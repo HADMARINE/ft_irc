@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:12:20 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/06/07 14:13:12 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/07/05 15:49:01 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,6 @@
 # include <arpa/inet.h>
 # include <netinet/in.h>
 
-# include "libft.h"
+// # include "libft.h"
 
 #endif

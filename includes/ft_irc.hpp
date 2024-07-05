@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   webserv.hpp                                        :+:      :+:    :+:   */
+/*   ft_irc.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:11:03 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/06/07 14:12:51 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/07/05 15:48:04 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef WEBSERV_HPP
-#define WEBSERV_HPP
+#ifndef FT_IRC_HPP
+#define FT_IRC_HPP
 
 #include "includes.hpp"
 

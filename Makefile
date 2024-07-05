@@ -6,11 +6,11 @@
 #    By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/07 14:13:59 by lhojoon           #+#    #+#              #
-#    Updated: 2024/06/07 14:21:18 by lhojoon          ###   ########.fr        #
+#    Updated: 2024/07/05 15:47:23 by lhojoon          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = webserv
+NAME = ircserv
 CPP = c++
 CFLAGS = -std=c++98 -Wall -Wextra -Werror 
 
