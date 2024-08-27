@@ -6,15 +6,15 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:48:44 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/08/27 17:46:26 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/08/27 22:12:15 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.hpp"
 
 namespace irc {
-    t_irc_exec_conf getIrcExecConf(char *password, char *port) {
-        if (!password || !port)
+    t_irc_exec_conf getIrcExecConf(char *password, char *port, bool *isServerShut) {
+        if (!password || !port || !isServerShut)
             throw std::runtime_error("parameters invalid : nullptr");
         
         std::string passwordStr(password), portStr(port);
@@ -34,6 +34,9 @@ namespace irc {
         
         conf.password = passwordStr;
         conf.port = portTmp;
+        conf.portStr = portStr;
+        conf.isServerShut = isServerShut;
+
         return conf;
     }
 }

@@ -21,6 +21,21 @@ namespace irc {
 
 ## TODO 
 * Nickname verification https://modern.ircdocs.horse/#clients
+* Parsing du config
+* Réception des clients
+* Lecture / Envoi
 
 ## Liens utils
 * How to open socket server in cpp : https://www.geeksforgeeks.org/socket-programming-in-cpp/
+
+## How to use
+* Ctrl + c pour quitter
+
+## Explications
+### irc::Ircserv(t_irc_exec_conf &)
+C'est le constructeur qui démarre du serveur. Utilisez toujours avec cette méthode. (non pas avec le défaut)
+* _addrinfo : le structure qui contient toutes les données pour la création du serveur.
+* _addrinfoHints : les contraintes pour créer le serveur, comme une ordonnance.
+* _serverSock : fd du socket
+* _password : mot de passe passé par le paramètre
+* _isServeurShut : mettre `true` pour éteindre le serveur. Loop va arrêter la boucle.

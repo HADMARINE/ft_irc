@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:12:20 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/08/27 19:28:50 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/08/27 22:36:34 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@
 # include <netinet/in.h>
 
 # include <netdb.h>
+# include <poll.h>
 
 // # include "libft.h"
 
