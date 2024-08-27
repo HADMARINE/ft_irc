@@ -6,7 +6,7 @@
 #    By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/07 14:13:59 by lhojoon           #+#    #+#              #
-#    Updated: 2024/07/05 15:47:23 by lhojoon          ###   ########.fr        #
+#    Updated: 2024/08/27 17:51:53 by lhojoon          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,10 @@ CPP = c++
 CFLAGS = -std=c++98 -Wall -Wextra -Werror 
 
 DIR = src
-SRCS_RAW = main.cpp
+SRCS_RAW =	main.cpp \
+			utils.cpp \
+			ircserv.cpp \
+
 SRCS = $(addprefix $(DIR)/,$(SRCS_RAW))
 OBJS = $(SRCS:cpp=o)
 INCLUDES = -Iincludes -Ilibft
