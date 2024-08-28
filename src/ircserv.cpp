@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/08/28 13:37:43 by root             ###   ########.fr       */
+/*   Updated: 2024/08/28 13:46:15 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,8 @@ void  Ircserv::clientMessage(int fd) {
   char messageBuff[1024];
   memset(messageBuff, 0, sizeof(messageBuff));
 
-  if (recv(fd, messageBuff, sizeof(messageBuff) - 1, 0) < 0)
-    throw std::runtime_error("Failed to receive client message");
+  if (recv(fd, messageBuff, sizeof(messageBuff) - 1, 0) <= 0)
+    clientDisconnect(fd);
   std::cout << "Client " << fd << " sent: " << messageBuff;
 }
 
