@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/08/27 22:37:03 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/08/28 13:37:43 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,58 +20,105 @@ Ircserv::Ircserv() : _password("password"), _isServerShut(NULL) {
 
 // Explanations on README
 Ircserv::Ircserv(t_irc_exec_conf & conf) : _password(conf.password), _isServerShut(conf.isServerShut) {
-    int res;
-    
+    struct pollfd servPoll;
+    struct sockaddr_in  serv_addr;
+
     memset(&_addrinfoHints, 0, sizeof(_addrinfoHints));
     _addrinfoHints.ai_family = AF_INET;
     _addrinfoHints.ai_socktype = SOCK_STREAM;
     _addrinfoHints.ai_flags = AI_PASSIVE;
 
-    res = getaddrinfo(NULL, conf.portStr.c_str(), &_addrinfoHints, &_addrinfo);
-
-    if (res < 0)
+    if (getaddrinfo(NULL, conf.portStr.c_str(), &_addrinfoHints, &_addrinfo) < 0)
         throw std::runtime_error("addrinfo init failed");
-    
-    // _addrinfo.sin_addr.s_addr = INADDR_ANY;
-    // _addrinfo.sin_family = AF_INET;
-    // _addrinfo. = htons(conf.port);
-    
-    _serverSock = socket(_addrinfo->ai_family, _addrinfo->ai_socktype, _addrinfo->ai_protocol);
 
+    _serverSock = socket(_addrinfo->ai_family, _addrinfo->ai_socktype, 0);
     if (_serverSock == -1)
         throw std::runtime_error("socket failed");
 
+    bzero((char*) &serv_addr, sizeof(serv_addr));
+    serv_addr.sin_family = AF_INET;
+    serv_addr.sin_addr.s_addr = INADDR_ANY;
+    serv_addr.sin_port = htons(atoi(conf.portStr.c_str()));
+
     // TODO : Check if we have to do this kind of thing...
-	// int optvalue = 1; // enables the re-use of a port if the IP address is different
-	// if (setsockopt(_server_socket_fd, SOL_SOCKET, SO_REUSEADDR, &optvalue, sizeof(optvalue)) == FAILURE)
-	// {
-	// 	std::cerr << RED << "[Server] Impossible to reuse" << RESET << std::endl;
-	// 	return (FAILURE);
-	// }
+    int optvalue = 1; // enables the re-use of a port if the IP address is different
+    if (setsockopt(_serverSock, SOL_SOCKET, SO_REUSEADDR, &optvalue, sizeof(optvalue)) < 0)
+      throw std::runtime_error("Failed to set socket options");
 
-    res = bind(_serverSock, _addrinfo->ai_addr, _addrinfo->ai_addrlen);
+    if (fcntl(_serverSock, F_SETFL, O_NONBLOCK))
+        throw std::runtime_error("Failed to put the socket on NON_BLOCK");
 
-    if (res != 0)
+    if (bind(_serverSock, (sockaddr *)&serv_addr, sizeof(serv_addr)) < 0)
         throw std::runtime_error("Failed to bind socket");
 
-    res = listen(_serverSock, IRC_LISTEN_BACKLOG);
-
-    if (res != 0)
+    if (listen(_serverSock, IRC_LISTEN_BACKLOG) < 0)
         throw std::runtime_error("Failed to listen socket");
 
+    servPoll.fd = _serverSock;
+    servPoll.events = POLLIN;
+    servPoll.revents = 0;
+    _pfds.push_back(servPoll);
     freeaddrinfo(_addrinfo);
+}
+
+void  Ircserv::clientConnect() {
+  int                fd;
+  struct pollfd      pfd;
+  struct sockaddr_in addr;
+  socklen_t          size;
+
+  size = sizeof(addr);
+  fd = accept(_serverSock, (sockaddr *)&addr, &size);
+  if (fd < 0)
+    throw std::runtime_error("Failed to accept connection");
+  pfd.fd = fd;
+  pfd.events = POLLIN;
+  pfd.revents = 0;
+  _pfds.push_back(pfd);
+  std::cout << "Client " << fd << " connected" << std::endl;
+}
+
+void  Ircserv::clientDisconnect(int fd) {
+  for (std::vector<pollfd>::iterator it = _pfds.begin(); it != _pfds.end(); it++)
+  {
+    if (it->fd == fd)
+    {
+      _pfds.erase(it);
+      close(fd);
+      std::cout << "Client " << fd << " disconnected" << std::endl;
+      break;
+    }
+  }
+}
+
+void  Ircserv::clientMessage(int fd) {
+  char messageBuff[1024];
+  memset(messageBuff, 0, sizeof(messageBuff));
+
+  if (recv(fd, messageBuff, sizeof(messageBuff) - 1, 0) < 0)
+    throw std::runtime_error("Failed to receive client message");
+  std::cout << "Client " << fd << " sent: " << messageBuff;
 }
 
 void Ircserv::bindLoop() {
     std::cout << "Loop bining...";
     std::cout << "Success!" << std::endl;
 
-    std::vector<pollfd> recvPollfds;
     while (!*this->_isServerShut) {
-        // Work !!!
-        std::vector<pollfd> newPollfds;
-
-        ;
+        if ((poll(_pfds.begin().base(),_pfds.size(), -1) < 0) && !*this->_isServerShut)
+          throw std::runtime_error("Failed to use poll");
+        for (std::vector<pollfd>::iterator it = _pfds.begin(); it != _pfds.end(); it++)
+        {
+          if ((it->revents & POLLIN) == POLLIN)
+          {
+              if (it->fd == _serverSock)
+              {
+                  clientConnect();
+                  break;
+              }
+              clientMessage(it->fd);
+          }
+        }
     }
 }
 

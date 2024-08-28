@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:35:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/08/27 22:32:20 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/08/28 13:31:33 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ public:
     Ircserv(const Ircserv &);
     Ircserv & operator=(const Ircserv &);
     ~Ircserv();
-    
+
+    void clientConnect();
+    void clientDisconnect(int fd);
+    void clientMessage(int fd);
     void bindLoop();
 protected:
 private:
@@ -33,6 +36,7 @@ private:
     int _serverSock;
     std::string _password;
     bool *_isServerShut;
+    std::vector<struct pollfd> _pfds;
 };
 
 }

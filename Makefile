@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+         #
+#    By: root <root@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/07 14:13:59 by lhojoon           #+#    #+#              #
-#    Updated: 2024/08/27 17:51:53 by lhojoon          ###   ########.fr        #
+#    Updated: 2024/08/28 12:54:47 by root             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ircserv
 CPP = c++
-CFLAGS = -std=c++98 -Wall -Wextra -Werror 
+CFLAGS = -std=c++98 -Wall -Wextra -Werror -g3
 
 DIR = src
 SRCS_RAW =	main.cpp \
