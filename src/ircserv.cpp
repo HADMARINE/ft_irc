@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/08/28 13:57:01 by root             ###   ########.fr       */
+/*   Updated: 2024/08/28 14:04:52 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,8 @@ void  Ircserv::clientMessage(int fd) {
 
   if (recv(fd, messageBuff, sizeof(messageBuff) - 1, 0) <= 0)
     clientDisconnect(fd);
-  std::cout << "Client " << fd << " sent: " << messageBuff;
+  else
+    std::cout << "Client " << fd << " sent: " << messageBuff;
 }
 
 void Ircserv::bindLoop() {
