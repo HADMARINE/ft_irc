@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/08/28 13:46:15 by root             ###   ########.fr       */
+/*   Updated: 2024/08/28 13:57:01 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,11 +112,10 @@ void Ircserv::bindLoop() {
           if ((it->revents & POLLIN) == POLLIN)
           {
               if (it->fd == _serverSock)
-              {
-                  clientConnect();
-                  break;
-              }
-              clientMessage(it->fd);
+                clientConnect();
+              else
+                clientMessage(it->fd);
+              break;
           }
         }
     }
