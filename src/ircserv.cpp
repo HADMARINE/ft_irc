@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/08/29 17:37:28 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/08/29 18:13:30 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,10 @@ void  Ircserv::clientConnect() {
   ssize_t bytesReceived = recv(fd, messageBuff, sizeof(messageBuff) - 1, 0);
 
   if (bytesReceived <= 0)
+  {
       clientDisconnect(fd);
+      return ;
+  }
   else {
     std::string message(messageBuff);
 
@@ -93,10 +96,10 @@ void  Ircserv::clientConnect() {
             std::cout << "Client " << fd << " authenticated successfully" << std::endl;
         } else {
             std::cerr << "Client " << fd << " provided wrong password" << std::endl;
-              pfd.fd = fd;
-              pfd.events = POLLIN;
-              pfd.revents = 0;
-              _pfds.push_back(pfd);
+            pfd.fd = fd;
+            pfd.events = POLLIN;
+            pfd.revents = 0;
+            _pfds.push_back(pfd);
             clientDisconnect(fd);
             return ;
         }
