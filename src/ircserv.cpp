@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/08/28 14:04:52 by root             ###   ########.fr       */
+/*   Updated: 2024/08/29 17:37:28 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,17 +66,49 @@ void  Ircserv::clientConnect() {
   struct pollfd      pfd;
   struct sockaddr_in addr;
   socklen_t          size;
+  char messageBuff[1024];
 
   size = sizeof(addr);
   fd = accept(_serverSock, (sockaddr *)&addr, &size);
   if (fd < 0)
     throw std::runtime_error("Failed to accept connection");
+  memset(messageBuff, 0, sizeof(messageBuff));
+
+  ssize_t bytesReceived = recv(fd, messageBuff, sizeof(messageBuff) - 1, 0);
+
+  if (bytesReceived <= 0)
+      clientDisconnect(fd);
+  else {
+    std::string message(messageBuff);
+
+    size_t passPos = message.find("PASS ");
+    if (passPos != std::string::npos) {
+        std::string password = message.substr(passPos + 5);
+        size_t endPos = password.find("\r\n");
+        if (endPos != std::string::npos) {
+            password = password.substr(0, endPos);
+        }
+
+        if (_password == password) {
+            std::cout << "Client " << fd << " authenticated successfully" << std::endl;
+        } else {
+            std::cerr << "Client " << fd << " provided wrong password" << std::endl;
+              pfd.fd = fd;
+              pfd.events = POLLIN;
+              pfd.revents = 0;
+              _pfds.push_back(pfd);
+            clientDisconnect(fd);
+            return ;
+        }
+    }
+  }
   pfd.fd = fd;
   pfd.events = POLLIN;
   pfd.revents = 0;
   _pfds.push_back(pfd);
   std::cout << "Client " << fd << " connected" << std::endl;
 }
+
 
 void  Ircserv::clientDisconnect(int fd) {
   for (std::vector<pollfd>::iterator it = _pfds.begin(); it != _pfds.end(); it++)
