@@ -27,6 +27,7 @@ namespace irc {
 
 ## Liens utils
 * How to open socket server in cpp : https://www.geeksforgeeks.org/socket-programming-in-cpp/
+* Visual map of structure around user : https://www.linuxjournal.com/sites/default/files/inline-images/Erlang%20IRC%20Datamodel.png
 
 ## How to use
 * Ctrl + c pour quitter

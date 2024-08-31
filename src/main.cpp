@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:19:41 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/08/27 22:32:37 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/08/31 21:08:18 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,6 @@ int main(int argc, char **argv)
         return 1;
     }
     
-    std::cout << "La SNCF et ses équipes vous souhaite un agréable voyage. À bientôt !" << std::endl;
+    std::cout << "La SNCF et ses équipes vous souhaitent un agréable voyage. À bientôt !" << std::endl;
     return 0;
 }

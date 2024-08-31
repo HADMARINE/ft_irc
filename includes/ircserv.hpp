@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:35:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/08/29 18:00:37 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/08/31 22:08:57 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ private:
     std::string _password;
     bool *_isServerShut;
     std::vector<struct pollfd> _pfds;
+
+    std::vector<User> _users;
+    
 };
 
 }
