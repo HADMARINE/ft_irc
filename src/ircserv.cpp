@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/01 15:01:13 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/01 17:09:38 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void  Ircserv::clientConnect() {
   else {
     std::string message(messageBuff);
 
-    size_t passPos = message.find("PASS ");
+    size_t passPos = message.find("PASS "); // TODO : c'est pas bon ce truc
     if (passPos != std::string::npos) {
         std::string password = message.substr(passPos + 5);
         size_t endPos = password.find("\r\n");
@@ -134,7 +134,6 @@ void  Ircserv::clientMessage(int fd) {
     clientDisconnect(fd);
   else
     std::cout << "Client " << fd << " sent: " << messageBuff;
-  send(fd, messageBuff, 4, 0);
 }
 
 void Ircserv::bindLoop() {
@@ -156,6 +155,31 @@ void Ircserv::bindLoop() {
           }
         }
     }
+}
+
+static ACommand * getCommandFromDict(std::string cmd) {
+    return ACommand();
+}
+
+std::vector<ACommand> parseCommandStr(std::string & str) {
+    std::vector<std::string> cmdLines = split(str, "\r\n");
+    std::string cmdStr;
+    
+    std::vector<std::string> params;
+    ACommand *cmd;
+    
+    while (!cmdLines.empty()) {
+        cmdStr = cmdLines.front();
+        cmdLines.erase(cmdLines.begin());
+        if (cmdStr.empty()) // TODO : Verify this case when empty line.. (space allowed ?)
+            continue;
+        params = split(cmdStr, " ");
+        cmd = getCommandFromDict(params.front());
+        params.erase(params.begin());
+        cmd->setParams(params);
+        
+    }
+    return std::vector<ACommand>();
 }
 
 Ircserv::~Ircserv() {

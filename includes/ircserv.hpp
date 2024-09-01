@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:35:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/01 15:40:22 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/01 16:41:44 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ public:
     void clientMessage(int fd);
     void bindLoop();
 
-    // ACommand parseCommand(std::string str);
+    std::vector<ACommand> parseCommandStr(std::string & str);
 protected:
 private:
     Ircserv();

@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:48:44 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/08/27 22:12:15 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/01 16:48:57 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,16 @@ namespace irc {
         conf.isServerShut = isServerShut;
 
         return conf;
+    }
+
+    std::vector<std::string> split(const std::string& s, const std::string& delimiter) {
+        size_t last = 0;
+        size_t next = 0;
+        std::vector<std::string> svalues;
+        while ((next = s.find(delimiter, last)) != std::string::npos) {
+            svalues.push_back(s.substr(last, next - last));
+            last = next + 1;
+        } 
+        svalues.push_back(s.substr(last));
     }
 }
