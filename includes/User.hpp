@@ -6,11 +6,14 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 21:50:27 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/08/31 22:13:25 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/01 15:04:43 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.hpp"
+
+#ifndef USER_HPP
+#define USER_HPP
 
 namespace irc {
     enum EUserMod {
@@ -28,6 +31,8 @@ namespace irc {
         std::string _nickname;
         std::string _username;
         std::string _hostname;
-        unsigned short _mod; // Ref EUserMod
+        unsigned short _mod; // Refer EUserMod
     };
 }
+
+#endif

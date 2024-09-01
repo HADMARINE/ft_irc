@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/08/29 18:13:30 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/01 15:01:13 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ void  Ircserv::clientMessage(int fd) {
     clientDisconnect(fd);
   else
     std::cout << "Client " << fd << " sent: " << messageBuff;
+  send(fd, messageBuff, 4, 0);
 }
 
 void Ircserv::bindLoop() {
