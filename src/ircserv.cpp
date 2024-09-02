@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/02 11:56:03 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/03 00:46:30 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,7 @@ void Ircserv::bindLoop() {
 
 static ACommand * getCommandFromDict(std::string cmd) {
 	// TODO : Emit error when undefined command
+	(void)cmd;
 	return NULL;
 }
 
