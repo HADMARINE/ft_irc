@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/01 17:09:38 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/02 11:56:03 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,28 +158,34 @@ void Ircserv::bindLoop() {
 }
 
 static ACommand * getCommandFromDict(std::string cmd) {
-    return ACommand();
+	// TODO : Emit error when undefined command
+	return NULL;
 }
 
-std::vector<ACommand> parseCommandStr(std::string & str) {
+std::vector<ACommand *> Ircserv::parseCommandStr(std::string & str) {
     std::vector<std::string> cmdLines = split(str, "\r\n");
     std::string cmdStr;
     
     std::vector<std::string> params;
     ACommand *cmd;
+	std::vector<ACommand *> cmdList;
     
     while (!cmdLines.empty()) {
         cmdStr = cmdLines.front();
         cmdLines.erase(cmdLines.begin());
         if (cmdStr.empty()) // TODO : Verify this case when empty line.. (space allowed ?)
             continue;
+
         params = split(cmdStr, " ");
+		
         cmd = getCommandFromDict(params.front());
         params.erase(params.begin());
+		
         cmd->setParams(params);
-        
+		
+        cmdList.push_back(cmd);
     }
-    return std::vector<ACommand>();
+    return cmdList;
 }
 
 Ircserv::~Ircserv() {

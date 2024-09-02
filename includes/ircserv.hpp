@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:35:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/01 16:41:44 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/02 11:20:43 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ public:
     void clientMessage(int fd);
     void bindLoop();
 
-    std::vector<ACommand> parseCommandStr(std::string & str);
+    std::vector<ACommand *> parseCommandStr(std::string & str);
 protected:
 private:
     Ircserv();
