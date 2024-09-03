@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/03 17:25:40 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/03 17:48:19 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,9 @@ void  Ircserv::clientConnect() {
   }
   else {
     std::string messageStr(messageBuff);
+    User user;
+    user._socketfd = fd;
+    this->_users.push_back(user);
     try {
       std::vector<ACommand *> commands = this->parseCommandStr(messageStr);
       int commandReturnCode;
@@ -95,11 +98,13 @@ void  Ircserv::clientConnect() {
       (void)e;
     }
   }
+  
 
   pfd.fd = fd;
   pfd.events = POLLIN;
   pfd.revents = 0;
   _pfds.push_back(pfd);
+  
   std::cout << "Client " << fd << " connected" << std::endl;
 }
 
@@ -147,7 +152,7 @@ void Ircserv::bindLoop() {
     std::cout << "Success!" << std::endl;
 
     while (!*this->_isServerShut) {
-        if ((poll(_pfds.begin().base(),_pfds.size(), -1) < 0) && !*this->_isServerShut)
+        if ((poll(_pfds.begin().base(), _pfds.size(), -1) < 0) && !*this->_isServerShut)
           throw std::runtime_error("Failed to use poll");
         for (std::vector<pollfd>::iterator it = _pfds.begin(); it != _pfds.end(); it++)
         {
