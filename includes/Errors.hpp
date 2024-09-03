@@ -1,36 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ACommand.hpp                                       :+:      :+:    :+:   */
+/*   Errors.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/31 21:18:50 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/03 16:13:48 by lhojoon          ###   ########.fr       */
+/*   Created: 2024/09/03 16:14:05 by lhojoon           #+#    #+#             */
+/*   Updated: 2024/09/03 16:22:22 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#ifndef ACOMMAND_HPP
-#define ACOMMAND_HPP
+#ifndef ERRORS_H
+#define ERRORS_H
 
 #include "ft_irc.hpp"
 
-
 namespace irc {
-
-    class Ircserv;
-
-    class ACommand {
+    class TooManyParameters : public IrcSpecificException {
     public:
-        ACommand();
-        ACommand(std::vector<std::string> params);
-        virtual int resolve(Ircserv & server) = 0; // 0 if success
-        void setParams(std::vector<std::string> params);
-        virtual std::vector<std::string> setParamsMiddleware(std::vector<std::string> params);
-    protected:
-        std::vector<std::string> _params;
+        TooManyParameters();
+        TooManyParameters(std::string condition, size_t receivedNum);
+        std::string what();
     private:
+        
     };
 }
 

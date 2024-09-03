@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/03 15:58:57 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/03 16:47:54 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,29 +82,25 @@ void  Ircserv::clientConnect() {
       return ;
   }
   else {
-    std::string message(messageBuff);
-
-    size_t passPos = message.find("PASS "); // TODO : c'est pas bon ce truc
-    if (passPos != std::string::npos) {
-        std::string password = message.substr(passPos + 5);
-        size_t endPos = password.find("\r\n");
-        if (endPos != std::string::npos) {
-            password = password.substr(0, endPos);
-        }
-
-        if (_password == password) {
-            std::cout << "Client " << fd << " authenticated successfully" << std::endl;
-        } else {
-            std::cerr << "Client " << fd << " provided wrong password" << std::endl;
-            pfd.fd = fd;
-            pfd.events = POLLIN;
-            pfd.revents = 0;
-            _pfds.push_back(pfd);
-            clientDisconnect(fd);
-            return ;
-        }
+    std::string messageStr(messageBuff);
+    try {
+      std::vector<ACommand *> commands = this->parseCommandStr(messageStr);
+      int commandReturnCode;
+      for (std::vector<ACommand *>::iterator it = commands.begin(); it != commands.end(); ++it) {
+        commandReturnCode = (*it)->resolve(*this); // use this instance for initial connection
+        if (commandReturnCode != 0)
+          throw std::runtime_error("Some error while command execution occured"); // TODO : precise error
+      }
+    } catch (EIrcException & e) {
+      // TODO : send error to client
+      (void)e;
+    } catch (IrcSpecificException & e) {
+      (void)e;
+    } catch (std::exception & e) {
+      throw e; // pass any error which is not mine...
     }
   }
+
   pfd.fd = fd;
   pfd.events = POLLIN;
   pfd.revents = 0;
@@ -130,10 +126,29 @@ void  Ircserv::clientMessage(int fd) {
   char messageBuff[1024];
   memset(messageBuff, 0, sizeof(messageBuff));
 
-  if (recv(fd, messageBuff, sizeof(messageBuff) - 1, 0) <= 0)
+  if (recv(fd, messageBuff, sizeof(messageBuff) - 1, 0) <= 0) {
     clientDisconnect(fd);
-  else
-    std::cout << "Client " << fd << " sent: " << messageBuff;
+    return;
+  }
+  std::string messageStr(messageBuff);
+  try {
+    std::vector<ACommand *> commmands = this->parseCommandStr(messageStr);
+    int commandReturnCode;
+    
+    for (std::vector<ACommand *>::iterator it = commmands.begin(); it != commmands.end(); ++it) {
+      commandReturnCode = (*it)->resolve(*this);
+      if (commandReturnCode != 0)
+        throw std::runtime_error("Some error while command execution occured"); // TODO : precise error
+    }
+  } catch (EIrcException & e) {
+    // TODO : send error to client
+    (void)e;
+  } catch (IrcSpecificException & e) {
+    (void)e;
+  } catch (std::exception & e) {
+    throw e;
+  }
+
 }
 
 void Ircserv::bindLoop() {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:35:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/03 16:36:27 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/03 16:49:04 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,6 @@
 #define IRCSERV_HPP
 
 #include "ft_irc.hpp"
-
-struct server_op
-{
-	std::string name;
-	std::string	host;
-	std::string	password;
-};
 
 namespace irc {
     
@@ -51,6 +44,7 @@ namespace irc {
         std::vector<struct pollfd> _pfds;
 
         std::vector<User> _users;
+        std::vector<t_server_op> _operators;
         
     };
 
