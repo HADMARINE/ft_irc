@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:35:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/03 14:07:02 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/03 16:36:27 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 #define IRCSERV_HPP
 
 #include "ft_irc.hpp"
+
+struct server_op
+{
+	std::string name;
+	std::string	host;
+	std::string	password;
+};
 
 namespace irc {
     
@@ -30,6 +37,7 @@ namespace irc {
         void clientDisconnect(int fd);
         void clientMessage(int fd);
         void bindLoop();
+        int readFromConfigFile(char *filename);
 
         std::vector<ACommand *> parseCommandStr(std::string & str);
     protected:
