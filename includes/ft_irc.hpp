@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:11:03 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/03 16:17:09 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/03 17:22:09 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 #include "ircserv.hpp"
 #include "ACommand.hpp"
 #include "Commands.hpp"
-#include "EIrcException.hpp"
 #include "IrcSpecificException.hpp"
 #include "Errors.hpp"
 

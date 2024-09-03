@@ -32,6 +32,8 @@ namespace irc {
         void bindLoop();
         int readFromConfigFile(char *filename);
 
+        std::vector<User> & getUsers() { return this->_users; }
+
         std::vector<ACommand *> parseCommandStr(std::string & str);
     protected:
     private:

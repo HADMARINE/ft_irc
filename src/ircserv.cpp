@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/03 17:05:54 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/03 17:25:40 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,17 +87,12 @@ void  Ircserv::clientConnect() {
       std::vector<ACommand *> commands = this->parseCommandStr(messageStr);
       int commandReturnCode;
       for (std::vector<ACommand *>::iterator it = commands.begin(); it != commands.end(); ++it) {
-        commandReturnCode = (*it)->resolve(*this); // use this instance for initial connection
+        commandReturnCode = (*it)->resolve(*this, fd); // use this instance for initial connection
         if (commandReturnCode != 0)
           throw std::runtime_error("Some error while command execution occured"); // TODO : precise error
       }
-    } catch (EIrcException & e) {
-      // TODO : send error to client
-      (void)e;
     } catch (IrcSpecificException & e) {
       (void)e;
-    } catch (std::exception & e) {
-      throw e; // pass any error which is not mine...
     }
   }
 
@@ -136,17 +131,13 @@ void  Ircserv::clientMessage(int fd) {
     int commandReturnCode;
     
     for (std::vector<ACommand *>::iterator it = commmands.begin(); it != commmands.end(); ++it) {
-      commandReturnCode = (*it)->resolve(*this);
+      commandReturnCode = (*it)->resolve(*this, fd);
       if (commandReturnCode != 0)
         throw std::runtime_error("Some error while command execution occured"); // TODO : precise error
     }
-  } catch (EIrcException & e) {
+  } catch (IrcSpecificException & e) {
     // TODO : send error to client
     (void)e;
-  } catch (IrcSpecificException & e) {
-    (void)e;
-  } catch (std::exception & e) {
-    throw e;
   }
 
 }
