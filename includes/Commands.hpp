@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 13:42:22 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/03 17:30:18 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/03 17:31:52 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ namespace irc {
         int resolve(Ircserv & server, int fd);
         std::vector<std::string> setParamsMiddleware(std::vector<std::string> params);
     };
-
-    class Command
 }
 
 
