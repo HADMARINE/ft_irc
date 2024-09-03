@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/03 00:46:30 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/03 14:21:42 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,22 @@ void  Ircserv::clientConnect() {
   else {
     std::string message(messageBuff);
 
+    try {
+      std::string messageStr(messageBuff);
+      std::vector<ACommand *> commmands = this->parseCommandStr(messageStr);
+      int commandReturnCode;
+      for (std::vector<ACommand *>::iterator it = commmands.begin(); it != commmands.end(); ++it) {
+        commandReturnCode = (*it)->resolve(*this); // use this instance for initial connection
+        if (commandReturnCode != 0)
+          throw std::runtime_error("Some error while command execution occured"); // TODO : precise error
+      }
+    } catch (EIrcException e) {
+      // TODO : send error to client
+      (void)e;
+    } catch (std::exception e) {
+      throw e; // pass any error which is not mine...
+    }
+
     size_t passPos = message.find("PASS "); // TODO : c'est pas bon ce truc
     if (passPos != std::string::npos) {
         std::string password = message.substr(passPos + 5);
@@ -130,10 +146,18 @@ void  Ircserv::clientMessage(int fd) {
   char messageBuff[1024];
   memset(messageBuff, 0, sizeof(messageBuff));
 
-  if (recv(fd, messageBuff, sizeof(messageBuff) - 1, 0) <= 0)
+  if (recv(fd, messageBuff, sizeof(messageBuff) - 1, 0) <= 0) {
     clientDisconnect(fd);
-  else
-    std::cout << "Client " << fd << " sent: " << messageBuff;
+    return;
+  }
+  std::string messageStr(messageBuff);
+  std::vector<ACommand *> commmands = this->parseCommandStr(messageStr);
+  int commandReturnCode;
+  for (std::vector<ACommand *>::iterator it = commmands.begin(); it != commmands.end(); ++it) {
+    commandReturnCode = (*it)->resolve(*this);
+    if (commandReturnCode != 0)
+      throw std::runtime_error("Some error while command execution occured"); // TODO : precise error
+  }
 }
 
 void Ircserv::bindLoop() {

@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_irc.hpp                                         :+:      :+:    :+:   */
+/*   CommandPass.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/07 14:11:03 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/03 14:19:17 by lhojoon          ###   ########.fr       */
+/*   Created: 2024/09/03 13:43:42 by lhojoon           #+#    #+#             */
+/*   Updated: 2024/09/03 14:19:30 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_IRC_HPP
-#define FT_IRC_HPP
-
-#include "includes.hpp"
-#include "definitions.hpp"
-#include "ircstruct.hpp"
-#include "utils.hpp"
-#include "User.hpp"
-#include "Channel.hpp"
-#include "ircserv.hpp"
-#include "ACommand.hpp"
-#include "Commands.hpp"
-#include "EIrcException.hpp"
+#include "ft_irc.hpp"
 
 namespace irc {
-    class Ircserv;
-    class ACommand;
-}
+    int CommandPASS::resolve(Ircserv & server) {
+        (void)server;
+        return 0;
+    }
 
-#endif
+    std::vector<std::string> CommandPASS::setParamsMiddleware(std::vector<std::string> params) {
+        if (params.empty()) {
+            throw ERR_NEEDMOREPARAMS;
+        }
+        return params;
+    }
+    
+}

@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_irc.hpp                                         :+:      :+:    :+:   */
+/*   ACommand.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/07 14:11:03 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/03 14:19:17 by lhojoon          ###   ########.fr       */
+/*   Created: 2024/09/03 13:47:28 by lhojoon           #+#    #+#             */
+/*   Updated: 2024/09/03 14:24:49 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_IRC_HPP
-#define FT_IRC_HPP
-
-#include "includes.hpp"
-#include "definitions.hpp"
-#include "ircstruct.hpp"
-#include "utils.hpp"
-#include "User.hpp"
-#include "Channel.hpp"
-#include "ircserv.hpp"
-#include "ACommand.hpp"
-#include "Commands.hpp"
-#include "EIrcException.hpp"
+#include "ft_irc.hpp"
 
 namespace irc {
-    class Ircserv;
-    class ACommand;
-}
+    ACommand::ACommand() {}
+    
+    ACommand::ACommand(std::vector<std::string> params) {
+        this->setParams(params);
+    }
+    
+    void ACommand::setParams(std::vector<std::string> params) {
+        this->_params = this->setParamsMiddleware(params);
+    }
 
-#endif
+    std::vector<std::string> ACommand::setParamsMiddleware(std::vector<std::string> params) {
+        return params;
+    }
+}

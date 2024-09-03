@@ -1,32 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_irc.hpp                                         :+:      :+:    :+:   */
+/*   EIrcException.hpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/07 14:11:03 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/03 14:19:17 by lhojoon          ###   ########.fr       */
+/*   Created: 2024/09/03 14:18:04 by lhojoon           #+#    #+#             */
+/*   Updated: 2024/09/03 15:21:07 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_IRC_HPP
-#define FT_IRC_HPP
-
-#include "includes.hpp"
-#include "definitions.hpp"
-#include "ircstruct.hpp"
-#include "utils.hpp"
-#include "User.hpp"
-#include "Channel.hpp"
-#include "ircserv.hpp"
-#include "ACommand.hpp"
-#include "Commands.hpp"
-#include "EIrcException.hpp"
+#ifndef EIRCEXCEPTION_HPP
+#define EIRCEXCEPTION_HPP
 
 namespace irc {
-    class Ircserv;
-    class ACommand;
+    enum EIrcException {
+      ERR_NEEDMOREPARAMS = 461,
+    };
 }
 
 #endif

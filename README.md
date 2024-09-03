@@ -24,10 +24,14 @@ namespace irc {
 * Parsing du config
 * Réception des clients
 * Lecture / Envoi
+* Lise des commandes à implementer (cocher * après le nom de commande une fois implémenté)
+    * PASS
+    * KICK
 
 ## Liens utils
 * How to open socket server in cpp : https://www.geeksforgeeks.org/socket-programming-in-cpp/
 * Visual map of structure around user : https://www.linuxjournal.com/sites/default/files/inline-images/Erlang%20IRC%20Datamodel.png
+* Standard doc : https://datatracker.ietf.org/doc/html/rfc1459
 
 ## How to use
 * Ctrl + c pour quitter

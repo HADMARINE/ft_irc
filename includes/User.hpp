@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 21:50:27 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/01 15:04:43 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/03 15:18:08 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ namespace irc {
         std::string _nickname;
         std::string _username;
         std::string _hostname;
+        std::vector<std::string> _recentNicknames;
         unsigned short _mod; // Refer EUserMod
     };
 }
