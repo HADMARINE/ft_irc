@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:30:58 by bfaisy            #+#    #+#             */
-/*   Updated: 2024/09/03 16:44:52 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/03 16:55:40 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int 		irc::Ircserv::readFromConfigFile(char *filename)
 	for (it = operators.begin(); it != operators.end(); it++)
 	{
 		std::string	line = *it;
-		server_op	op;
+		t_server_op	op;
 		
 		int len = line.size() - (line.size() - line.find_first_of(' '));
 
@@ -38,7 +38,7 @@ int 		irc::Ircserv::readFromConfigFile(char *filename)
 		op.host.insert(0, line, len + 1, line.find_last_of(' ') - len - 1);
 		op.password.insert(0, line, line.find_last_of(' ') + 1, line.size() - 1);
 		
-		operator.push_back(op);
+		_operators.push_back(op);
 	}
    return (1);
 }
