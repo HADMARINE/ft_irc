@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:19:41 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/03 16:55:46 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/03 17:04:59 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int main(int argc, char **argv)
         irc::Ircserv server(conf);
         
         signal(SIGINT, signalHdlr);
-        server.readFromConfigFile("../config/servop.config");
+        server.readFromConfigFile(const_cast<char *>("../config/servop.config"));
         server.bindLoop();
         
     } catch (std::exception & e) {
