@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hadmarine <hadmarine@student.42.fr>        +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:48:44 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/02 11:01:57 by hadmarine        ###   ########.fr       */
+/*   Updated: 2024/09/04 23:07:33 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 namespace irc {
     t_irc_exec_conf getIrcExecConf(char *password, char *port, bool *isServerShut) {
         if (!password || !port || !isServerShut)
-            throw std::runtime_error("parameters invalid : nullptr");
+            throw std::runtime_error("parameters invalid - nullptr");
         
         std::string passwordStr(password), portStr(port);
         
         if (portStr.find_first_not_of("0123456789") != std::string::npos || // check is numeric, positive, non floating point
             passwordStr.empty())
-            throw std::runtime_error("parameters invalid : constraint");
+            throw std::runtime_error("parameters invalid - port format incorrect");
         
         t_irc_exec_conf conf;
         

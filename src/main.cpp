@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:19:41 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/03 17:04:59 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/04 23:09:45 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@ static void signalHdlr(int sig) {
 
 int main(int argc, char **argv)
 {
+    if (argc == 2 && strncmp(argv[1], "help", 5) == 0) {
+        std::cout << "Usage : ./ircserv <password> <port>" << std::endl;
+        std::cout << "\t<password> : non void string value\n\t<port> : number in range of 1 ~ 65535\n\n";
+        std::cout << "Happy hacking !" << std::endl;
+        return 0;
+    }
     std::cout << "ircserv launched" << std::endl;
     if (argc != 3)
     {

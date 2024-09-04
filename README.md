@@ -34,6 +34,11 @@ namespace irc {
 * Standard doc : https://datatracker.ietf.org/doc/html/rfc1459
 
 ## How to use
+* ./ircserv <password> <port>
+    <password> : non void string value
+    <port> : number in range of 1 ~ 65535 - port under 1024 is strictly not recommended since they're reserved
+* ./ircserv help
+    Show how to use
 * Ctrl + c pour quitter
 
 ## Explications
