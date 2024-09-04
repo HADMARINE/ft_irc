@@ -6,24 +6,18 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 17:28:34 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/03 17:30:10 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/04 18:31:07 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.hpp"
 
 namespace irc {
-    int CommandNick::resolve(Ircserv & server, int fd) {
-        std::vector<User> &users = server.getUsers();
-        User * foundUser = NULL;
-        for (std::vector<User>::iterator it = users.begin(); it != users.end(); it++) {
-            if ((*it)._socketfd == fd)
-                foundUser = it.base();
+    int CommandNICK::resolve(Ircserv & server, User * user) {
+        if (!user->_isUserLoggedOn && server.getPassword() != user->_pendingPassword) {
+            throw BadPassword();
         }
-        if (foundUser == NULL) {
-            throw UserNotFound();
-        }
-        foundUser->_nickname = this->_params.at(0);
+        user->_nickname = this->_params.at(0);
         return 0;
     }
     

@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:21:34 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/03 17:12:20 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/04 18:32:47 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,12 @@ namespace irc {
         this->setMessage(ss.str());
     }
 
+    AlreadyRegistered::AlreadyRegistered() {
+        this->setCode("ALREADY_REGISTERED");
+        this->setNumeric(462);
+        this->setMessage("Already registered");
+    }
+
     TooManyParameters::TooManyParameters() {
         this->setCode("TOO_MANY_PARAMETERS");
         this->setMessage("Too many parameters received");
@@ -43,5 +49,10 @@ namespace irc {
     UserNotFound::UserNotFound() {
         this->setCode("USER_NOT_FOUND");
         this->setMessage("User not found");
+    }
+
+    BadPassword::BadPassword() {
+        this->setCode("BAD_PASSWORD");
+        this->setMessage("Bad password");
     }
 }

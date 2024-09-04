@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 13:42:22 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/03 17:31:52 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/04 18:11:30 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@
 
 namespace irc {
     class CommandPASS : public ACommand {
-        int resolve(Ircserv & server, int fd);
+        int resolve(Ircserv & server, User * user);
         std::vector<std::string> setParamsMiddleware(std::vector<std::string> params);
     };
 
-    class CommandNick : public ACommand {
-        int resolve(Ircserv & server, int fd);
+    class CommandNICK : public ACommand {
+        int resolve(Ircserv & server, User * user);
         std::vector<std::string> setParamsMiddleware(std::vector<std::string> params);
     };
 }

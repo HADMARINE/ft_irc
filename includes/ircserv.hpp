@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:35:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/03 17:05:43 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/04 18:19:51 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ namespace irc {
         int readFromConfigFile(char *filename);
 
         std::vector<User> & getUsers() { return this->_users; }
+        User * findUserByFd(int fd);
+        const std::string & getPassword() const { return this->_password; }
 
         std::vector<ACommand *> parseCommandStr(std::string & str);
     protected:
@@ -44,6 +46,7 @@ namespace irc {
         std::string _password;
         bool *_isServerShut;
         std::vector<struct pollfd> _pfds;
+        struct pollfd _serverPfd;
 
         std::vector<User> _users;
         std::vector<t_server_op> _operators;

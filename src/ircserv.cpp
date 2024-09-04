@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/03 17:48:19 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/04 18:34:25 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,37 +75,39 @@ void  Ircserv::clientConnect() {
   memset(messageBuff, 0, sizeof(messageBuff));
 
   ssize_t bytesReceived = recv(fd, messageBuff, sizeof(messageBuff) - 1, 0);
+  // TODO : Error when bytes received exceed 512 (CRLF included)
 
   if (bytesReceived <= 0)
   {
       clientDisconnect(fd);
       return ;
   }
-  else {
-    std::string messageStr(messageBuff);
-    User user;
-    user._socketfd = fd;
-    this->_users.push_back(user);
-    try {
-      std::vector<ACommand *> commands = this->parseCommandStr(messageStr);
-      int commandReturnCode;
-      for (std::vector<ACommand *>::iterator it = commands.begin(); it != commands.end(); ++it) {
-        commandReturnCode = (*it)->resolve(*this, fd); // use this instance for initial connection
-        if (commandReturnCode != 0)
-          throw std::runtime_error("Some error while command execution occured"); // TODO : precise error
-      }
-    } catch (IrcSpecificException & e) {
-      (void)e;
-    }
-  }
-  
+    
+  User user;
+  user._socketfd = fd;
+  this->_users.push_back(user);
 
   pfd.fd = fd;
   pfd.events = POLLIN;
   pfd.revents = 0;
   _pfds.push_back(pfd);
+
+  std::string messageStr(messageBuff);
+
+  try {
+    std::vector<ACommand *> commands = this->parseCommandStr(messageStr);
+    int commandReturnCode;
+    for (std::vector<ACommand *>::iterator it = commands.begin(); it != commands.end(); ++it) {
+      commandReturnCode = (*it)->resolve(*this, this->findUserByFd(fd));
+      if (commandReturnCode != 0)
+        throw std::runtime_error("Some error while command execution occured"); // TODO : precise error
+    }
+  } catch (IrcSpecificException & e) {
+    (void)e;
+  }
   
-  std::cout << "Client " << fd << " connected" << std::endl;
+  
+  DCMD(std::cout << "Client " << fd << " connected" << std::endl);
 }
 
 
@@ -116,7 +118,7 @@ void  Ircserv::clientDisconnect(int fd) {
     {
       _pfds.erase(it);
       close(fd);
-      std::cout << "Client " << fd << " disconnected" << std::endl;
+      DCMD(std::cout << "Client " << fd << " disconnected" << std::endl);
       break;
     }
   }
@@ -136,7 +138,7 @@ void  Ircserv::clientMessage(int fd) {
     int commandReturnCode;
     
     for (std::vector<ACommand *>::iterator it = commmands.begin(); it != commmands.end(); ++it) {
-      commandReturnCode = (*it)->resolve(*this, fd);
+      commandReturnCode = (*it)->resolve(*this, this->findUserByFd(fd));
       if (commandReturnCode != 0)
         throw std::runtime_error("Some error while command execution occured"); // TODO : precise error
     }
@@ -148,8 +150,7 @@ void  Ircserv::clientMessage(int fd) {
 }
 
 void Ircserv::bindLoop() {
-    std::cout << "Loop bining...";
-    std::cout << "Success!" << std::endl;
+    DCMD(std::cout << "Loop binded" << std::endl);
 
     while (!*this->_isServerShut) {
         if ((poll(_pfds.begin().base(), _pfds.size(), -1) < 0) && !*this->_isServerShut)
@@ -229,6 +230,18 @@ int Ircserv::readFromConfigFile(char *filename)
 		_operators.push_back(op);
 	}
    return (1);
+}
+
+User * Ircserv::findUserByFd(int fd) {
+  User * foundUser = NULL;
+  for (std::vector<User>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
+      if ((*it)._socketfd == fd)
+          foundUser = it.base();
+  }
+  if (foundUser == NULL) {
+      throw UserNotFound();
+  }
+  return foundUser;
 }
 
 Ircserv::~Ircserv() {

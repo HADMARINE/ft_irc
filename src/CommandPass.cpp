@@ -6,24 +6,20 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 13:43:42 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/03 17:31:05 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/04 18:35:04 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.hpp"
 
 namespace irc {
-    int CommandPASS::resolve(Ircserv & server, int fd) {
-        std::vector<User> &users = server.getUsers();
-        User * foundUser = NULL;
-        for (std::vector<User>::iterator it = users.begin(); it != users.end(); it++) {
-            if ((*it)._socketfd == fd)
-                foundUser = it.base();
+    int CommandPASS::resolve(Ircserv & server, User * user) {
+        (void)server;
+        // TODO : Verification of logged-on user reauth try 
+        if (user->_isUserLoggedOn) {
+            throw AlreadyRegistered();
         }
-        if (foundUser == NULL) {
-            throw UserNotFound();
-        }
-        foundUser->_pendingPassword = this->_params.at(0);
+        user->_pendingPassword = this->_params.at(0);
         return 0;
     }
 
