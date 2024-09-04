@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/04 18:34:25 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/04 18:48:02 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,8 +171,10 @@ void Ircserv::bindLoop() {
 
 static ACommand * getCommandFromDict(std::string cmd) {
 	// TODO : Emit error when undefined command
-	(void)cmd;
-	return NULL;
+	if (cmd == "PASS") {
+    return new CommandPASS();
+  }
+	throw UnknownCommand(cmd);
 }
 
 std::vector<ACommand *> Ircserv::parseCommandStr(std::string & str) {

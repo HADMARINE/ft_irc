@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:14:05 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/04 18:33:22 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/04 18:51:33 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,13 @@ namespace irc {
     class AlreadyRegistered : public IrcSpecificException {
     public:
         AlreadyRegistered();
+    };
+
+    // 421
+    class UnknownCommand : public IrcSpecificException {
+    public:
+        UnknownCommand();
+        UnknownCommand(std::string cmd);
     };
 
     class TooManyParameters : public IrcSpecificException {

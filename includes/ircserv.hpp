@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:35:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/04 18:19:51 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/04 18:45:03 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ namespace irc {
 
         std::vector<User> & getUsers() { return this->_users; }
         User * findUserByFd(int fd);
+        User * findUserByNick(std::string & nick);
+
         const std::string & getPassword() const { return this->_password; }
 
         std::vector<ACommand *> parseCommandStr(std::string & str);

@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:21:34 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/04 18:32:47 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/04 18:51:16 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ namespace irc {
     AlreadyRegistered::AlreadyRegistered() {
         this->setCode("ALREADY_REGISTERED");
         this->setNumeric(462);
-        this->setMessage("Already registered");
+        this->setMessage("You may not reregister");
     }
 
     TooManyParameters::TooManyParameters() {
@@ -54,5 +54,19 @@ namespace irc {
     BadPassword::BadPassword() {
         this->setCode("BAD_PASSWORD");
         this->setMessage("Bad password");
+    }
+
+    UnknownCommand::UnknownCommand() {
+        this->setNumeric(421);
+        this->setCode("UNKNOWN_COMMAND");
+        this->setMessage("Unknown command");
+    }
+
+    UnknownCommand::UnknownCommand(std::string cmd) {
+        this->setNumeric(421);
+        this->setCode("UNKNOWN_COMMAND");
+        std::stringstream ss;
+        ss << cmd << " :Unknown command";
+        this->setMessage(ss.str());
     }
 }
