@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: enorie <enorie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:35:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/04 18:45:03 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/05 15:42:17 by enorie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ namespace irc {
         struct pollfd _serverPfd;
 
         std::vector<User> _users;
-        std::vector<t_server_op> _operators;
-        
+		std::vector<Channel> _channels;
+		std::vector<t_server_op> _operators;
     };
 
 }
