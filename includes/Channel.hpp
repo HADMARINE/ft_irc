@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 21:40:47 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/05 17:49:59 by root             ###   ########.fr       */
+/*   Updated: 2024/09/05 18:02:27 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ namespace irc {
 
     class Channel {
 		public:
-			Channel();
+			Channel(std::string name);
 			Channel(Channel &cpy);
 			Channel &operator=(Channel &cpy);
 			~Channel();
@@ -28,16 +28,16 @@ namespace irc {
 			std::string			getName();
 			std::string			getTopic();
 			std::string			getPassword();
-			std::vector<User &> getUsers(void) const;
-			std::vector<User &> getOperators(void) const;
-			std::vector<User &> getInvitedUsers(void) const;
-			int					getClientLimit();
+			std::vector<User &> getUsers() const;
+			std::vector<User &> getOperators() const;
+			std::vector<User &> getInvitedUsers() const;
+			int					getUserLimit();
 			bool				isInvitOnly();
 			bool				isTopicRestricted();
 			void				setName(std::string name);
 			void				setTopic(std::string topic);
 			void				setPassword(std::string password);
-			void				setClientLimit(int limit);
+			void				setUserLimit(int limit);
 			void				changeInvitOnly();
 			void				changeTopicRestrict();
 			void				addOperators(User& user);
@@ -46,14 +46,15 @@ namespace irc {
 			int 				kickUser(User& user);
 			int 				inviteUser(User& user);
    		private:
+			Channel();
 			std::string 		_name;
 			std::string 		_topic;
 			std::string 		_channelPassword;
-			std::vector<User *> _users;
-			std::vector<User *> _operators;
-			std::vector<User *> _invitedUsers;
-			unsigned int		_clientLimit;
-			bool				_invitOnly;
+			std::vector<User &> _users;
+			std::vector<User &> _operators;
+			std::vector<User &> _invitedUsers;
+			unsigned int		_userLimit;
+			bool				_onInvite;
 			bool				_topicRestriction;
     };
 }
