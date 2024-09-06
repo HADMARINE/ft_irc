@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 21:40:47 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/05 18:02:27 by root             ###   ########.fr       */
+/*   Updated: 2024/09/06 13:22:15 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,12 @@ namespace irc {
 			void				setUserLimit(int limit);
 			void				changeInvitOnly();
 			void				changeTopicRestrict();
-			void				addOperators(User& user);
-			int					sendToAll(std::string message);
-			int 				joinUser(User& user);
-			int 				kickUser(User& user);
-			int 				inviteUser(User& user);
+			void				addOperators(User& user, int fd);
+			void				sendToAll(std::string message, int fd);
+			void 				joinUser(User& user, int fd);
+			void 				kickUser(User& user, int fd);
+			void 				inviteUser(User& user, int fd);
+			bool				isUserInChannel(User& user);
    		private:
 			Channel();
 			std::string 		_name;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enorie <enorie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 21:50:27 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/05 15:49:33 by enorie           ###   ########.fr       */
+/*   Updated: 2024/09/06 13:33:59 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ namespace irc {
 		void		setUsername(std::string username);
 		void		setHostname(std::string hostname);
 		void		setPendingpassword(std::string pp);
+		void		sendPvtMessage(std::string message, int fd);
 
 	private:
 		User();
@@ -42,7 +43,7 @@ namespace irc {
         std::string _realname;
         std::string _nickname;
         std::string _username;
-        std::string _hostname;  
+        std::string _hostname;
         std::string _pendingPassword;
     };
 }

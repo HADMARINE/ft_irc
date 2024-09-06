@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enorie <enorie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/05 15:40:11 by enorie           ###   ########.fr       */
+/*   Updated: 2024/09/06 12:53:19 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ namespace irc {
 		// TODO : Check if we have to do this kind of thing...
 		int optvalue = 1; // enables the re-use of a port if the IP address is different
 		if (setsockopt(_serverSock, SOL_SOCKET, SO_REUSEADDR, &optvalue, sizeof(optvalue)) < 0)
-		throw std::runtime_error("Failed to set socket options");
+		  throw std::runtime_error("Failed to set socket options");
 
 		if (fcntl(_serverSock, F_SETFL, O_NONBLOCK))
 			throw std::runtime_error("Failed to put the socket on NON_BLOCK");
@@ -82,7 +82,7 @@ namespace irc {
 		clientDisconnect(fd);
 		return ;
 	}
-		
+
 	User user(fd);
 	this->_users.push_back(user);
 
@@ -104,8 +104,8 @@ namespace irc {
 	} catch (IrcSpecificException & e) {
 		(void)e;
 	}
-	
-	
+
+
 	DCMD(std::cout << "Client " << fd << " connected" << std::endl);
 	}
 
@@ -135,7 +135,7 @@ namespace irc {
 	try {
 		std::vector<ACommand *> commmands = this->parseCommandStr(messageStr);
 		int commandReturnCode;
-		
+
 		for (std::vector<ACommand *>::iterator it = commmands.begin(); it != commmands.end(); ++it) {
 		commandReturnCode = (*it)->resolve(*this, this->findUserByFd(fd));
 		if (commandReturnCode != 0)
@@ -179,11 +179,11 @@ namespace irc {
 	std::vector<ACommand *> Ircserv::parseCommandStr(std::string & str) {
 		std::vector<std::string> cmdLines = split(str, "\r\n");
 		std::string cmdStr;
-		
+
 		std::vector<std::string> params;
 		ACommand *cmd;
 		std::vector<ACommand *> cmdList;
-		
+
 		while (!cmdLines.empty()) {
 			cmdStr = cmdLines.front();
 			cmdLines.erase(cmdLines.begin());
@@ -191,12 +191,12 @@ namespace irc {
 				continue;
 
 			params = split(cmdStr, " ");
-			
+
 			cmd = getCommandFromDict(params.front());
 			params.erase(params.begin());
-			
+
 			cmd->setParams(params);
-			
+
 			cmdList.push_back(cmd);
 		}
 		return cmdList;
@@ -221,13 +221,13 @@ namespace irc {
 		{
 			std::string	line = *it;
 			t_server_op	op;
-			
+
 			int len = line.size() - (line.size() - line.find_first_of(' '));
 
 			op.name.insert(0, line, 0, len);
 			op.host.insert(0, line, len + 1, line.find_last_of(' ') - len - 1);
 			op.password.insert(0, line, line.find_last_of(' ') + 1, line.size() - 1);
-			
+
 			_operators.push_back(op);
 		}
 	return (1);
@@ -250,5 +250,3 @@ namespace irc {
 	}
 
 }
-
-
