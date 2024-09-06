@@ -6,12 +6,11 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:29:50 by enorie            #+#    #+#             */
-/*   Updated: 2024/09/06 13:24:24 by root             ###   ########.fr       */
+/*   Updated: 2024/09/06 13:50:50 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Channel.hpp"
-#include "User.hpp"
+#include "ft_irc.hpp"
 
 namespace irc {
 	Channel::Channel(std::string name) { _name = name; }
@@ -23,9 +22,9 @@ namespace irc {
 	int					Channel::getUserLimit() { return (_userLimit); }
 	bool				Channel::isInvitOnly() { return (_onInvite); }
 	bool				Channel::isTopicRestricted() { return (_topicRestriction); }
-	std::vector<User &>	Channel::getUsers() const { return (_users); }
-	std::vector<User &>	Channel::getOperators() const { return (_operators); }
-	std::vector<User &>	Channel::getInvitedUsers() const { return (_invitedUsers); }
+	std::vector<User>	Channel::getUsers() const { return (_users); }
+	std::vector<User>	Channel::getOperators() const { return (_operators); }
+	std::vector<User>	Channel::getInvitedUsers() const { return (_invitedUsers); }
 
 	void				Channel::setName(std::string name) { _name = name; }
 	void				Channel::setTopic(std::string topic) { _topic = topic; }
@@ -45,9 +44,9 @@ namespace irc {
 		else
 			_topicRestriction = true;
 	}
-	bool				Channel::isUserInChannel(User& user)
+	bool				Channel::isUserInChannel(User user)
 	{
-		std::vector<User &>::iterator it;
+		std::vector<User>::iterator it;
 		for (it = _users.begin(); it != _users.end(); it++)
 		{
 			if (it->getNickname() == user.getNickname())
@@ -62,11 +61,11 @@ namespace irc {
 		}
 		return (false);
 	}
-	void				Channel::addOperators(User& user, int fd)
+	void				Channel::addOperators(User user, int fd)
 	{
 		std::string	alreadyOppError = "User is already an operator";
 		std::string	userNotChannelError = "User is not in the channel";
-		std::vector<User &>::iterator it;
+		std::vector<User>::iterator it;
 		for (it = _operators.begin(); it != _operators.end(); it++)
 		{
 			if (it->getNickname() == user.getNickname())
@@ -94,7 +93,7 @@ namespace irc {
 			it++;
 		}
 	}
-	void	Channel::joinUser(User& user, int fd)
+	void	Channel::joinUser(User user, int fd)
 	{
 		std::string	userAlreadyInChannel = "User is already in the channel";
 		if (isUserInChannel(user))
@@ -105,11 +104,11 @@ namespace irc {
 		}
 		_users.push_back(user);
 	}
-	void	Channel::kickUser(User& user, int fd)
+	void	Channel::kickUser(User user, int fd)
 	{
 		std::string	userNotInChannel = "User is not in the channel";
 		std::string	kickMessage = "You've been kicked from the channel";
-		std::vector<User &>::iterator it;
+		std::vector<User>::iterator it;
 		for (it = _users.begin(); it != _users.end(); it++)
 		{
 			if (it->getNickname() == user.getNickname())
@@ -137,12 +136,12 @@ namespace irc {
 	}
 	void	Channel::sendToAll(std::string message, int fd)
 	{
-		std::vector<User &>::iterator it;
+		std::vector<User>::iterator it;
 		for (it = _users.begin(); it != _users.end(); it++)
 		{
-			if (it->getSocketFd() =! fd)
+			if (it->getSocketfd() != fd)
 			{
-				if (send(it->getSocketFd(), message.c_str(), message.size(), 0))
+				if (send(it->getSocketfd(), message.c_str(), message.size(), 0))
 					 throw std::runtime_error("Failed to send message");
 				_users.erase(it);
 				return ;
@@ -151,9 +150,9 @@ namespace irc {
 		}
 		for (it = _operators.begin(); it != _operators.end(); it++)
 		{
-			if (it->getSocketFd() =! fd)
+			if (it->getSocketfd() != fd)
 			{
-				if (send(it->getSocketFd(), message.c_str(), message.size(), 0))
+				if (send(it->getSocketfd(), message.c_str(), message.size(), 0))
 					 throw std::runtime_error("Failed to send message");
 				_users.erase(it);
 				return ;

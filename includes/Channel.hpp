@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 21:40:47 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/06 13:22:15 by root             ###   ########.fr       */
+/*   Updated: 2024/09/06 13:53:07 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ namespace irc {
 			std::string			getName();
 			std::string			getTopic();
 			std::string			getPassword();
-			std::vector<User &> getUsers() const;
-			std::vector<User &> getOperators() const;
-			std::vector<User &> getInvitedUsers() const;
+			std::vector<User> getUsers() const;
+			std::vector<User> getOperators() const;
+			std::vector<User> getInvitedUsers() const;
 			int					getUserLimit();
 			bool				isInvitOnly();
 			bool				isTopicRestricted();
@@ -40,20 +40,20 @@ namespace irc {
 			void				setUserLimit(int limit);
 			void				changeInvitOnly();
 			void				changeTopicRestrict();
-			void				addOperators(User& user, int fd);
+			void				addOperators(User user, int fd);
 			void				sendToAll(std::string message, int fd);
-			void 				joinUser(User& user, int fd);
-			void 				kickUser(User& user, int fd);
-			void 				inviteUser(User& user, int fd);
-			bool				isUserInChannel(User& user);
+			void 				joinUser(User user, int fd);
+			void 				kickUser(User user, int fd);
+			void 				inviteUser(User user, int fd);
+			bool				isUserInChannel(User user);
    		private:
 			Channel();
 			std::string 		_name;
 			std::string 		_topic;
 			std::string 		_channelPassword;
-			std::vector<User &> _users;
-			std::vector<User &> _operators;
-			std::vector<User &> _invitedUsers;
+			std::vector<User> _users;
+			std::vector<User> _operators;
+			std::vector<User> _invitedUsers;
 			unsigned int		_userLimit;
 			bool				_onInvite;
 			bool				_topicRestriction;

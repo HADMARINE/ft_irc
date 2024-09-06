@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+         #
+#    By: root <root@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/07 14:13:59 by lhojoon           #+#    #+#              #
-#    Updated: 2024/09/03 16:21:46 by lhojoon          ###   ########.fr        #
+#    Updated: 2024/09/06 13:52:45 by root             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,8 @@ SRCS_RAW =	main.cpp \
 			ircserv.cpp \
 			CommandPass.cpp \
 			ACommand.cpp \
+			Channel.cpp \
+			User.cpp \
 			Errors.cpp
 
 SRCS = $(addprefix $(DIR)/,$(SRCS_RAW))
