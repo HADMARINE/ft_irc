@@ -6,14 +6,14 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 13:43:42 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/07 15:53:07 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/07 16:57:04 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.hpp"
 
 namespace irc {
-    int CommandPASS::resolve(Ircserv & server, User * user) {
+    int CommandPASS::resolve(Ircserv * server, User * user) {
         (void)server;
         // TODO : Verification of logged-on user reauth try 
         if (user->getIsRegistered()) {

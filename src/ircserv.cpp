@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/07 16:08:43 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/07 17:16:39 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,9 @@ namespace irc {
     }
 
     std::vector<ACommand *> commmands;
+
     try {
-      int CRLFPos = getCRLFPos(messageBuff, sizeof(messageBuff) / sizeof(char));
+      int CRLFPos = getCRLFPos(messageBuff, sizeof(messageBuff) / sizeof(char)); // check crlf position
       if (CRLFPos < 0 || CRLFPos >= 512) {
         throw MessageBufferLimitExceeded();
       }
@@ -118,27 +119,29 @@ namespace irc {
       std::string messageStr(messageBuff);
 
       commmands = this->parseCommandStr(messageStr);
-      int commandReturnCode;
 
-      for (std::vector<ACommand *>::iterator it = commmands.begin(); it != commmands.end(); ++it) {
-        commandReturnCode = (*it)->resolve(*this, this->findUserByFd(fd));
+      int commandReturnCode;
+      for (std::vector<ACommand *>::iterator it = commmands.begin(); it != commmands.end(); it++) {
+        commandReturnCode = (*it)->resolve(this, this->findUserByFd(fd));
         if (commandReturnCode != 0) {
-            for (std::vector<ACommand *>::iterator it = commmands.begin(); it != commmands.end(); ++it) {
-              delete *it;  
-            }
             throw std::runtime_error("Some error while command execution occured"); // TODO : precise error
-          }
+        }
       }
       
-      for (std::vector<ACommand *>::iterator it = commmands.begin(); it != commmands.end(); ++it) {
+      for (std::vector<ACommand *>::iterator it = commmands.begin(); it != commmands.end(); it++) {
         delete *it;  
       }
     } catch (IrcSpecificException & e) {
       // TODO : send error to client
-      DCMD(std::cerr << "Application Error : " << e.getMessage() << std::endl);
-      for (std::vector<ACommand *>::iterator it = commmands.begin(); it != commmands.end(); ++it) {
-        delete *it;  
+      for (std::vector<ACommand *>::iterator it = commmands.begin(); it != commmands.end(); it++) {
+        delete *it;
       }
+      DCMD(std::cerr << "Client " << fd << " : Application Error : " << e.getMessage() << std::endl);
+    } catch (std::exception & e) {
+      for (std::vector<ACommand *>::iterator it = commmands.begin(); it != commmands.end(); it++) {
+        delete *it;
+      }
+      DCMD(std::cerr << "Client " << fd << " : System Error : " << e.what() << std::endl);
     }
 	}
 
@@ -192,39 +195,51 @@ namespace irc {
     }
 
 
-		std::string cmdStr;
 
-		std::vector<std::string> params;
-		ACommand *cmd;
 		std::vector<ACommand *> cmdList;
+    try  {
+      std::string cmdStr;
+      std::vector<std::string> params;
+      ACommand *cmd;
 
-		while (!cmdLines.empty()) {
-			cmdStr = cmdLines.front();
-			cmdLines.erase(cmdLines.begin());
-			if (cmdStr.empty()) // TODO : Verify this case when empty line.. (space allowed ?)
-				continue;
-
-			params = split(cmdStr, " ");
-
-      // Remove invalid parameters - empty
-      std::vector<std::vector<std::string>::iterator> vIt;
-      for (std::vector<std::string>::iterator it = params.begin(); it != params.end(); it++) {
-        if (it->empty()) { 
-          vIt.push_back(it);
+      while (!cmdLines.empty()) {
+        cmdStr = cmdLines.front();
+        cmdLines.erase(cmdLines.begin());
+        if (cmdStr.empty()) // TODO : Verify this case when empty line.. (space allowed ?)
           continue;
+
+        params = split(cmdStr, " ");
+
+        // Remove invalid parameters - empty
+        std::vector<std::vector<std::string>::iterator> vIt;
+        for (std::vector<std::string>::iterator it = params.begin(); it != params.end(); it++) {
+          if (it->empty()) { 
+            vIt.push_back(it);
+            continue;
+          }
         }
+        for (std::vector<std::vector<std::string>::iterator>::iterator it = vIt.begin(); it != vIt.end(); it++) {
+          params.erase(*it);
+        }
+
+        cmd = getCommandFromDict(params.front());
+        cmdList.push_back(cmd);
+
+        params.erase(params.begin());
+
+        cmd->setParams(params);
       }
-      for (std::vector<std::vector<std::string>::iterator>::iterator it = vIt.begin(); it != vIt.end(); it++) {
-        params.erase(*it);
+    } catch (IrcSpecificException & e) {
+      for (std::vector<ACommand *>::iterator it = cmdList.begin(); it != cmdList.end(); it++) {
+        delete *it;
       }
-
-			cmd = getCommandFromDict(params.front());
-			params.erase(params.begin());
-
-			cmd->setParams(params);
-
-			cmdList.push_back(cmd);
-		}
+      throw e;
+    } catch (std::exception & e) {
+      for (std::vector<ACommand *>::iterator it = cmdList.begin(); it != cmdList.end(); it++) {
+        delete *it;
+      }
+      throw e;
+    }
 		return cmdList;
 	}
 

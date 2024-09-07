@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 13:47:28 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/07 16:04:29 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/07 17:07:22 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,6 @@
 namespace irc {
     ACommand::ACommand() {}
     
-    ACommand::ACommand(std::vector<std::string> params) {
-        this->setParams(params);
-    }
     
     void ACommand::setParams(std::vector<std::string> params) {
         this->_params = this->setParamsMiddleware(params);

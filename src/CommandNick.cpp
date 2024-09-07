@@ -6,15 +6,15 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 17:28:34 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/07 14:45:56 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/07 16:56:53 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.hpp"
 
 namespace irc {
-    int CommandNICK::resolve(Ircserv & server, User * user) {
-        if (server.getPassword() != user->getPendingpassword()) {
+    int CommandNICK::resolve(Ircserv * server, User * user) {
+        if (server->getPassword() != user->getPendingpassword()) {
             throw PasswordMisMatch();
         }
         user->setNickname(this->_params.at(0));
