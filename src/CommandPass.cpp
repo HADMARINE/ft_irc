@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandPass.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enorie <enorie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 13:43:42 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/05 15:50:25 by enorie           ###   ########.fr       */
+/*   Updated: 2024/09/07 14:11:02 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ namespace irc {
         if (user) {
             throw AlreadyRegistered();
         }
-        user->getPendingpassword() = this->_params.at(0);
+        user->setPendingpassword(this->_params.at(0));
         return 0;
     }
 
