@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 21:50:27 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/06 13:53:17 by root             ###   ########.fr       */
+/*   Updated: 2024/09/07 13:44:15 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ namespace irc {
     class User {
     public:
 		User(int fd);
-		User(User &cpy);
-		User &operator=(User &cpy);
 		~User();
 		int			getSocketfd();
 		std::string	getRealname();
