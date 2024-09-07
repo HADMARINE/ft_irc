@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/07 16:07:56 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/07 16:08:43 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,19 +260,22 @@ namespace irc {
 	}
 
 	User * Ircserv::findUserByFd(int fd) {
-	User * foundUser = NULL;
-	for (std::vector<User>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
-		if ((*it).getSocketfd() == fd)
-			foundUser = it.base();
-	}
-	if (foundUser == NULL) {
-		throw UserNotFound();
-	}
-	return foundUser;
-	}
+    User * foundUser = NULL;
+    
+    for (std::vector<User>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
+      if ((*it).getSocketfd() == fd)
+        foundUser = it.base();
+    }
+    
+    if (foundUser == NULL) {
+      throw UserNotFound();
+    }
+    
+    return foundUser;
+  }
 
-	Ircserv::~Ircserv() {
-		std::cout << "Server shutting down..." << std::endl;
-	}
+  Ircserv::~Ircserv() {
+      std::cout << "Server shutting down..." << std::endl;
+  }
 
 }
