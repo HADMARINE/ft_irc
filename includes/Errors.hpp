@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:14:05 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/04 18:51:33 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/07 14:28:18 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@ namespace irc {
         AlreadyRegistered();
     };
 
+    // 464
+    class PasswordMisMatch : public IrcSpecificException {
+    public:
+        PasswordMisMatch();
+    };
+
     // 421
     class UnknownCommand : public IrcSpecificException {
     public:
@@ -48,9 +54,9 @@ namespace irc {
         UserNotFound();
     };
 
-    class BadPassword : public IrcSpecificException {
+    class MessageBufferLimitExceeded : public IrcSpecificException {
     public:
-        BadPassword();
+        MessageBufferLimitExceeded();
     };
 }
 
