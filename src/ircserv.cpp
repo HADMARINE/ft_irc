@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/07 16:05:04 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/07 16:07:56 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,8 +197,6 @@ namespace irc {
 		std::vector<std::string> params;
 		ACommand *cmd;
 		std::vector<ACommand *> cmdList;
-
-    std::cout << "getcommand vec len : " << cmdLines.size() << std::endl;
 
 		while (!cmdLines.empty()) {
 			cmdStr = cmdLines.front();
