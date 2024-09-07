@@ -6,16 +6,16 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:29:47 by enorie            #+#    #+#             */
-/*   Updated: 2024/09/07 14:10:25 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/07 15:54:15 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "User.hpp"
 
 namespace irc {
-	User::User() : _socketfd(-1), _realname(""), _nickname(""), _username(""), _hostname(""), _pendingPassword("") {}
-	User::User(int fd) : _socketfd(fd), _realname(""), _nickname(""), _username(""), _hostname(""), _pendingPassword("") {}
-	User::User(const User & cpy) : _socketfd(cpy.getSocketfd()), _realname(cpy.getRealname()), _nickname(cpy.getNickname()), _username(cpy.getUsername()), _hostname(cpy.getHostname()), _pendingPassword(cpy.getPendingpassword()) {
+	User::User() : _socketfd(-1), _realname(""), _nickname(""), _username(""), _hostname(""), _pendingPassword(""), _isRegistered(false) {}
+	User::User(int fd) : _socketfd(fd), _realname(""), _nickname(""), _username(""), _hostname(""), _pendingPassword(""), _isRegistered(false) {}
+	User::User(const User & cpy) : _socketfd(cpy.getSocketfd()), _realname(cpy.getRealname()), _nickname(cpy.getNickname()), _username(cpy.getUsername()), _hostname(cpy.getHostname()), _pendingPassword(cpy.getPendingpassword()), _isRegistered(cpy.getIsRegistered()) {
 	}
 	User::~User() {}
 
@@ -25,15 +25,17 @@ namespace irc {
 	const std::string & User::getUsername() const { return (_username); }
 	const std::string & User::getHostname() const { return (_hostname); }
 	const std::string & User::getPendingpassword() const { return (_pendingPassword); }
+	bool User::getIsRegistered() const { return _isRegistered; }
+	
 	void		User::setSocketfd(int fd) { _socketfd = fd; }
 	void		User::setRealname(std::string realname) { _realname = realname; }
 	void		User::setNickname(std::string nickname) { _nickname = nickname; }
 	void		User::setUsername(std::string username) { _username = username; }
 	void		User::setHostname(std::string hostname) { _hostname = hostname; }
 	void		User::setPendingpassword(std::string pp) { _pendingPassword = pp; }
-	void		User::sendPvtMessage(std::string message, int fd)
-	{
+	void		User::sendPvtMessage(std::string message, int fd) {
 		if (send(fd, message.c_str(), message.size(), 0))
 					 throw std::runtime_error("Failed to send error message");
 	}
+	void		User::setIsRegistered(bool isRegistered) { _isRegistered = isRegistered; }
 }

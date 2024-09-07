@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 21:50:27 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/07 14:11:41 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/07 15:53:56 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ namespace irc {
 		const std::string	& getUsername() const;
 		const std::string	& getHostname() const;
 		const std::string	& getPendingpassword() const;
+        bool          getIsRegistered() const;
         
 		void		setSocketfd(int fd);
 		void		setRealname(std::string realname);
@@ -39,6 +40,7 @@ namespace irc {
 		void		setHostname(std::string hostname);
 		void		setPendingpassword(std::string pp);
 		void		sendPvtMessage(std::string message, int fd);
+        void        setIsRegistered(bool isRegistered);
 
 	private:
 		int 		_socketfd;
@@ -47,6 +49,7 @@ namespace irc {
         std::string _username;
         std::string _hostname;
         std::string _pendingPassword;
+        bool        _isRegistered;
     };
 }
 
