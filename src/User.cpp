@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:29:47 by enorie            #+#    #+#             */
-/*   Updated: 2024/09/07 15:54:15 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/07 16:11:51 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,16 @@
 namespace irc {
 	User::User() : _socketfd(-1), _realname(""), _nickname(""), _username(""), _hostname(""), _pendingPassword(""), _isRegistered(false) {}
 	User::User(int fd) : _socketfd(fd), _realname(""), _nickname(""), _username(""), _hostname(""), _pendingPassword(""), _isRegistered(false) {}
-	User::User(const User & cpy) : _socketfd(cpy.getSocketfd()), _realname(cpy.getRealname()), _nickname(cpy.getNickname()), _username(cpy.getUsername()), _hostname(cpy.getHostname()), _pendingPassword(cpy.getPendingpassword()), _isRegistered(cpy.getIsRegistered()) {
+	User::User(const User & cpy) : _socketfd(cpy.getSocketfd()), _realname(cpy.getRealname()), _nickname(cpy.getNickname()), _username(cpy.getUsername()), _hostname(cpy.getHostname()), _pendingPassword(cpy.getPendingpassword()), _isRegistered(cpy.getIsRegistered()) {}
+	User & User::operator=(const User & cpy) {
+		this->setSocketfd(cpy.getSocketfd());
+		this->setRealname(cpy.getRealname());
+		this->setNickname(cpy.getNickname());
+		this->setUsername(cpy.getUsername());
+		this->setHostname(cpy.getHostname());
+		this->setPendingpassword(cpy.getPendingpassword());
+		this->setIsRegistered(cpy.getIsRegistered());
+		return *this;
 	}
 	User::~User() {}
 

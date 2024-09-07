@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 21:50:27 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/07 15:53:56 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/07 16:09:00 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ namespace irc {
 		User();
 		User(int fd);
 		User(const User & cpy);
-		// User &operator=(const User & cpy);
+		User &operator=(const User & cpy);
 		~User();
         
 		int			getSocketfd() const;
