@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandNick.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enorie <enorie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 17:28:34 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/05 15:49:53 by enorie           ###   ########.fr       */
+/*   Updated: 2024/09/07 14:45:56 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 namespace irc {
     int CommandNICK::resolve(Ircserv & server, User * user) {
         if (server.getPassword() != user->getPendingpassword()) {
-            throw BadPassword();
+            throw PasswordMisMatch();
         }
         user->setNickname(this->_params.at(0));
         return 0;
