@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/07 15:55:58 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/07 16:05:04 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ namespace irc {
     struct pollfd      pfd;
     struct sockaddr_in addr;
     socklen_t          size;
-    // char messageBuff[1024];
 
     size = sizeof(addr);
     fd = accept(_serverSock, (sockaddr *)&addr, &size);
@@ -81,54 +80,27 @@ namespace irc {
     pfd.revents = 0;
     _pfds.push_back(pfd);
 
-    // std::string messageStr(messageBuff);
-
     this->clientMessage(fd);
     
     DCMD(std::cout << "Client " << fd << " connected" << std::endl);
-      
-    // memset(messageBuff, 0, sizeof(messageBuff));
-
-    // ssize_t bytesReceived = recv(fd, messageBuff, sizeof(messageBuff) - 1, 0);
-    // // TODO : Error when bytes received exceed 512 (CRLF included)
-
-    // if (bytesReceived <= 0)
-    // {
-    //   clientDisconnect(fd);
-    //   return ;
-    // }
-
-    // try {
-    //   std::vector<ACommand *> commands = this->parseCommandStr(messageStr);
-    //   int commandReturnCode;
-    //   for (std::vector<ACommand *>::iterator it = commands.begin(); it != commands.end(); ++it) {
-    //   commandReturnCode = (*it)->resolve(*this, this->findUserByFd(fd));
-    //   if (commandReturnCode != 0)
-    //     throw std::runtime_error("Some error while command execution occured"); // TODO : precise error
-    //   }
-    // } catch (IrcSpecificException & e) {
-    //   (void)e;
-    // }
-
-
 	}
 
 
 	void  Ircserv::clientDisconnect(int fd) {
-	for (std::vector<pollfd>::iterator it = _pfds.begin(); it != _pfds.end(); it++)
-	{
-		if (it->fd == fd)
-		{
-		_pfds.erase(it);
-		close(fd);
-		DCMD(std::cout << "Client " << fd << " disconnected" << std::endl);
-		break;
-		}
-	}
+    for (std::vector<pollfd>::iterator it = _pfds.begin(); it != _pfds.end(); it++)
+    {
+      if (it->fd == fd)
+      {
+      _pfds.erase(it);
+      close(fd);
+      DCMD(std::cout << "Client " << fd << " disconnected" << std::endl);
+      break;
+      }
+    }
 	}
 
 	void  Ircserv::clientMessage(int fd) {
-    char messageBuff[512];
+    char messageBuff[512]; // Following ircserv standard
     memset(messageBuff, 0, sizeof(messageBuff));
 
     if (recv(fd, messageBuff, sizeof(messageBuff) - 1, 0) <= 0) {
@@ -136,29 +108,37 @@ namespace irc {
       return;
     }
 
+    std::vector<ACommand *> commmands;
     try {
-      std::cout << "HELLO ! : " << fd << " : " << messageBuff << std::endl;
-
       int CRLFPos = getCRLFPos(messageBuff, sizeof(messageBuff) / sizeof(char));
       if (CRLFPos < 0 || CRLFPos >= 512) {
-        std::cout << "crlfpos : " << CRLFPos << std::endl;
         throw MessageBufferLimitExceeded();
       }
 
       std::string messageStr(messageBuff);
 
-      std::vector<ACommand *> commmands = this->parseCommandStr(messageStr);
+      commmands = this->parseCommandStr(messageStr);
       int commandReturnCode;
 
       for (std::vector<ACommand *>::iterator it = commmands.begin(); it != commmands.end(); ++it) {
-      commandReturnCode = (*it)->resolve(*this, this->findUserByFd(fd));
-      if (commandReturnCode != 0)
-        throw std::runtime_error("Some error while command execution occured"); // TODO : precise error
+        commandReturnCode = (*it)->resolve(*this, this->findUserByFd(fd));
+        if (commandReturnCode != 0) {
+            for (std::vector<ACommand *>::iterator it = commmands.begin(); it != commmands.end(); ++it) {
+              delete *it;  
+            }
+            throw std::runtime_error("Some error while command execution occured"); // TODO : precise error
+          }
+      }
+      
+      for (std::vector<ACommand *>::iterator it = commmands.begin(); it != commmands.end(); ++it) {
+        delete *it;  
       }
     } catch (IrcSpecificException & e) {
       // TODO : send error to client
-      std::cerr << "ERR : " << e.getMessage() << std::endl;
-      (void)e;
+      DCMD(std::cerr << "Application Error : " << e.getMessage() << std::endl);
+      for (std::vector<ACommand *>::iterator it = commmands.begin(); it != commmands.end(); ++it) {
+        delete *it;  
+      }
     }
 	}
 
