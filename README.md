@@ -40,6 +40,7 @@ namespace irc {
 * ./ircserv help
     Show how to use
 * Ctrl + c pour quitter
+* Testing with nc : use <code>sed -u 's/$/\r/g' | nc localhost 6100</code>
 
 ## Explications
 ### irc::Ircserv(t_irc_exec_conf &)
