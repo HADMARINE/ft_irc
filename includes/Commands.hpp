@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Commands.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 13:42:22 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/09 18:08:07 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/09 18:20:08 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,15 @@ namespace irc {
         std::vector<std::string> setParamsMiddleware(std::vector<std::string> params);
     }; 
     class CommandINVITE : public ACommand {
-        int CommandINVITE::resolve(Ircserv *server, User *operatorUser);
+        int resolve(Ircserv *server, User *operatorUser);
         std::vector<std::string> setParamsMiddleware(std::vector<std::string> params);
     };
     class CommandTOPIC : public ACommand {
-        int CommandTOPIC::resolve(Ircserv *server, User *user);
+        int resolve(Ircserv *server, User *user);
         std::vector<std::string> setParamsMiddleware(std::vector<std::string> params);
     };
     class CommandMODE : public ACommand {
-        int CommandMODE::resolve(Ircserv *server, User *user);
+        int resolve(Ircserv *server, User *user);
         std::vector<std::string> setParamsMiddleware(std::vector<std::string> params);
     };
 }
