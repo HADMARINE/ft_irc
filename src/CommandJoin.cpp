@@ -1,36 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   CommandNick.cpp                                    :+:      :+:    :+:   */
+/*   CommandJoin.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/03 17:28:34 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/09 17:19:47 by lhojoon          ###   ########.fr       */
+/*   Created: 2024/09/09 17:09:48 by lhojoon           #+#    #+#             */
+/*   Updated: 2024/09/09 17:12:54 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.hpp"
 
+
 namespace irc {
-    int CommandNICK::resolve(Ircserv * server, User * user) {
-        if (server->getPassword() != user->getPendingpassword()) {
-            throw PasswordMisMatch();
-        }
-       
-       if (server->findUserByNick(this->_params.at(0))) {
-            // TODO : throw NicknameInUse~~~();
-       }
-        user->setNickname(this->_params.at(0));
+    CommandJOIN::resolve(Ircserv * server, User * user) {
+        std::string channelName = this->_params.at(1);
+        Channel *channel;
+        std::string msg;
+    
+        channel = server->findChannelByName(channelName);
+        channel->joinUser(user);
+        msg = user->getNickname() + " has joined the channel\n";
+        channel->sendToAll(msg);
+
         return 0;
     }
 
-    std::vector<std::string> CommandPASS::setParamsMiddleware(std::vector<std::string> params) {
+    std::vector<std::string> CommandJOIN::setParamsMiddleware(std::vector<std::string> params) {
         if (params.empty()) {
             throw NeedMoreParams();
         }
-        if (params.size() != 1) {
-            throw TooManyParameters("1", params.size());
+        if (params.size() != 2) {
+            throw TooManyParameters("2", params.size());
         }
         return params;
     }

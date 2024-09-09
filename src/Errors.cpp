@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:21:34 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/07 14:31:47 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/09 16:36:31 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,48 @@
 
 
 namespace irc {
+    UserNotInChannel::UserNotInChannel() {
+        this->setCode("ERR_USERNOTINCHANNEL");
+        this->setNumeric(441);
+        this->setMessage(":They aren't on that channel");
+    }
+
+    UserNotInChannel::UserNotInChannel(std::string nick, std::string channel) {
+        this->setCode("ERR_USERNOTINCHANNEL");
+        this->setNumeric(441);
+        std::stringstream ss;
+        ss << nick << " " << channel << " :They aren't on that channel";
+        this->setMessage(ss.str());
+    }
+
+    NotOnChannel::NotOnChannel() {
+        this->setCode("ERR_NOTONCHANNEL");
+        this->setNumeric(442);
+        this->setMessage(":You're not on that channel");
+    }
+
+    NotOnChannel::NotOnChannel(std::string channel) {
+        this->setCode("ERR_NOTONCHANNEL");
+        this->setNumeric(442);
+        std::stringstream ss;
+        ss << channel << " :You're not on that channel";
+        this->setMessage(ss.str());
+    }
+
+    UserOnChannel::UserOnChannel() {
+        this->setCode("ERR_USERONCHANNEL");
+        this->setNumeric(443);
+        this->setMessage(":is already on channel");
+    }
+
+    UserOnChannel::UserOnChannel(std::string nick, std::string channel) {
+        this->setCode("ERR_USERONCHANNEL");
+        this->setNumeric(443);
+        std::stringstream ss;
+        ss << nick << " " << channel << " :is already on channel";
+        this->setMessage(ss.str());
+    }
+
     NeedMoreParams::NeedMoreParams() {
         this->setCode("ERR_NEEDMOREPARAMS");
         this->setNumeric(461);
@@ -74,5 +116,17 @@ namespace irc {
     MessageBufferLimitExceeded::MessageBufferLimitExceeded() {
         this->setCode("MESSAGE_BUFFER_LIMIT_EXCEEDED");
         this->setMessage(":Message too long, 512 characters max !");
+    }
+
+    UserAlreadyOperator::UserAlreadyOperator() {
+        this->setCode("ERR_USERISOPERATOR");
+        this->setMessage(":is already an operator");
+    }
+
+    UserAlreadyOperator::UserAlreadyOperator(std::string nick, std::string channel) {
+        this->setCode("ERR_USERISOPERATOR");
+        std::stringstream ss;
+        ss << nick << " " << channel << " :is already an operator";
+        this->setMessage(ss.str());
     }
 }

@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:14:05 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/07 14:28:18 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/09 16:58:03 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,34 @@
 #include "ft_irc.hpp"
 
 namespace irc {
+    // 421
+    class UnknownCommand : public IrcSpecificException {
+    public:
+        UnknownCommand();
+        UnknownCommand(std::string cmd);
+    };
+
+    // 441
+    class UserNotInChannel : public IrcSpecificException {
+    public:
+        UserNotInChannel();
+        UserNotInChannel(std::string nick, std::string channel);
+    };
+
+    // 442
+    class NotOnChannel : public IrcSpecificException {
+    public:
+        NotOnChannel();
+        NotOnChannel(std::string channel);
+    };
+
+    // 443
+    class UserOnChannel : public IrcSpecificException {
+    public:
+        UserOnChannel();
+        UserOnChannel(std::string nick, std::string channel);
+    };
+
     // 461
     class NeedMoreParams : public IrcSpecificException {
     public:
@@ -35,13 +63,16 @@ namespace irc {
         PasswordMisMatch();
     };
 
-    // 421
-    class UnknownCommand : public IrcSpecificException {
+    // 473
+    class InviteOnlyChan : public IrcSpecificException {
     public:
-        UnknownCommand();
-        UnknownCommand(std::string cmd);
+        InviteOnlyChan();
+        InviteOnlyChan(std::string channel);
     };
 
+
+
+    // ~~~ Custom exceptions from here which are not defined in RFC1459 ~~~
     class TooManyParameters : public IrcSpecificException {
     public:
         TooManyParameters();
@@ -58,6 +89,13 @@ namespace irc {
     public:
         MessageBufferLimitExceeded();
     };
+
+    class UserAlreadyOperator : public IrcSpecificException {
+    public:
+        UserAlreadyOperator();
+        UserAlreadyOperator(std::string nick, std::string channel);
+    };
+
 }
 
 #endif

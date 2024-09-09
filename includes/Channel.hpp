@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 21:40:47 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/09 16:45:10 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/09 17:19:33 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ namespace irc {
 			void				changeInvitOnly();
 			void				changeTopicRestrict();
 			void				addOperators(User * user);
-			void				isOperator(User * user);
-			void				isUserInChannel(User * user);
+			bool				isOperator(User * user);
 			void				sendToAll(std::string & message);
 			void 				joinUser(User * user);
 			void 				kickUser(User * user);

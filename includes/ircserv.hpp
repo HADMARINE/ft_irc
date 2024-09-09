@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:35:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/09 16:21:24 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/09 17:05:25 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,16 @@ namespace irc {
         int readFromConfigFile(char *filename);
 
         std::vector<User> & getUsers() { return this->_users; }
+        const std::string & getPassword() const { return this->_password; }
+
         User * findUserByFd(int fd);
         User * findUserByNick(std::string & nick);
-
         Channel * findChannelByName(std::string & name);
 
-        const std::string & getPassword() const { return this->_password; }
+        void sendToAll(std::string & message);
+        void sendToSpecificDestination(std::string & message, User * user);
+        void sendToSpecificDestination(std::string & message, std::vector<User *> users);
+        void sendToSpecificDestination(std::string & message, Channel * channel);
 
         std::vector<ACommand *> parseCommandStr(std::string & str);
     protected:
