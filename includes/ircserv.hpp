@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:35:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/09 17:05:25 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/09 17:36:09 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,12 @@ namespace irc {
         std::vector<User> & getUsers() { return this->_users; }
         const std::string & getPassword() const { return this->_password; }
 
-        User * findUserByFd(int fd);
-        User * findUserByNick(std::string & nick);
+        User * findUserByFd(int fd); // User * can be null
+        User * findUserByFdSafe(int fd); // User * cannot be null, throw when null
+        User * findUserByNick(std::string & nick); // User * can be null
+        User * findUserByNickSafe(std::string & nick); // User * cannot be null, throw when null
         Channel * findChannelByName(std::string & name);
+        Channel * findChannelByNameSafe(std::string & name);
 
         void sendToAll(std::string & message);
         void sendToSpecificDestination(std::string & message, User * user);
