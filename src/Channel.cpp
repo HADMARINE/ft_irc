@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:29:50 by enorie            #+#    #+#             */
-/*   Updated: 2024/09/09 17:26:09 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/09 17:54:11 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,25 +44,8 @@ namespace irc {
 		else
 			_topicRestriction = true;
 	}
-	bool				Channel::isUserInChannel(const User * user)
-	{
-		std::vector<User *>::iterator it;
-		for (it = _users.begin(); it != _users.end(); it++)
-		{
-			if ((*it)->getNickname() == user->getNickname())
-				return (true);
-			it++;
-		}
-		for (it = _operators.begin(); it != _operators.end(); it++)
-		{
-			if ((*it)->getNickname() == user->getNickname())
-				return (true);
-			it++;
-		}
-		return (false);
-	}
 
-	void				Channel::addOperators(User * user)
+	void				Channel::addOperator(User * user)
 	{
 		std::vector<User *>::iterator it;
 		for (it = _operators.begin(); it != _operators.end(); it++)
@@ -87,12 +70,34 @@ namespace irc {
 		}
 	}
 
-	void	Channel::joinUser(User * user)
+	void	Channel::addUser(User * user)
 	{
 		if (this->isUserInChannel(user)) {
 			throw UserOnChannel(user->getNickname(), this->getName());
 		}
 		_users.push_back(user);
+	}
+
+	bool	Channel::isOperator(User * user)
+	{
+		std::vector<User *>::iterator it;
+		for (it = _operators.begin(); it != _operators.end(); it++)
+		{
+			if ((*it)->getNickname() == user->getNickname())
+				return (true);
+		}
+		return (false);
+	}
+
+	bool	Channel::isUserInChannel(const User * user)
+	{
+		std::vector<User *>::iterator it;
+		for (it = _users.begin(); it != _users.end(); it++)
+		{
+			if ((*it)->getNickname() == user->getNickname())
+				return (true);
+		}
+		return (false);
 	}
 
 	void	Channel::removeUser(User * user)
