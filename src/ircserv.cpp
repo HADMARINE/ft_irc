@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/09 17:57:44 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/09 17:59:54 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,8 +169,14 @@ namespace irc {
 		// TODO : Emit error when undefined command
 		if (cmd == "PASS") {
       return new CommandPASS();
+    } else if (cmd == "JOIN") {
+      return new CommandJOIN();
+    } else if (cmd == "KICK") {
+      return new CommandKICK();
+    } else if (cmd == "QUIT") {
+      return new CommandQUIT();
     }
-		throw UnknownCommand(cmd);
+ 		throw UnknownCommand(cmd);
 	}
 
 	std::vector<ACommand *> Ircserv::parseCommandStr(std::string & str) {
