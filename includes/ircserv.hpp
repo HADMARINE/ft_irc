@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:35:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/09 17:36:09 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/09 23:07:30 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ namespace irc {
 
         std::vector<User> & getUsers() { return this->_users; }
         const std::string & getPassword() const { return this->_password; }
+        std::vector<Channel> & getChannels() { return this->_channels; }
+
 
         User * findUserByFd(int fd); // User * can be null
         User * findUserByFdSafe(int fd); // User * cannot be null, throw when null
@@ -46,6 +48,8 @@ namespace irc {
         void sendToSpecificDestination(std::string & message, User * user);
         void sendToSpecificDestination(std::string & message, std::vector<User *> users);
         void sendToSpecificDestination(std::string & message, Channel * channel);
+
+        void removeUser(User * user);
 
         std::vector<ACommand *> parseCommandStr(std::string & str);
     protected:
