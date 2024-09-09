@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/09 17:38:43 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/09 17:57:44 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ namespace irc {
 		throw UnknownCommand(cmd);
 	}
 
-	std::vector<ACommand *> Ircserv::(std::string & str) {
+	std::vector<ACommand *> Ircserv::parseCommandStr(std::string & str) {
 		std::vector<std::string> cmdLines = split(str, "\r\n");
     
 
