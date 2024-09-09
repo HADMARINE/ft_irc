@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:14:05 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/09 17:48:55 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/09 18:22:58 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,13 @@ namespace irc {
     public:
         NoSuchChannel();
         NoSuchChannel(std::string channel);
+    };
+
+    // 404
+    class CannotSendToChan : public IrcSpecificException {
+    public:
+        CannotSendToChan();
+        CannotSendToChan(std::string channel);
     };
 
     // 421
@@ -133,6 +140,12 @@ namespace irc {
     public:
         UserAlreadyOperator();
         UserAlreadyOperator(std::string nick, std::string channel);
+    };
+    
+    class UserAlreadyInvited : public IrcSpecificException {
+    public:
+        UserAlreadyInvited();
+        UserAlreadyInvited(std::string nick, std::string channel);
     };
 
 }
