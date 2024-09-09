@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:21:34 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/09 17:43:54 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/09 17:49:07 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,12 @@ namespace irc {
         std::stringstream ss;
         ss << channel << " :Cannot join channel (+i)";
         this->setMessage(ss.str());
+    }
+
+    NoPrivileges::NoPrivileges() {
+        this->setCode("ERR_NOPRIVILEGES");
+        this->setNumeric(481);
+        this->setMessage(":Permission Denied- You're not an IRC operator");
     }
 
     TooManyParameters::TooManyParameters() {

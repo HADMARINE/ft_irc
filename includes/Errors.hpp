@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:14:05 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/09 17:41:58 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/09 17:48:55 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,11 @@ namespace irc {
         InviteOnlyChan(std::string channel);
     };
 
-
+    // 481
+    class NoPrivileges : public IrcSpecificException {
+    public:
+        NoPrivileges();
+    };
 
     // ~~~ Custom exceptions from here which are not defined in RFC1459 ~~~
     class TooManyParameters : public IrcSpecificException {
