@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/07 17:16:39 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/09 17:38:43 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ namespace irc {
 
       int commandReturnCode;
       for (std::vector<ACommand *>::iterator it = commmands.begin(); it != commmands.end(); it++) {
-        commandReturnCode = (*it)->resolve(this, this->findUserByFd(fd));
+        commandReturnCode = (*it)->resolve(this, this->findUserByFdSafe(fd));
         if (commandReturnCode != 0) {
             throw std::runtime_error("Some error while command execution occured"); // TODO : precise error
         }
@@ -278,7 +278,18 @@ namespace irc {
 	return (1);
 	}
 
-	User * Ircserv::findUserByFd(int fd) {
+  User * Ircserv::findUserByFd(int fd) {
+    User * foundUser = NULL;
+    
+    for (std::vector<User>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
+      if ((*it).getSocketfd() == fd)
+        foundUser = it.base();
+    }
+
+    return foundUser;
+  }
+
+	User * Ircserv::findUserByFdSafe(int fd) {
     User * foundUser = NULL;
     
     for (std::vector<User>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
@@ -291,6 +302,81 @@ namespace irc {
     }
     
     return foundUser;
+  }
+
+  User * Ircserv::findUserByNick(std::string & nick) {
+    User * foundUser = NULL;
+    
+    for (std::vector<User>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
+      if ((*it).getNickname() == nick)
+        foundUser = it.base();
+    }
+    
+    return foundUser;
+  }
+
+  User * Ircserv::findUserByNickSafe(std::string & nick) {
+    User * foundUser = NULL;
+    
+    for (std::vector<User>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
+      if ((*it).getNickname() == nick)
+        foundUser = it.base();
+    }
+    
+    if (foundUser == NULL) {
+      throw NoSuchNick(nick);
+    }
+    
+    return foundUser;
+  }
+
+  Channel * Ircserv::findChannelByName(std::string & name) {
+    Channel * foundChannel = NULL;
+    
+    for (std::vector<Channel>::iterator it = this->_channels.begin(); it != this->_channels.end(); it++) {
+      if ((*it).getName() == name)
+        foundChannel = it.base();
+    }
+    
+    return foundChannel;
+  }
+
+  Channel * Ircserv::findChannelByNameSafe(std::string & name) {
+    Channel * foundChannel = NULL;
+    
+    for (std::vector<Channel>::iterator it = this->_channels.begin(); it != this->_channels.end(); it++) {
+      if ((*it).getName() == name)
+        foundChannel = it.base();
+    }
+
+    if (foundChannel == NULL) {
+      throw NoSuchChannel();
+    }
+    
+    return foundChannel;
+  }
+
+
+  void Ircserv::sendToAll(std::string & message) { // TODO : test this
+    for (std::vector<User>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
+      this->sendToSpecificDestination(message, it.base());
+    }
+  }
+
+  void Ircserv::sendToSpecificDestination(std::string & message, User * user) {
+    if (send(user->getSocketfd(), message.c_str(), message.size(), 0) < 0) {
+      throw std::runtime_error("Failed to send message");
+    }
+  }
+
+  void Ircserv::sendToSpecificDestination(std::string & message, std::vector<User *> users) {
+    for (std::vector<User *>::iterator it = users.begin(); it != users.end(); it++) {
+      this->sendToSpecificDestination(message, *it);
+    }
+  }
+
+  void Ircserv::sendToSpecificDestination(std::string & message, Channel * channel) {
+    this->sendToSpecificDestination(message, channel->getUsers());
   }
 
   Ircserv::~Ircserv() {
