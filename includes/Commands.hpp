@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Commands.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 13:42:22 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/07 16:57:35 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/09 17:04:40 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@ namespace irc {
     class CommandNICK : public ACommand {
         int resolve(Ircserv * server, User * user);
         std::vector<std::string> setParamsMiddleware(std::vector<std::string> params);
+        int handleNickCommand(Ircserv *server, User *user);
+        int CommandNICK::handleJoinCommand(Ircserv *server, User *user);
+        int CommandNICK::handleQuitCommand(Ircserv *server, User *user);
+        int CommandNICK::handleKickCommand(Ircserv *server, User *operatorUser);
     };
 }
 

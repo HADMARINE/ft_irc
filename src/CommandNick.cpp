@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 17:28:34 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/09 16:25:48 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/09 17:04:25 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ namespace irc {
             return handleJoinCommand(server, user);
         } else if (commandType == "QUIT") {
             return handleQuitCommand(server, user);
-        } else {
+        }
+        else if (commandType == "KICK")
+            return handleKickCommand(server, user);
+        else
             throw UnknownCommandException();  // Lancer une exception si la commande est inconnue
         }
         return 0;
@@ -35,7 +38,7 @@ namespace irc {
 
         std::string newNickname = this->_params.at(1);
         user->setNickname(newNickname);
-        if (finduserbynick(newNickname))
+        if (findUserByNick(newNickname))
             throw ;
         return 0;
     }
@@ -44,36 +47,40 @@ namespace irc {
 
         std::string channelName = this->_params.at(1);
         Channel *channel;
+        std::string msg;
     
-        channel = findchannelbyname(channelName);
-        channel->joinChanel(user); // en cours de DEV
-        
-        channel->sendToAll(" has joined the channel\n");
+        channel = findChannelByName(channelName);
+        channel->joinUser(user);
+        msg = user->getNickname() + " has joined the channel\n";
+        channel->sendToAll(msg);
 
         return 0;
     }
 
     int CommandNICK::handleQuitCommand(Ircserv *server, User *user) {
-        server->kickUser(user); // demander a eliott
+        server->quituser(user); // en DEV
 
         return 0;
     }
 
-    int CommandChannel::handleKickCommand(Ircserv *server, User *operatorUser) {
+    int CommandNICK::handleKickCommand(Ircserv *server, User *operatorUser) {
 
         std::string channelName = this->_params.at(1);
         std::string targetUserNickname = this->_params.at(2);
+        std::string msg;
+        Channel *channel = findChannelByName(channelName);
+        User *targetUser = server->findUserByNickname(targetUserNickname);
 
-        if (!server->isOperator(channelName, operatorUser)) {
+        if (!channel->isOperator(targetUser)) {
             throw NotOperatorException();  
 
-        User *targetUser = server->findUserByNickname(targetUserNickname);
-        if (!targetUser || !server->isUserInChannel(channelName, targetUser)) {
+        if (!targetUser || !channel->isUserInChannel(targetUser)) {
             throw UserNotInChannelException(); 
 
-        server->kickUserFromChannel(channelName, targetUser);
-
-        server->notifyChannel(channelName, targetUserNickname + " has been kicked from the channel by " + operatorUser->getNickname());
+        channel->kickUser(targetUser);
+        msg = targetUserNickname + " has been kicked from the channel by " + operatorUser->getNickname();
+        channel->sendToAll(msg);
+         
 
         return 0;
     }
