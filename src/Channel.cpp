@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:29:50 by enorie            #+#    #+#             */
-/*   Updated: 2024/09/09 16:38:57 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/09 17:26:09 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,19 @@ namespace irc {
 	Channel::Channel(std::string name) { _name = name; }
 	Channel::~Channel() {};
 
-	std::string			Channel::getName() { return (_name); }
-	std::string			Channel::getTopic() { return (_topic); }
-	std::string			Channel::getPassword() { return (_channelPassword); }
+	const std::string & Channel::getName() const { return (_name); }
+	const std::string & Channel::getTopic() const { return (_topic); }
+	const std::string & Channel::getPassword() const { return (_channelPassword); }
 	int					Channel::getUserLimit() { return (_userLimit); }
-	bool				Channel::isInvitOnly() { return (_onInvite); }
+	bool				Channel::isInviteOnly() { return (_onInvite); }
 	bool				Channel::isTopicRestricted() { return (_topicRestriction); }
-	std::vector<User>	Channel::getUsers() const { return (_users); }
-	std::vector<User>	Channel::getOperators() const { return (_operators); }
-	std::vector<User>	Channel::getInvitedUsers() const { return (_invitedUsers); }
+	std::vector<User *>	Channel::getUsers() const { return (_users); }
+	std::vector<User *>	Channel::getOperators() const { return (_operators); }
+	std::vector<User *>	Channel::getInvitedUsers() const { return (_invitedUsers); }
 
-	void				Channel::setName(std::string name) { _name = name; }
-	void				Channel::setTopic(std::string topic) { _topic = topic; }
-	void				Channel::setPassword(std::string password) { _channelPassword = password; }
+	void				Channel::setName(std::string & name) { _name = name; }
+	void				Channel::setTopic(std::string & topic) { _topic = topic; }
+	void				Channel::setPassword(std::string & password) { _channelPassword = password; }
 	void				Channel::setUserLimit(int limit) { _userLimit = limit; }
 	void				Channel::changeInvitOnly()
 	{
@@ -44,18 +44,18 @@ namespace irc {
 		else
 			_topicRestriction = true;
 	}
-	bool				Channel::isUserInChannel(User user)
+	bool				Channel::isUserInChannel(const User * user)
 	{
-		std::vector<User>::iterator it;
+		std::vector<User *>::iterator it;
 		for (it = _users.begin(); it != _users.end(); it++)
 		{
-			if (it->getNickname() == user.getNickname())
+			if ((*it)->getNickname() == user->getNickname())
 				return (true);
 			it++;
 		}
 		for (it = _operators.begin(); it != _operators.end(); it++)
 		{
-			if (it->getNickname() == user.getNickname())
+			if ((*it)->getNickname() == user->getNickname())
 				return (true);
 			it++;
 		}
@@ -77,7 +77,7 @@ namespace irc {
 		}
 		for (it = _users.begin(); it != _users.end(); it++)
 		{
-			if (it->getNickname() == user.getNickname())
+			if ((*it)->getNickname() == user->getNickname())
 			{
 				_users.erase(it);
 				_operators.push_back(user);
@@ -95,7 +95,7 @@ namespace irc {
 		_users.push_back(user);
 	}
 
-	void	Channel::kickUser(User * user)
+	void	Channel::removeUser(User * user)
 	{
 		std::string	userNotInChannel = "User is not in the channel";
 		std::string	kickMessage = "You've been kicked from the channel";
@@ -104,47 +104,7 @@ namespace irc {
 		{
 			if ((*it)->getNickname() == user->getNickname())
 			{
-				if (send(fd, kickMessage.c_str(), kickMessage.size(), 0))
-					 throw std::runtime_error("Failed to send error message");
-				_users.erase(it);
-				return ;
-			}
-			it++;
-		}
-		for (it = _operators.begin(); it != _operators.end(); it++)
-		{
-			if (it->getNickname() == user.getNickname())
-			{
-				if (send(fd, kickMessage.c_str(), kickMessage.size(), 0))
-					 throw std::runtime_error("Failed to send error message");
-				_users.erase(it);
-				return ;
-			}
-			it++;
-		}
-		if (send(fd, userNotInChannel.c_str(), userNotInChannel.size(), 0))
-			throw std::runtime_error("Failed to send error message");
-	}
-	void	Channel::sendToAll(std::string message, int fd)
-	{
-		std::vector<User>::iterator it;
-		for (it = _users.begin(); it != _users.end(); it++)
-		{
-			if (it->getSocketfd() != fd)
-			{
-				if (send(it->getSocketfd(), message.c_str(), message.size(), 0))
-					 throw std::runtime_error("Failed to send message");
-				_users.erase(it);
-				return ;
-			}
-			it++;
-		}
-		for (it = _operators.begin(); it != _operators.end(); it++)
-		{
-			if (it->getSocketfd() != fd)
-			{
-				if (send(it->getSocketfd(), message.c_str(), message.size(), 0))
-					 throw std::runtime_error("Failed to send message");
+				throw UserNotInChannel(user->getNickname(), this->getName());
 				_users.erase(it);
 				return ;
 			}
