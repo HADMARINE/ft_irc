@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enorie <enorie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:35:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/05 15:42:17 by enorie           ###   ########.fr       */
+/*   Updated: 2024/09/09 16:21:24 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ namespace irc {
         std::vector<User> & getUsers() { return this->_users; }
         User * findUserByFd(int fd);
         User * findUserByNick(std::string & nick);
+
+        Channel * findChannelByName(std::string & name);
 
         const std::string & getPassword() const { return this->_password; }
 
