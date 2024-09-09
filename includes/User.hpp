@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 21:50:27 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/09 13:22:25 by root             ###   ########.fr       */
+/*   Updated: 2024/09/09 16:21:49 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ namespace irc {
 
 		int			getSocketfd() const;
 		const std::string & getRealname() const;
-		const std::string	& getNickname() const;
-		const std::string	& getUsername() const;
-		const std::string	& getHostname() const;
-		const std::string	& getPendingpassword() const;
+		const std::string & getNickname() const;
+		const std::string & getUsername() const;
+		const std::string & getHostname() const;
+		const std::string & getPendingpassword() const;
         bool          getIsRegistered() const;
 
 		void		setSocketfd(int fd);
