@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:18:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/09 17:25:23 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/09 17:50:38 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@ namespace irc {
         std::string msg;
         
         Channel *channel = server->findChannelByName(channelName);
-        User *targetUser = server->findUserByNick(targetUserNickname);
+        User *targetUser = server->findUserByNickSafe(targetUserNickname);
 
-        if (!channel->isOperator(targetUser)) {
-            throw NotOperatorException();
+        if (!channel->isOperator(user)) {
+            throw NoPrivileges();
         }
-        if (!targetUser || !channel->isUserInChannel(targetUser)) {
+        if (!channel->isUserInChannel(targetUser)) {
             throw UserNotInChannel(targetUser->getNickname(), channel->getName()); 
         }
+        
         channel->removeUser(targetUser);
-        msg = targetUserNickname + " has been kicked from the channel by " + operatorUser->getNickname();
-        channel->sendToAll(msg);
-         
+        msg = targetUserNickname + " has been kicked from the channel by " + user->getNickname();
+        server->sendToSpecificDestination(msg, channel);
 
         return 0;
     }
