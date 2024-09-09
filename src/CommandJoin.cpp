@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandJoin.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:09:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/09 17:54:33 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/09 18:09:34 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 namespace irc {
     int CommandJOIN::resolve(Ircserv * server, User * user) {
-        std::string channelName = this->_params.at(1);
+        std::string channelName = this->_params.at(0);
         Channel *channel;
         std::string msg;
     

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   CommandKick.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:18:23 by lhojoon           #+#    #+#             */
 /*   Updated: 2024/09/09 17:50:38 by lhojoon          ###   ########.fr       */
