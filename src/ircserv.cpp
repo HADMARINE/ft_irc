@@ -173,7 +173,7 @@ namespace irc {
 		throw UnknownCommand(cmd);
 	}
 
-	std::vector<ACommand *> Ircserv::parseCommandStr(std::string & str) {
+	std::vector<ACommand *> Ircserv::(std::string & str) {
 		std::vector<std::string> cmdLines = split(str, "\r\n");
     
 
@@ -271,6 +271,10 @@ namespace irc {
 
 			_operators.push_back(op);
 		}
+	// for (std::vector<t_server_op>::iterator itOp = _operators.begin(); itOp != _operators.end(); itOp++)
+	// {
+	// 	std::cout << itOp->name << std::endl;  // Accès aux noms de chaque opérateur
+	// }
 	return (1);
 	}
 
