@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:24:01 by bfaisy            #+#    #+#             */
-/*   Updated: 2024/09/09 18:09:25 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/09 18:12:15 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ namespace irc {
 		User *targetUser = server->findUserByNick(targetUserNickname);
 
 		if (!channel->isOperator(operatorUser)) {
-			throw NotOperatorException();
+			throw NoPrivileges();
 		}
 		if (!targetUser) {
 			throw UserNotFoundException(); 

@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:32:24 by bfaisy            #+#    #+#             */
-/*   Updated: 2024/09/09 18:10:07 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/09 18:12:27 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ namespace irc {
 		}
 
 		if (!channel->isOperator(user)) {
-			throw NotOperatorException(); 
+			throw NoPrivileges();
 		}
 
 		std::string newTopic = this->_params.at(2);
