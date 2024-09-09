@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:29:50 by enorie            #+#    #+#             */
-/*   Updated: 2024/09/09 17:54:11 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/09 18:02:20 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,25 +48,19 @@ namespace irc {
 	void				Channel::addOperator(User * user)
 	{
 		std::vector<User *>::iterator it;
-		for (it = _operators.begin(); it != _operators.end(); it++)
-		{
-			if ((*it)->getNickname() == user->getNickname()) {
-				throw UserAlreadyOperator(user->getNickname(), this->getName());
-			}
-			it++;
+		if (this->isOperator(user)) {
+			throw UserAlreadyOperator(user->getNickname(), this->getName());
 		}
-		if (isUserInChannel(user) == false) {
+		if (!isUserInChannel(user)) {
 			throw UserNotInChannel(user->getNickname(), this->getName());
 		}
 		for (it = _users.begin(); it != _users.end(); it++)
 		{
 			if ((*it)->getNickname() == user->getNickname())
 			{
-				_users.erase(it);
 				_operators.push_back(user);
 				return ;
 			}
-			it++;
 		}
 	}
 
@@ -113,7 +107,6 @@ namespace irc {
 				_users.erase(it);
 				return ;
 			}
-			it++;
 		}
 	}
 }
