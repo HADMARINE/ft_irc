@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:29:50 by enorie            #+#    #+#             */
-/*   Updated: 2024/09/09 16:25:45 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/09 16:38:57 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,26 +61,19 @@ namespace irc {
 		}
 		return (false);
 	}
-	void				Channel::addOperators(User user, int fd)
+
+	void				Channel::addOperators(User * user)
 	{
-		std::string	alreadyOppError = "User is already an operator";
-		std::string	userNotChannelError = "User is not in the channel";
-		std::vector<User>::iterator it;
+		std::vector<User *>::iterator it;
 		for (it = _operators.begin(); it != _operators.end(); it++)
 		{
-			if (it->getNickname() == user.getNickname())
-			{
-				if (send(fd, alreadyOppError.c_str(), alreadyOppError.size(), 0))
-					 throw std::runtime_error("Failed to send error message");
-				return ;
+			if ((*it)->getNickname() == user->getNickname()) {
+				throw UserAlreadyOperator(user->getNickname(), this->getName());
 			}
 			it++;
 		}
-		if (isUserInChannel(user) == false)
-		{
-			if (send(fd, userNotChannelError.c_str(), userNotChannelError.size(), 0))
-					 throw std::runtime_error("Failed to send error message");
-			return ;
+		if (isUserInChannel(user) == false) {
+			throw UserNotInChannel(user->getNickname(), this->getName());
 		}
 		for (it = _users.begin(); it != _users.end(); it++)
 		{
@@ -93,25 +86,23 @@ namespace irc {
 			it++;
 		}
 	}
-	void	Channel::joinUser(User user, int fd)
+
+	void	Channel::joinUser(User * user)
 	{
-		std::string	userAlreadyInChannel = "User is already in the channel";
-		if (isUserInChannel(user))
-		{
-			if (send(fd, userAlreadyInChannel.c_str(), userAlreadyInChannel.size(), 0))
-					 throw std::runtime_error("Failed to send error message");
-			return ;
+		if (this->isUserInChannel(user)) {
+			throw UserOnChannel(user->getNickname(), this->getName());
 		}
 		_users.push_back(user);
 	}
-	void	Channel::kickUser(User user, int fd)
+
+	void	Channel::kickUser(User * user)
 	{
 		std::string	userNotInChannel = "User is not in the channel";
 		std::string	kickMessage = "You've been kicked from the channel";
-		std::vector<User>::iterator it;
+		std::vector<User *>::iterator it;
 		for (it = _users.begin(); it != _users.end(); it++)
 		{
-			if (it->getNickname() == user.getNickname())
+			if ((*it)->getNickname() == user->getNickname())
 			{
 				if (send(fd, kickMessage.c_str(), kickMessage.size(), 0))
 					 throw std::runtime_error("Failed to send error message");
