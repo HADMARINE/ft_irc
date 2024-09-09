@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 21:40:47 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/09 18:05:10 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/09 18:10:22 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ namespace irc {
 			void 				addUser(User * user);
 			void 				removeUser(User * user);
 			void 				inviteUser(User * user);
+			bool				isInvitedUser(User * user);
 			bool				isUserInChannel(const User * user);
    		private:
 			Channel();

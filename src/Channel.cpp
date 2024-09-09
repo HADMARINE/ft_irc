@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:29:50 by enorie            #+#    #+#             */
-/*   Updated: 2024/09/09 18:04:11 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/09 18:09:58 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,10 @@ namespace irc {
 		if (this->isOperator(user)) {
 			throw UserAlreadyOperator(user->getNickname(), this->getName());
 		}
-		if (!isUserInChannel(user)) {
+		if (!this->isUserInChannel(user)) {
 			throw UserNotInChannel(user->getNickname(), this->getName());
 		}
-		for (it = _users.begin(); it != _users.end(); it++)
-		{
-			if ((*it)->getNickname() == user->getNickname())
-			{
-				_operators.push_back(user);
-				return ;
-			}
-		}
+		_operators.push_back(user);
 	}
 
 	void	Channel::addUser(User * user)
@@ -78,7 +71,7 @@ namespace irc {
 		std::vector<User *>::iterator it;
 		for (it = _operators.begin(); it != _operators.end(); it++)
 		{
-			if ((*it)->getNickname() == user->getNickname())
+			if ((*it) == user)
 				return (true);
 		}
 		return (false);
@@ -89,7 +82,7 @@ namespace irc {
 		std::vector<User *>::iterator it;
 		for (it = _users.begin(); it != _users.end(); it++)
 		{
-			if ((*it)->getNickname() == user->getNickname())
+			if ((*it) == user)
 				return (true);
 		}
 		return (false);
@@ -100,12 +93,28 @@ namespace irc {
 		std::vector<User *>::iterator it;
 		for (it = _users.begin(); it != _users.end(); it++)
 		{
-			if ((*it)->getNickname() == user->getNickname())
+			if ((*it) == user)
 			{
 				_users.erase(it);
 				return ;
 			}
 		}
 		throw UserNotInChannel(user->getNickname(), this->getName());
+	}
+
+	bool Channel::isInvitedUser(User * user) {
+		for (std::vector<User *>::iterator it = _invitedUsers.begin(); it != _users.end(); it++) {
+			if ((*it) == user) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	void Channel::inviteUser(User * user) {
+		if (this->isInvitedUser(user)) {
+			throw UserAlreadyInvited(user->getNickname(), this->getName());
+		}
+		_invitedUsers.push_back(user);
 	}
 }
