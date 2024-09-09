@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/06 12:53:19 by root             ###   ########.fr       */
+/*   Updated: 2024/09/07 17:16:39 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,90 +62,87 @@ namespace irc {
 	}
 
 	void  Ircserv::clientConnect() {
-	int                fd;
-	struct pollfd      pfd;
-	struct sockaddr_in addr;
-	socklen_t          size;
-	char messageBuff[1024];
+    int                fd;
+    struct pollfd      pfd;
+    struct sockaddr_in addr;
+    socklen_t          size;
 
-	size = sizeof(addr);
-	fd = accept(_serverSock, (sockaddr *)&addr, &size);
-	if (fd < 0)
-		throw std::runtime_error("Failed to accept connection");
-	memset(messageBuff, 0, sizeof(messageBuff));
+    size = sizeof(addr);
+    fd = accept(_serverSock, (sockaddr *)&addr, &size);
+    if (fd < 0)
+      throw std::runtime_error("Failed to accept connection");
 
-	ssize_t bytesReceived = recv(fd, messageBuff, sizeof(messageBuff) - 1, 0);
-	// TODO : Error when bytes received exceed 512 (CRLF included)
+    User user(fd);
+    this->_users.push_back(user);
 
-	if (bytesReceived <= 0)
-	{
-		clientDisconnect(fd);
-		return ;
-	}
+    pfd.fd = fd;
+    pfd.events = POLLIN;
+    pfd.revents = 0;
+    _pfds.push_back(pfd);
 
-	User user(fd);
-	this->_users.push_back(user);
-
-	pfd.fd = fd;
-	pfd.events = POLLIN;
-	pfd.revents = 0;
-	_pfds.push_back(pfd);
-
-	std::string messageStr(messageBuff);
-
-	try {
-		std::vector<ACommand *> commands = this->parseCommandStr(messageStr);
-		int commandReturnCode;
-		for (std::vector<ACommand *>::iterator it = commands.begin(); it != commands.end(); ++it) {
-		commandReturnCode = (*it)->resolve(*this, this->findUserByFd(fd));
-		if (commandReturnCode != 0)
-			throw std::runtime_error("Some error while command execution occured"); // TODO : precise error
-		}
-	} catch (IrcSpecificException & e) {
-		(void)e;
-	}
-
-
-	DCMD(std::cout << "Client " << fd << " connected" << std::endl);
+    this->clientMessage(fd);
+    
+    DCMD(std::cout << "Client " << fd << " connected" << std::endl);
 	}
 
 
 	void  Ircserv::clientDisconnect(int fd) {
-	for (std::vector<pollfd>::iterator it = _pfds.begin(); it != _pfds.end(); it++)
-	{
-		if (it->fd == fd)
-		{
-		_pfds.erase(it);
-		close(fd);
-		DCMD(std::cout << "Client " << fd << " disconnected" << std::endl);
-		break;
-		}
-	}
+    for (std::vector<pollfd>::iterator it = _pfds.begin(); it != _pfds.end(); it++)
+    {
+      if (it->fd == fd)
+      {
+      _pfds.erase(it);
+      close(fd);
+      DCMD(std::cout << "Client " << fd << " disconnected" << std::endl);
+      break;
+      }
+    }
 	}
 
 	void  Ircserv::clientMessage(int fd) {
-	char messageBuff[1024];
-	memset(messageBuff, 0, sizeof(messageBuff));
+    char messageBuff[512]; // Following ircserv standard
+    memset(messageBuff, 0, sizeof(messageBuff));
 
-	if (recv(fd, messageBuff, sizeof(messageBuff) - 1, 0) <= 0) {
-		clientDisconnect(fd);
-		return;
-	}
-	std::string messageStr(messageBuff);
-	try {
-		std::vector<ACommand *> commmands = this->parseCommandStr(messageStr);
-		int commandReturnCode;
+    if (recv(fd, messageBuff, sizeof(messageBuff) - 1, 0) <= 0) {
+      clientDisconnect(fd);
+      return;
+    }
 
-		for (std::vector<ACommand *>::iterator it = commmands.begin(); it != commmands.end(); ++it) {
-		commandReturnCode = (*it)->resolve(*this, this->findUserByFd(fd));
-		if (commandReturnCode != 0)
-			throw std::runtime_error("Some error while command execution occured"); // TODO : precise error
-		}
-	} catch (IrcSpecificException & e) {
-		// TODO : send error to client
-		(void)e;
-	}
+    std::vector<ACommand *> commmands;
 
+    try {
+      int CRLFPos = getCRLFPos(messageBuff, sizeof(messageBuff) / sizeof(char)); // check crlf position
+      if (CRLFPos < 0 || CRLFPos >= 512) {
+        throw MessageBufferLimitExceeded();
+      }
+
+      std::string messageStr(messageBuff);
+
+      commmands = this->parseCommandStr(messageStr);
+
+      int commandReturnCode;
+      for (std::vector<ACommand *>::iterator it = commmands.begin(); it != commmands.end(); it++) {
+        commandReturnCode = (*it)->resolve(this, this->findUserByFd(fd));
+        if (commandReturnCode != 0) {
+            throw std::runtime_error("Some error while command execution occured"); // TODO : precise error
+        }
+      }
+      
+      for (std::vector<ACommand *>::iterator it = commmands.begin(); it != commmands.end(); it++) {
+        delete *it;  
+      }
+    } catch (IrcSpecificException & e) {
+      // TODO : send error to client
+      for (std::vector<ACommand *>::iterator it = commmands.begin(); it != commmands.end(); it++) {
+        delete *it;
+      }
+      DCMD(std::cerr << "Client " << fd << " : Application Error : " << e.getMessage() << std::endl);
+    } catch (std::exception & e) {
+      for (std::vector<ACommand *>::iterator it = commmands.begin(); it != commmands.end(); it++) {
+        delete *it;
+      }
+      DCMD(std::cerr << "Client " << fd << " : System Error : " << e.what() << std::endl);
+    }
 	}
 
 	void Ircserv::bindLoop() {
@@ -171,34 +168,78 @@ namespace irc {
 	static ACommand * getCommandFromDict(std::string cmd) {
 		// TODO : Emit error when undefined command
 		if (cmd == "PASS") {
-		return new CommandPASS();
-	}
+      return new CommandPASS();
+    }
 		throw UnknownCommand(cmd);
 	}
 
 	std::vector<ACommand *> Ircserv::parseCommandStr(std::string & str) {
 		std::vector<std::string> cmdLines = split(str, "\r\n");
-		std::string cmdStr;
+    
 
-		std::vector<std::string> params;
-		ACommand *cmd;
+    // Remove invalid lists
+    std::vector<std::vector<std::string>::iterator> vIt;
+    for (std::vector<std::string>::iterator it = cmdLines.begin(); it != cmdLines.end(); it++) {
+      if (it->empty()) { 
+        vIt.push_back(it);
+        continue;
+      }
+      if (strcmp(it->c_str(), "\n") == 0) {
+        vIt.push_back(it);
+        continue;
+      }
+    }
+
+    for (std::vector<std::vector<std::string>::iterator>::iterator it = vIt.begin(); it != vIt.end(); it++) {
+      cmdLines.erase(*it);
+    }
+
+
+
 		std::vector<ACommand *> cmdList;
+    try  {
+      std::string cmdStr;
+      std::vector<std::string> params;
+      ACommand *cmd;
 
-		while (!cmdLines.empty()) {
-			cmdStr = cmdLines.front();
-			cmdLines.erase(cmdLines.begin());
-			if (cmdStr.empty()) // TODO : Verify this case when empty line.. (space allowed ?)
-				continue;
+      while (!cmdLines.empty()) {
+        cmdStr = cmdLines.front();
+        cmdLines.erase(cmdLines.begin());
+        if (cmdStr.empty()) // TODO : Verify this case when empty line.. (space allowed ?)
+          continue;
 
-			params = split(cmdStr, " ");
+        params = split(cmdStr, " ");
 
-			cmd = getCommandFromDict(params.front());
-			params.erase(params.begin());
+        // Remove invalid parameters - empty
+        std::vector<std::vector<std::string>::iterator> vIt;
+        for (std::vector<std::string>::iterator it = params.begin(); it != params.end(); it++) {
+          if (it->empty()) { 
+            vIt.push_back(it);
+            continue;
+          }
+        }
+        for (std::vector<std::vector<std::string>::iterator>::iterator it = vIt.begin(); it != vIt.end(); it++) {
+          params.erase(*it);
+        }
 
-			cmd->setParams(params);
+        cmd = getCommandFromDict(params.front());
+        cmdList.push_back(cmd);
 
-			cmdList.push_back(cmd);
-		}
+        params.erase(params.begin());
+
+        cmd->setParams(params);
+      }
+    } catch (IrcSpecificException & e) {
+      for (std::vector<ACommand *>::iterator it = cmdList.begin(); it != cmdList.end(); it++) {
+        delete *it;
+      }
+      throw e;
+    } catch (std::exception & e) {
+      for (std::vector<ACommand *>::iterator it = cmdList.begin(); it != cmdList.end(); it++) {
+        delete *it;
+      }
+      throw e;
+    }
 		return cmdList;
 	}
 
@@ -234,19 +275,22 @@ namespace irc {
 	}
 
 	User * Ircserv::findUserByFd(int fd) {
-	User * foundUser = NULL;
-	for (std::vector<User>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
-		if ((*it).getSocketfd() == fd)
-			foundUser = it.base();
-	}
-	if (foundUser == NULL) {
-		throw UserNotFound();
-	}
-	return foundUser;
-	}
+    User * foundUser = NULL;
+    
+    for (std::vector<User>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
+      if ((*it).getSocketfd() == fd)
+        foundUser = it.base();
+    }
+    
+    if (foundUser == NULL) {
+      throw UserNotFound();
+    }
+    
+    return foundUser;
+  }
 
-	Ircserv::~Ircserv() {
-		std::cout << "Server shutting down..." << std::endl;
-	}
+  Ircserv::~Ircserv() {
+      std::cout << "Server shutting down..." << std::endl;
+  }
 
 }

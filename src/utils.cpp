@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:48:44 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/04 23:07:33 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/07 14:48:09 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,21 @@ namespace irc {
         svalues.push_back(s.substr(last));
         return svalues;
     }
+
+    int getCRLFPos(char * str, size_t len) {
+        char * s = str;
+        if (!str) {
+            return -1;
+        }
+        while (*s) {
+            if (*s == '\r') {
+                if (s - str < (int)len && *(s + 1) == '\n') {
+                    return s - str;
+                }
+            }
+            s += 1;
+        }
+        return -1;
+    }
+
 }

@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   CommandPass.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enorie <enorie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 13:43:42 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/05 15:50:25 by enorie           ###   ########.fr       */
+/*   Updated: 2024/09/07 16:57:04 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.hpp"
 
 namespace irc {
-    int CommandPASS::resolve(Ircserv & server, User * user) {
+    int CommandPASS::resolve(Ircserv * server, User * user) {
         (void)server;
         // TODO : Verification of logged-on user reauth try 
-        if (user) {
+        if (user->getIsRegistered()) {
             throw AlreadyRegistered();
         }
-        user->getPendingpassword() = this->_params.at(0);
+        user->setPendingpassword(this->_params.at(0));
         return 0;
     }
 
