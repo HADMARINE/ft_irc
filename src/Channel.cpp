@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:29:50 by enorie            #+#    #+#             */
-/*   Updated: 2024/09/09 18:02:20 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/09 18:04:11 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ namespace irc {
 	void				Channel::setTopic(std::string & topic) { _topic = topic; }
 	void				Channel::setPassword(std::string & password) { _channelPassword = password; }
 	void				Channel::setUserLimit(int limit) { _userLimit = limit; }
-	void				Channel::changeInvitOnly()
+
+	void				Channel::changeInviteOnly()
 	{
 		if (_onInvite == true)
 			_onInvite = false;
@@ -96,17 +97,15 @@ namespace irc {
 
 	void	Channel::removeUser(User * user)
 	{
-		std::string	userNotInChannel = "User is not in the channel";
-		std::string	kickMessage = "You've been kicked from the channel";
 		std::vector<User *>::iterator it;
 		for (it = _users.begin(); it != _users.end(); it++)
 		{
 			if ((*it)->getNickname() == user->getNickname())
 			{
-				throw UserNotInChannel(user->getNickname(), this->getName());
 				_users.erase(it);
 				return ;
 			}
 		}
+		throw UserNotInChannel(user->getNickname(), this->getName());
 	}
 }
