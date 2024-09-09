@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:18:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/09 17:19:41 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/09 17:25:23 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ namespace irc {
         User *targetUser = server->findUserByNick(targetUserNickname);
 
         if (!channel->isOperator(targetUser)) {
-            throw NotOperatorException();  
+            throw NotOperatorException();
         }
         if (!targetUser || !channel->isUserInChannel(targetUser)) {
-            throw UserNotInChannelException(); 
+            throw UserNotInChannel(targetUser->getNickname(), channel->getName()); 
         }
-        channel->kickUser(targetUser);
+        channel->removeUser(targetUser);
         msg = targetUserNickname + " has been kicked from the channel by " + operatorUser->getNickname();
         channel->sendToAll(msg);
          

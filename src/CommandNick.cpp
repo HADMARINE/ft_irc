@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 17:28:34 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/09 17:19:47 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/09 17:23:01 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ namespace irc {
         return 0;
     }
 
-    std::vector<std::string> CommandPASS::setParamsMiddleware(std::vector<std::string> params) {
+    std::vector<std::string> CommandNICK::setParamsMiddleware(std::vector<std::string> params) {
         if (params.empty()) {
             throw NeedMoreParams();
         }

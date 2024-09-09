@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:09:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/09 17:12:54 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/09 17:38:55 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 
 namespace irc {
-    CommandJOIN::resolve(Ircserv * server, User * user) {
+    int CommandJOIN::resolve(Ircserv * server, User * user) {
         std::string channelName = this->_params.at(1);
         Channel *channel;
         std::string msg;
