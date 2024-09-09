@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:14:05 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/09 16:58:03 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/09 17:41:58 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,46 @@
 #include "ft_irc.hpp"
 
 namespace irc {
+    // 401
+    class NoSuchNick : public IrcSpecificException {
+    public:
+        NoSuchNick();
+        NoSuchNick(std::string nick);
+    };
+
+    // 402
+    class NoSuchServer : public IrcSpecificException {
+    public:
+        NoSuchServer();
+        NoSuchServer(std::string server);
+    };
+
+    // 403
+    class NoSuchChannel : public IrcSpecificException {
+    public:
+        NoSuchChannel();
+        NoSuchChannel(std::string channel);
+    };
+
     // 421
     class UnknownCommand : public IrcSpecificException {
     public:
         UnknownCommand();
         UnknownCommand(std::string cmd);
+    };
+
+    // 432
+    class ErroneusNickName : public IrcSpecificException {
+    public:
+        ErroneusNickName();
+        ErroneusNickName(std::string nick);
+    };
+
+    // 433
+    class NicknameInUse : public IrcSpecificException {
+    public:
+        NicknameInUse();
+        NicknameInUse(std::string nick);
     };
 
     // 441

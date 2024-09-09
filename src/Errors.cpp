@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:21:34 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/09 16:36:31 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/09 17:43:54 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,90 @@
 
 
 namespace irc {
+    NoSuchNick::NoSuchNick() {
+        this->setCode("ERR_NOSUCHNICK");
+        this->setNumeric(401);
+        this->setMessage(":No such nick/channel");
+    }
+
+    NoSuchNick::NoSuchNick(std::string nick) {
+        this->setCode("ERR_NOSUCHNICK");
+        this->setNumeric(401);
+        std::stringstream ss;
+        ss << nick << " :No such nick/channel";
+        this->setMessage(ss.str());
+    }
+
+    NoSuchServer::NoSuchServer() {
+        this->setCode("ERR_NOSUCHSERVER");
+        this->setNumeric(402);
+        this->setMessage(":No such server");
+    }
+
+    NoSuchServer::NoSuchServer(std::string server) {
+        this->setCode("ERR_NOSUCHSERVER");
+        this->setNumeric(402);
+        std::stringstream ss;
+        ss << server << " :No such server";
+        this->setMessage(ss.str());
+    }
+
+    NoSuchChannel::NoSuchChannel() {
+        this->setCode("ERR_NOSUCHCHANNEL");
+        this->setNumeric(403);
+        this->setMessage(":No such channel");
+    }
+
+    NoSuchChannel::NoSuchChannel(std::string channel) {
+        this->setCode("ERR_NOSUCHCHANNEL");
+        this->setNumeric(403);
+        std::stringstream ss;
+        ss << channel << " :No such channel";
+        this->setMessage(ss.str());
+    }
+
+    UnknownCommand::UnknownCommand() {
+        this->setNumeric(421);
+        this->setCode("UNKNOWN_COMMAND");
+        this->setMessage(":Unknown command");
+    }
+
+    UnknownCommand::UnknownCommand(std::string cmd) {
+        this->setNumeric(421);
+        this->setCode("UNKNOWN_COMMAND");
+        std::stringstream ss;
+        ss << cmd << " :Unknown command";
+        this->setMessage(ss.str());
+    }
+
+    ErroneusNickName::ErroneusNickName() {
+        this->setCode("ERR_ERRONEUSNICKNAME");
+        this->setNumeric(432);
+        this->setMessage(":Erroneus nickname");
+    }
+
+    ErroneusNickName::ErroneusNickName(std::string nick) {
+        this->setCode("ERR_ERRONEUSNICKNAME");
+        this->setNumeric(432);
+        std::stringstream ss;
+        ss << nick << " :Erroneus nickname";
+        this->setMessage(ss.str());
+    }
+
+    NicknameInUse::NicknameInUse() {
+        this->setCode("ERR_NICKNAMEINUSE");
+        this->setNumeric(433);
+        this->setMessage(":Nickname is already in use");
+    }
+
+    NicknameInUse::NicknameInUse(std::string nick) {
+        this->setCode("ERR_NICKNAMEINUSE");
+        this->setNumeric(433);
+        std::stringstream ss;
+        ss << nick << " :Nickname is already in use";
+        this->setMessage(ss.str());
+    }
+
     UserNotInChannel::UserNotInChannel() {
         this->setCode("ERR_USERNOTINCHANNEL");
         this->setNumeric(441);
@@ -82,6 +166,20 @@ namespace irc {
         this->setMessage(":Password incorrect");
     }
 
+    InviteOnlyChan::InviteOnlyChan() {
+        this->setCode("ERR_INVITEONLYCHAN");
+        this->setNumeric(473);
+        this->setMessage(":Cannot join channel (+i)");
+    }
+
+    InviteOnlyChan::InviteOnlyChan(std::string channel) {
+        this->setCode("ERR_INVITEONLYCHAN");
+        this->setNumeric(473);
+        std::stringstream ss;
+        ss << channel << " :Cannot join channel (+i)";
+        this->setMessage(ss.str());
+    }
+
     TooManyParameters::TooManyParameters() {
         this->setCode("TOO_MANY_PARAMETERS");
         this->setMessage(":Too many parameters received");
@@ -97,20 +195,6 @@ namespace irc {
     UserNotFound::UserNotFound() {
         this->setCode("USER_NOT_FOUND");
         this->setMessage(":User not found");
-    }
-
-    UnknownCommand::UnknownCommand() {
-        this->setNumeric(421);
-        this->setCode("UNKNOWN_COMMAND");
-        this->setMessage(":Unknown command");
-    }
-
-    UnknownCommand::UnknownCommand(std::string cmd) {
-        this->setNumeric(421);
-        this->setCode("UNKNOWN_COMMAND");
-        std::stringstream ss;
-        ss << cmd << " :Unknown command";
-        this->setMessage(ss.str());
     }
 
     MessageBufferLimitExceeded::MessageBufferLimitExceeded() {
