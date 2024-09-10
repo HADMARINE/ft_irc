@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_irc.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:11:03 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/03 17:22:09 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/10 15:39:57 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_IRC_HPP
-#define FT_IRC_HPP
+#pragma once
 
 #include "includes.hpp"
 #include "definitions.hpp"
@@ -29,5 +28,3 @@ namespace irc {
     class Ircserv;
     class ACommand;
 }
-
-#endif

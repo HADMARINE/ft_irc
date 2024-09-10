@@ -3,20 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:35:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/10 09:28:04 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/10 15:39:29 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef IRCSERV_HPP
-#define IRCSERV_HPP
+#pragma once
 
 #include "ft_irc.hpp"
 
 namespace irc {
-    
+
     class ACommand;
 
     class Ircserv {
@@ -70,5 +69,3 @@ namespace irc {
     };
 
 }
-
-#endif

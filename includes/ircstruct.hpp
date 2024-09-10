@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ircstruct.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:05:10 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/03 17:27:23 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/10 15:38:56 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef IRCSTRUCT_HPP
-#define IRCSTRUCT_HPP
+#pragma once
 
 #include "ft_irc.hpp"
 
@@ -32,5 +31,3 @@ typedef struct s_server_op
 } t_server_op;
 
 }
-
-#endif

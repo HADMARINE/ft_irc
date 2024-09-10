@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   IrcSpecificException.hpp                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:24:11 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/03 17:08:35 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/10 15:39:12 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef IRCSPECIFICEXCEPTION_HPP
-#define IRCSPECIFICEXCEPTION_HPP
+#pragma once
 
 #include "ft_irc.hpp"
 
@@ -26,7 +25,7 @@ namespace irc {
         std::string getCode() const { return this->_code; }
         void setMessage(std::string message) { this->_message = message; }
         std::string getMessage() const { return this->_message; }
-        
+
         std::string what() {
             return this->getMessage();
         };
@@ -36,5 +35,3 @@ namespace irc {
         std::string _message;
     };
 }
-
-#endif

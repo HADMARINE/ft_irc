@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   Commands.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 13:42:22 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/10 10:04:28 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/10 15:41:16 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COMMANDS_HPP
-#define COMMANDS_HPP
+#pragma once
 
 #include "ft_irc.hpp"
 
@@ -40,7 +39,7 @@ namespace irc {
     class CommandKICK : public ACommand {
         int resolve(Ircserv * server, User * user);
         std::vector<std::string> setParamsMiddleware(std::vector<std::string> params);
-    }; 
+    };
     class CommandINVITE : public ACommand {
         int resolve(Ircserv *server, User *operatorUser);
         std::vector<std::string> setParamsMiddleware(std::vector<std::string> params);
@@ -54,6 +53,3 @@ namespace irc {
         std::vector<std::string> setParamsMiddleware(std::vector<std::string> params);
     };
 }
-
-
-#endif

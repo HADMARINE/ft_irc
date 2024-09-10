@@ -3,18 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 21:40:47 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/09 18:10:22 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/10 15:41:31 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.hpp"
 #include "User.hpp"
 
-#ifndef CHANNEL_HPP
-#define CHANNEL_HPP
+#pragma once
 
 namespace irc {
 
@@ -60,5 +59,3 @@ namespace irc {
 			bool				_topicRestriction;
     };
 }
-
-#endif

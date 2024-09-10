@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 21:50:27 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/09 16:21:49 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/10 15:38:35 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.hpp"
 
-#ifndef USER_HPP
-#define USER_HPP
+#pragma once
 
 namespace irc {
 
@@ -52,5 +51,3 @@ namespace irc {
         bool        _isRegistered;
     };
 }
-
-#endif

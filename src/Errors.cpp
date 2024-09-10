@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Errors.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:21:34 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/09 18:23:40 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/10 15:37:38 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,11 @@ namespace irc {
         this->setCode("ERR_NOPRIVILEGES");
         this->setNumeric(481);
         this->setMessage(":Permission Denied- You're not an IRC operator");
+    }
+
+    IsTopicRestricted::IsTopicRestricted() {
+        this->setCode("TOPIC_RESTRICTED");
+        this->setMessage(":Permission Denied- This channel is topic restricted");
     }
 
     TooManyParameters::TooManyParameters() {
