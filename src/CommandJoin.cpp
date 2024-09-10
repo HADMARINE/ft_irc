@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandJoin.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:09:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/09 18:09:34 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/10 09:40:22 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@ namespace irc {
         std::string msg;
     
         channel = server->findChannelByName(channelName);
+        // TODO : check channel rights
         channel->addUser(user);
         msg = user->getNickname() + " has joined the channel\n";
-        channel->sendToAll(msg);
+        server->sendToSpecificDestination(msg, channel);
 
         return 0;
     }

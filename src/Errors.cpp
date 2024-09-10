@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Errors.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:21:34 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/09 17:49:07 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/10 15:37:38 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,20 @@ namespace irc {
         this->setNumeric(403);
         std::stringstream ss;
         ss << channel << " :No such channel";
+        this->setMessage(ss.str());
+    }
+
+    CannotSendToChan::CannotSendToChan() {
+        this->setCode("ERR_CANNOTSENDTOCHAN");
+        this->setNumeric(404);
+        this->setMessage(":Cannot send to channel");
+    }
+
+    CannotSendToChan::CannotSendToChan(std::string channel) {
+        this->setCode("ERR_CANNOTSENDTOCHAN");
+        this->setNumeric(404);
+        std::stringstream ss;
+        ss << channel << " :Cannot send to channel";
         this->setMessage(ss.str());
     }
 
@@ -186,6 +200,11 @@ namespace irc {
         this->setMessage(":Permission Denied- You're not an IRC operator");
     }
 
+    IsTopicRestricted::IsTopicRestricted() {
+        this->setCode("TOPIC_RESTRICTED");
+        this->setMessage(":Permission Denied- This channel is topic restricted");
+    }
+
     TooManyParameters::TooManyParameters() {
         this->setCode("TOO_MANY_PARAMETERS");
         this->setMessage(":Too many parameters received");
@@ -219,4 +238,17 @@ namespace irc {
         ss << nick << " " << channel << " :is already an operator";
         this->setMessage(ss.str());
     }
+
+    UserAlreadyInvited::UserAlreadyInvited() {
+        this->setCode("ERR_USERISINVITED");
+        this->setMessage(" :is already invited");
+    }
+
+    UserAlreadyInvited::UserAlreadyInvited(std::string nick, std::string channel) {
+        this->setCode("ERR_USERISINVITED");
+        std::stringstream ss;
+        ss << nick << "  " << channel << " :is already invited";
+        this->setMessage(ss.str());
+    }
+
 }

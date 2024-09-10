@@ -3,20 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:35:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/09 17:36:09 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/10 15:39:29 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef IRCSERV_HPP
-#define IRCSERV_HPP
+#pragma once
 
 #include "ft_irc.hpp"
 
 namespace irc {
-    
+
     class ACommand;
 
     class Ircserv {
@@ -34,6 +33,8 @@ namespace irc {
 
         std::vector<User> & getUsers() { return this->_users; }
         const std::string & getPassword() const { return this->_password; }
+        std::vector<Channel> & getChannels() { return this->_channels; }
+
 
         User * findUserByFd(int fd); // User * can be null
         User * findUserByFdSafe(int fd); // User * cannot be null, throw when null
@@ -46,6 +47,9 @@ namespace irc {
         void sendToSpecificDestination(std::string & message, User * user);
         void sendToSpecificDestination(std::string & message, std::vector<User *> users);
         void sendToSpecificDestination(std::string & message, Channel * channel);
+
+        void removeUser(User * user); // remove user from _users
+        void disconnectUser(User * user); // Disconnect totally from server
 
         std::vector<ACommand *> parseCommandStr(std::string & str);
     protected:
@@ -65,5 +69,3 @@ namespace irc {
     };
 
 }
-
-#endif

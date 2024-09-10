@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandTopic.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:32:24 by bfaisy            #+#    #+#             */
-/*   Updated: 2024/09/09 18:12:27 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/10 15:31:23 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@ namespace irc {
 		if (!channel->isOperator(user)) {
 			throw NoPrivileges();
 		}
+    	if (channel->isTopicRestricted() == true) {
+    		throw IsTopicRestricted();
+    	}
 
 		std::string newTopic = this->_params.at(2);
 

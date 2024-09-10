@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/09 17:59:54 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/10 09:27:42 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -383,6 +383,20 @@ namespace irc {
 
   void Ircserv::sendToSpecificDestination(std::string & message, Channel * channel) {
     this->sendToSpecificDestination(message, channel->getUsers());
+  }
+
+  void Ircserv::removeUser(User * user) {
+    for (std::vector<User>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
+      if (it.base() == user) {
+        this->_users.erase(it);
+        break;
+      }
+    }
+  }
+
+  void Ircserv::disconnectUser(User * user) {
+    this->clientDisconnect(user->getSocketfd());
+    this->removeUser(user);
   }
 
   Ircserv::~Ircserv() {

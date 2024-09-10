@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:50:52 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/07 14:51:35 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/10 15:38:21 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_HPP
-#define UTILS_HPP
+#pragma once
 
 #include "ft_irc.hpp"
 
@@ -24,7 +23,5 @@ namespace irc {
     std::vector<std::string> split(const std::string& s, const std::string& delimiter);
     int getCRLFPos(char * str, size_t len);
 
-    
-}
 
-#endif
+}

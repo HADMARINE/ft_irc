@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   includes.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:12:20 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/08/27 22:36:34 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/10 15:39:42 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INCLUDES_HPP
-#define INCLUDES_HPP
+#pragma once
 
 // CPP Includes
 # include <iostream>
@@ -59,5 +58,3 @@
 # include <poll.h>
 
 // # include "libft.h"
-
-#endif

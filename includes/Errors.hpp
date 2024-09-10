@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   Errors.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:14:05 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/09 17:48:55 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/10 15:40:17 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERRORS_H
-#define ERRORS_H
+#pragma once
 
 #include "ft_irc.hpp"
 
@@ -35,6 +34,13 @@ namespace irc {
     public:
         NoSuchChannel();
         NoSuchChannel(std::string channel);
+    };
+
+    // 404
+    class CannotSendToChan : public IrcSpecificException {
+    public:
+        CannotSendToChan();
+        CannotSendToChan(std::string channel);
     };
 
     // 421
@@ -112,6 +118,12 @@ namespace irc {
     };
 
     // ~~~ Custom exceptions from here which are not defined in RFC1459 ~~~
+
+    class IsTopicRestricted : public IrcSpecificException {
+    public:
+        IsTopicRestricted();
+    };
+
     class TooManyParameters : public IrcSpecificException {
     public:
         TooManyParameters();
@@ -135,6 +147,10 @@ namespace irc {
         UserAlreadyOperator(std::string nick, std::string channel);
     };
 
-}
+    class UserAlreadyInvited : public IrcSpecificException {
+    public:
+        UserAlreadyInvited();
+        UserAlreadyInvited(std::string nick, std::string channel);
+    };
 
-#endif
+}
