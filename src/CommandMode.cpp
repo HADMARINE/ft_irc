@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandMode.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 18:06:27 by bfaisy            #+#    #+#             */
-/*   Updated: 2024/09/09 18:12:45 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/10 09:43:04 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,20 @@ namespace irc {
 		std::string ss;
 
 		std::string channelName = this->_params.at(0);
-		std::string 
 
 		if (!channel->isOperator(user)) {
-			throw NotOperatorException();  
+			throw NoPrivileges();  
 		}
+	}
+
+	std::vector<std::string> CommandMODE::setParamsMiddleware(std::vector<std::string> params)
+	{
+		if (params.empty()) {
+			throw NeedMoreParams();
+		}
+		if (params.size() != 2) {
+			throw TooManyParameters("2", params.size());
+		}
+		return params;
 	}
 }

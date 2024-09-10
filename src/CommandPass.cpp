@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 13:43:42 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/07 16:57:04 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/10 10:04:52 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,6 @@
 namespace irc {
     int CommandPASS::resolve(Ircserv * server, User * user) {
         (void)server;
-        // TODO : Verification of logged-on user reauth try 
-        if (user->getIsRegistered()) {
-            throw AlreadyRegistered();
-        }
         user->setPendingpassword(this->_params.at(0));
         return 0;
     }
@@ -31,6 +27,13 @@ namespace irc {
             throw TooManyParameters("1", params.size());
         }
         return params;
+    }
+
+    void CommandPASS::permissionCheckMiddleware(Ircserv * server, User * user) {
+        (void)server;
+        if (user->getIsRegistered()) {
+            throw AlreadyRegistered();
+        }
     }
     
 }

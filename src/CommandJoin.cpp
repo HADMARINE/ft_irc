@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:09:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/09 23:00:08 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/10 09:40:22 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ namespace irc {
         std::string msg;
     
         channel = server->findChannelByName(channelName);
+        // TODO : check channel rights
         channel->addUser(user);
         msg = user->getNickname() + " has joined the channel\n";
         server->sendToSpecificDestination(msg, channel);
