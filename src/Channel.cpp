@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:29:50 by enorie            #+#    #+#             */
-/*   Updated: 2024/09/10 17:05:11 by root             ###   ########.fr       */
+/*   Updated: 2024/09/10 17:44:00 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,25 +25,19 @@ namespace irc {
 	std::vector<User *>	Channel::getUsers() const { return (_users); }
 	std::vector<User *>	Channel::getOperators() const { return (_operators); }
 	std::vector<User *>	Channel::getInvitedUsers() const { return (_invitedUsers); }
-
+	void				Channel::SetPasswordRequired(bool cond) {_isPasswordRequired = cond;}
 	void				Channel::setName(std::string & name) { _name = name; }
 	void				Channel::setTopic(std::string & topic) { _topic = topic; }
 	void				Channel::setPassword(std::string & password) { _channelPassword = password; }
 	void				Channel::setUserLimit(int limit) { _userLimit = limit; }
-
-	void				Channel::changeInviteOnly()
+	void				Channel::isUserLimit(bool cond) {_isUserLimit = cond;}
+	void				Channel::changeInviteOnly(bool cond)
 	{
-		if (_onInvite == true)
-			_onInvite = false;
-		else
-			_onInvite = true;
+		_onInvite = cond;
 	}
-	void				Channel::changeTopicRestrict()
+	void				Channel::changeTopicRestrict(bool cond)
 	{
-		if (_topicRestriction == true)
-			_topicRestriction = false;
-		else
-			_topicRestriction = true;
+		_topicRestriction = cond;
 	}
 
 	void				Channel::addOperator(User * user)

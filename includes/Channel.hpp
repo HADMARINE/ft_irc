@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 21:40:47 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/10 17:06:05 by root             ###   ########.fr       */
+/*   Updated: 2024/09/10 17:43:37 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,8 @@ namespace irc {
 			void				setTopic(std::string & topic);
 			void				setPassword(std::string & password);
 			void				setUserLimit(int limit);
-			void				changeInviteOnly();
-			void				changeTopicRestrict();
-
+			void				changeInviteOnly(bool cond);
+			void				changeTopicRestrict(bool cond);
 			void				addOperator(User * user);
 			void				removeOperator(User * user);
 			bool				isOperator(User * user);
@@ -48,6 +47,8 @@ namespace irc {
 			void 				inviteUser(User * user);
 			bool				isInvitedUser(User * user);
 			bool				isUserInChannel(const User * user);
+			void				SetPasswordRequired(bool cond);
+			void				isUserLimit(bool cond);
    		private:
 			Channel();
 			std::string 		_name;
@@ -59,5 +60,7 @@ namespace irc {
 			unsigned int		_userLimit;
 			bool				_onInvite;
 			bool				_topicRestriction;
+			bool				_isPasswordRequired;
+			bool				_isUserLimit;
     };
 }
