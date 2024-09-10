@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 18:06:27 by bfaisy            #+#    #+#             */
-/*   Updated: 2024/09/10 17:49:42 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/10 17:52:04 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ namespace irc {
 			std::string user = this->_params.at(2);
 			User *userop;
 			userop = server->findUserByNickSafe(user);
-			return (channel->removeOperator(userop), 0); // en DEV
+			return (channel->removeOperator(userop), 0);
 		}
 		if (option == "+l")
 		{
@@ -64,14 +64,13 @@ namespace irc {
 		return 0;
 	}
 
-	std::vector<std::string> CommandMODE::setParamsMiddleware(std::vector<std::string> params)
-	{
-		if (params.empty()) {
-			throw NeedMoreParams();
-		}
-		if (params.size() != 2) {
-			throw TooManyParameters("2", params.size());
-		}
-		return params;
-	}
+    std::vector<std::string> CommandMODE::setParamsMiddleware(std::vector<std::string> params) {
+        if (params.empty()) {
+            throw NeedMoreParams();
+        }
+        if (params.size() < 2) {
+            throw TooManyParameters("3", params.size());
+        }
+        return params;
+    }
 }

@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:24:01 by bfaisy            #+#    #+#             */
-/*   Updated: 2024/09/09 18:12:15 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/10 17:53:22 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,10 @@ namespace irc {
 		std::string msg;
 		Channel *channel;
 
-		User *targetUser = server->findUserByNick(targetUserNickname);
+		User *targetUser = server->findUserByNickSafe(targetUserNickname);
 
 		if (!channel->isOperator(operatorUser)) {
 			throw NoPrivileges();
-		}
-		if (!targetUser) {
-			throw UserNotFoundException(); 
 		}
 		server->inviteUserToChannel(channelName, targetUser); // en dev
 		msg = "You have been invited to join the channel: " + channelName;
