@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandTopic.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:32:24 by bfaisy            #+#    #+#             */
-/*   Updated: 2024/09/10 15:31:23 by root             ###   ########.fr       */
+/*   Updated: 2024/09/10 16:34:29 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ namespace irc {
 		std::string channelName = this->_params.at(0);
 		channel = server->findChannelByNameSafe(channelName);
 
-		if (this->_params.size() == 2) {
+		if (this->_params.size() == 1) {
 			std::string currentTopic = channel->getTopic();
 			ss = "Current topic for channel " + channelName + ": " + currentTopic;
 			server->sendToSpecificDestination(ss, channel);
@@ -45,12 +45,13 @@ namespace irc {
 	}
 
 
+	// 1 ~ 2 params
     std::vector<std::string> CommandTOPIC::setParamsMiddleware(std::vector<std::string> params) {
-        if (params.empty()) {
+        if (params.size() == 0) {
             throw NeedMoreParams();
         }
-        if (params.size() < 2) {
-            throw TooManyParameters("1", params.size());
+        if (params.size() != 2) {
+            throw TooManyParameters("2", params.size());
         }
         return params;
     }
