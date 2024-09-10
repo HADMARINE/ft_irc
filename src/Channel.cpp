@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:29:50 by enorie            #+#    #+#             */
-/*   Updated: 2024/09/10 15:46:21 by root             ###   ########.fr       */
+/*   Updated: 2024/09/10 16:55:37 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,15 @@ namespace irc {
 			throw UserNotInChannel(user->getNickname(), this->getName());
 		}
 		_operators.push_back(user);
+	}
+
+	void				Channel::removeOperator(User * user) {
+		for (std::vector<User *>::iterator it = _operators.begin(); it != _operators.end(); it++) {
+			if ((*it) == user) {
+				_operators.erase(it);
+				return ;
+			}
+		}
 	}
 
 	void	Channel::addUser(User * user)

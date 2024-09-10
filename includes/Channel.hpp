@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 21:40:47 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/10 15:41:31 by root             ###   ########.fr       */
+/*   Updated: 2024/09/10 16:54:33 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#pragma once
+
 #include "ft_irc.hpp"
 #include "User.hpp"
-
-#pragma once
 
 namespace irc {
 
@@ -39,8 +39,11 @@ namespace irc {
 			void				setUserLimit(int limit);
 			void				changeInviteOnly();
 			void				changeTopicRestrict();
+			
 			void				addOperator(User * user);
+			void				removeOperator(User * user);
 			bool				isOperator(User * user);
+
 			void 				addUser(User * user);
 			void 				removeUser(User * user);
 			void 				inviteUser(User * user);
