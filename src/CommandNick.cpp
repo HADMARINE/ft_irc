@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandNick.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 17:28:34 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/09 17:23:01 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/10 16:00:45 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ namespace irc {
         if (server->getPassword() != user->getPendingpassword()) {
             throw PasswordMisMatch();
         }
-       
+
        if (server->findUserByNick(this->_params.at(0))) {
-            // TODO : throw NicknameInUse~~~();
+            throw NicknameInUse(this->_params.at(0));
        }
         user->setNickname(this->_params.at(0));
         return 0;

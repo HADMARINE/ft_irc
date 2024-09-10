@@ -6,21 +6,20 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 21:40:47 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/10 15:41:31 by root             ###   ########.fr       */
+/*   Updated: 2024/09/10 17:06:05 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_irc.hpp"
-#include "User.hpp"
-
 #pragma once
+
+#include "ft_irc.hpp"
 
 namespace irc {
 
     class Channel {
 		public:
 			Channel(std::string name);
-			Channel(Channel &cpy);
+			//Channel(Channel &cpy);
 			Channel &operator=(Channel &cpy);
 			~Channel();
 
@@ -30,7 +29,7 @@ namespace irc {
 			std::vector<User *> getUsers() const;
 			std::vector<User *> getOperators() const;
 			std::vector<User *> getInvitedUsers() const;
-			int					getUserLimit();
+			unsigned int		getUserLimit();
 			bool				isInviteOnly();
 			bool				isTopicRestricted();
 			void				setName(std::string & name);
@@ -39,8 +38,11 @@ namespace irc {
 			void				setUserLimit(int limit);
 			void				changeInviteOnly();
 			void				changeTopicRestrict();
+
 			void				addOperator(User * user);
+			void				removeOperator(User * user);
 			bool				isOperator(User * user);
+
 			void 				addUser(User * user);
 			void 				removeUser(User * user);
 			void 				inviteUser(User * user);

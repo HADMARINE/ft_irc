@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:35:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/10 15:39:29 by root             ###   ########.fr       */
+/*   Updated: 2024/09/10 16:49:16 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,11 @@ namespace irc {
     protected:
     private:
         Ircserv();
-        addrinfo *_addrinfo;
         addrinfo _addrinfoHints;
         int _serverSock;
         std::string _password;
         bool *_isServerShut;
         std::vector<struct pollfd> _pfds;
-        struct pollfd _serverPfd;
 
         std::vector<User> _users;
 		std::vector<Channel> _channels;

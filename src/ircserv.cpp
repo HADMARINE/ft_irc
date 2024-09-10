@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/10 09:27:42 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/10 16:42:30 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,17 @@ namespace irc {
 	Ircserv::Ircserv(t_irc_exec_conf & conf) : _password(conf.password), _isServerShut(conf.isServerShut) {
 		struct pollfd servPoll;
 		struct sockaddr_in  serv_addr;
+    addrinfo *addrinfo;
 
 		memset(&_addrinfoHints, 0, sizeof(_addrinfoHints));
 		_addrinfoHints.ai_family = AF_INET;
 		_addrinfoHints.ai_socktype = SOCK_STREAM;
 		_addrinfoHints.ai_flags = AI_PASSIVE;
 
-		if (getaddrinfo(NULL, conf.portStr.c_str(), &_addrinfoHints, &_addrinfo) < 0)
+		if (getaddrinfo(NULL, conf.portStr.c_str(), &_addrinfoHints, &addrinfo) < 0)
 			throw std::runtime_error("addrinfo init failed");
 
-		_serverSock = socket(_addrinfo->ai_family, _addrinfo->ai_socktype, 0);
+		_serverSock = socket(addrinfo->ai_family, addrinfo->ai_socktype, 0);
 		if (_serverSock == -1)
 			throw std::runtime_error("socket failed");
 
@@ -40,7 +41,6 @@ namespace irc {
 		serv_addr.sin_addr.s_addr = INADDR_ANY;
 		serv_addr.sin_port = htons(atoi(conf.portStr.c_str()));
 
-		// TODO : Check if we have to do this kind of thing...
 		int optvalue = 1; // enables the re-use of a port if the IP address is different
 		if (setsockopt(_serverSock, SOL_SOCKET, SO_REUSEADDR, &optvalue, sizeof(optvalue)) < 0)
 		  throw std::runtime_error("Failed to set socket options");
@@ -58,7 +58,7 @@ namespace irc {
 		servPoll.events = POLLIN;
 		servPoll.revents = 0;
 		_pfds.push_back(servPoll);
-		freeaddrinfo(_addrinfo);
+		freeaddrinfo(addrinfo);
 	}
 
 	void  Ircserv::clientConnect() {
