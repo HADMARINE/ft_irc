@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:29:47 by enorie            #+#    #+#             */
-/*   Updated: 2024/09/07 16:11:51 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/10 16:52:56 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "User.hpp"
+#include "ft_irc.hpp"
 
 namespace irc {
 	User::User() : _socketfd(-1), _realname(""), _nickname(""), _username(""), _hostname(""), _pendingPassword(""), _isRegistered(false) {}
@@ -35,7 +35,7 @@ namespace irc {
 	const std::string & User::getHostname() const { return (_hostname); }
 	const std::string & User::getPendingpassword() const { return (_pendingPassword); }
 	bool User::getIsRegistered() const { return _isRegistered; }
-	
+
 	void		User::setSocketfd(int fd) { _socketfd = fd; }
 	void		User::setRealname(std::string realname) { _realname = realname; }
 	void		User::setNickname(std::string nickname) { _nickname = nickname; }

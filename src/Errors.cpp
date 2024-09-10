@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:21:34 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/10 15:37:38 by root             ###   ########.fr       */
+/*   Updated: 2024/09/10 16:39:13 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,11 @@ namespace irc {
         this->setCode("TOPIC_RESTRICTED");
         this->setMessage(":Permission Denied- This channel is topic restricted");
     }
+
+	ChannelFull::ChannelFull() {
+		this->setCode("CHANNEL_FULL");
+        this->setMessage(":Can't join the channel because it's full");
+	}
 
     TooManyParameters::TooManyParameters() {
         this->setCode("TOO_MANY_PARAMETERS");

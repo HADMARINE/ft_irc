@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:14:05 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/10 15:40:17 by root             ###   ########.fr       */
+/*   Updated: 2024/09/10 16:38:00 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,11 @@ namespace irc {
     };
 
     // ~~~ Custom exceptions from here which are not defined in RFC1459 ~~~
+
+	class ChannelFull : public IrcSpecificException {
+    public:
+        ChannelFull();
+    };
 
     class IsTopicRestricted : public IrcSpecificException {
     public:

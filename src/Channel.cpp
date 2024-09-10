@@ -6,20 +6,20 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:29:50 by enorie            #+#    #+#             */
-/*   Updated: 2024/09/10 15:46:21 by root             ###   ########.fr       */
+/*   Updated: 2024/09/10 16:54:31 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.hpp"
 
 namespace irc {
-	Channel::Channel(std::string name) { _name = name; }
+	Channel::Channel(std::string name) : _name(name), _topic(""), _channelPassword(""), _userLimit(-1), _onInvite(false), _topicRestriction(false) {}
 	Channel::~Channel() {};
 
 	const std::string & Channel::getName() const { return (_name); }
 	const std::string & Channel::getTopic() const { return (_topic); }
 	const std::string & Channel::getPassword() const { return (_channelPassword); }
-	int					Channel::getUserLimit() { return (_userLimit); }
+	unsigned int		Channel::getUserLimit() { return (_userLimit); }
 	bool				Channel::isInviteOnly() { return (_onInvite); }
 	bool				Channel::isTopicRestricted() { return (_topicRestriction); }
 	std::vector<User *>	Channel::getUsers() const { return (_users); }
