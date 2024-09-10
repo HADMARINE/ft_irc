@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/10 17:58:32 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/10 22:44:39 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,23 @@ namespace irc {
 		_pfds.push_back(servPoll);
 		freeaddrinfo(addrinfo);
 	}
+
+  Ircserv & Ircserv::operator=(const Ircserv & rhs) {
+    if (this != &rhs) {
+      this->_password = rhs._password;
+      this->_isServerShut = rhs._isServerShut;
+      this->_serverSock = rhs._serverSock;
+      this->_pfds = rhs._pfds;
+      this->_users = rhs._users;
+      this->_channels = rhs._channels;
+      this->_operators = rhs._operators;
+    }
+    return *this;
+  }
+
+  Ircserv::~Ircserv() {
+      std::cout << "Server shutting down..." << std::endl;
+  }
 
 	void  Ircserv::clientConnect() {
     int                fd;
@@ -363,9 +380,7 @@ namespace irc {
 
 
   void Ircserv::sendToAll(std::string & message) { // TODO : test this
-    for (std::vector<User>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
-      this->sendToSpecificDestination(message, it.base());
-    }
+    this->sendToSpecificDestination(message, this->_users);
   }
 
   void Ircserv::sendToSpecificDestination(std::string & message, User * user) {
@@ -398,8 +413,30 @@ namespace irc {
     this->removeUser(user);
   }
 
-  Ircserv::~Ircserv() {
-      std::cout << "Server shutting down..." << std::endl;
+  std::string Ircserv::formatResponse(std::string & message) {
+    std::stringstream ss;
+    ss << message << "\r\n";
+    return ss.str();
+  }
+  
+  std::string Ircserv::formatResponse(IrcSpecificResponse message) {
+    std::stringstream ss;
+    ss << ":" << this->getDomain() << " ";
+    if (message.getNumeric() != 0) {
+      ss << message.getCode() << " ";
+    }
+    ss << message.getMessage() << "\r\n";
+    return ss.str();
+  }
+
+  std::string Ircserv::formatResponse(User * origin, std::string & message) {
+    std::stringstream ss;
+    ss << ":" << origin->getNickname();
+    if (!origin->getRealname().empty()) {
+
+    }
+    ss << ":" << origin->getNickname() << "!" << origin->getUsername() << "@" << origin->getHostname() << " " << message << "\r\n";
+    return ss.str();
   }
 
 }

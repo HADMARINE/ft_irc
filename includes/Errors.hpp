@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:14:05 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/10 17:58:48 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/10 22:49:25 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,12 @@ namespace irc {
     public:
         UnknownCommand();
         UnknownCommand(std::string cmd);
+    };
+
+    // 431
+    class NoNicknameGiven : public IrcSpecificResponse {
+    public:
+        NoNicknameGiven();
     };
 
     // 432

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_irc.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:11:03 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/10 15:39:57 by root             ###   ########.fr       */
+/*   Updated: 2024/09/10 22:19:31 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,11 @@
 #include "ircserv.hpp"
 #include "ACommand.hpp"
 #include "Commands.hpp"
-#include "IrcSpecificException.hpp"
+#include "IrcSpecificResponse.hpp"
 #include "Errors.hpp"
 
 namespace irc {
     class Ircserv;
     class ACommand;
 }
+
