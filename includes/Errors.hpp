@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Errors.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:14:05 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/10 16:38:00 by root             ###   ########.fr       */
+/*   Updated: 2024/09/10 17:58:48 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,143 +16,143 @@
 
 namespace irc {
     // 401
-    class NoSuchNick : public IrcSpecificException {
+    class NoSuchNick : public IrcSpecificResponse {
     public:
         NoSuchNick();
         NoSuchNick(std::string nick);
     };
 
     // 402
-    class NoSuchServer : public IrcSpecificException {
+    class NoSuchServer : public IrcSpecificResponse {
     public:
         NoSuchServer();
         NoSuchServer(std::string server);
     };
 
     // 403
-    class NoSuchChannel : public IrcSpecificException {
+    class NoSuchChannel : public IrcSpecificResponse {
     public:
         NoSuchChannel();
         NoSuchChannel(std::string channel);
     };
 
     // 404
-    class CannotSendToChan : public IrcSpecificException {
+    class CannotSendToChan : public IrcSpecificResponse {
     public:
         CannotSendToChan();
         CannotSendToChan(std::string channel);
     };
 
     // 421
-    class UnknownCommand : public IrcSpecificException {
+    class UnknownCommand : public IrcSpecificResponse {
     public:
         UnknownCommand();
         UnknownCommand(std::string cmd);
     };
 
     // 432
-    class ErroneusNickName : public IrcSpecificException {
+    class ErroneusNickName : public IrcSpecificResponse {
     public:
         ErroneusNickName();
         ErroneusNickName(std::string nick);
     };
 
     // 433
-    class NicknameInUse : public IrcSpecificException {
+    class NicknameInUse : public IrcSpecificResponse {
     public:
         NicknameInUse();
         NicknameInUse(std::string nick);
     };
 
     // 441
-    class UserNotInChannel : public IrcSpecificException {
+    class UserNotInChannel : public IrcSpecificResponse {
     public:
         UserNotInChannel();
         UserNotInChannel(std::string nick, std::string channel);
     };
 
     // 442
-    class NotOnChannel : public IrcSpecificException {
+    class NotOnChannel : public IrcSpecificResponse {
     public:
         NotOnChannel();
         NotOnChannel(std::string channel);
     };
 
     // 443
-    class UserOnChannel : public IrcSpecificException {
+    class UserOnChannel : public IrcSpecificResponse {
     public:
         UserOnChannel();
         UserOnChannel(std::string nick, std::string channel);
     };
 
     // 461
-    class NeedMoreParams : public IrcSpecificException {
+    class NeedMoreParams : public IrcSpecificResponse {
     public:
         NeedMoreParams();
         NeedMoreParams(std::string cmd);
     };
 
     // 462
-    class AlreadyRegistered : public IrcSpecificException {
+    class AlreadyRegistered : public IrcSpecificResponse {
     public:
         AlreadyRegistered();
     };
 
     // 464
-    class PasswordMisMatch : public IrcSpecificException {
+    class PasswordMisMatch : public IrcSpecificResponse {
     public:
         PasswordMisMatch();
     };
 
     // 473
-    class InviteOnlyChan : public IrcSpecificException {
+    class InviteOnlyChan : public IrcSpecificResponse {
     public:
         InviteOnlyChan();
         InviteOnlyChan(std::string channel);
     };
 
     // 481
-    class NoPrivileges : public IrcSpecificException {
+    class NoPrivileges : public IrcSpecificResponse {
     public:
         NoPrivileges();
     };
 
     // ~~~ Custom exceptions from here which are not defined in RFC1459 ~~~
 
-	class ChannelFull : public IrcSpecificException {
+	class ChannelFull : public IrcSpecificResponse {
     public:
         ChannelFull();
     };
 
-    class IsTopicRestricted : public IrcSpecificException {
+    class IsTopicRestricted : public IrcSpecificResponse {
     public:
         IsTopicRestricted();
     };
 
-    class TooManyParameters : public IrcSpecificException {
+    class TooManyParameters : public IrcSpecificResponse {
     public:
         TooManyParameters();
         TooManyParameters(std::string condition, size_t receivedNum);
     private:
     };
 
-    class UserNotFound : public IrcSpecificException {
+    class UserNotFound : public IrcSpecificResponse {
     public:
         UserNotFound();
     };
 
-    class MessageBufferLimitExceeded : public IrcSpecificException {
+    class MessageBufferLimitExceeded : public IrcSpecificResponse {
     public:
         MessageBufferLimitExceeded();
     };
 
-    class UserAlreadyOperator : public IrcSpecificException {
+    class UserAlreadyOperator : public IrcSpecificResponse {
     public:
         UserAlreadyOperator();
         UserAlreadyOperator(std::string nick, std::string channel);
     };
 
-    class UserAlreadyInvited : public IrcSpecificException {
+    class UserAlreadyInvited : public IrcSpecificResponse {
     public:
         UserAlreadyInvited();
         UserAlreadyInvited(std::string nick, std::string channel);

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   IrcSpecificException.hpp                           :+:      :+:    :+:   */
+/*   IrcSpecificResponse.hpp                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -15,10 +15,10 @@
 #include "ft_irc.hpp"
 
 namespace irc {
-    class IrcSpecificException {
+    class IrcSpecificResponse {
     public:
-        IrcSpecificException() : _numeric(0), _code("UNDEFINED"), _message("Unknown error occured") {}
-        IrcSpecificException(std::string code, std::string message) : _numeric(0), _code(code), _message(message) {}
+        IrcSpecificResponse() : _numeric(0), _code("UNDEFINED"), _message("Unknown error occured") {}
+        IrcSpecificResponse(std::string code, std::string message) : _numeric(0), _code(code), _message(message) {}
         void setNumeric(unsigned short numeric) { this->_numeric = numeric; }
         unsigned short getNumeric() const { return this->_numeric; }
         void setCode(std::string code) { this->_code = code; }

@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/10 16:42:30 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/10 17:58:32 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ namespace irc {
       for (std::vector<ACommand *>::iterator it = commmands.begin(); it != commmands.end(); it++) {
         delete *it;  
       }
-    } catch (IrcSpecificException & e) {
+    } catch (IrcSpecificResponse & e) {
       // TODO : send error to client
       for (std::vector<ACommand *>::iterator it = commmands.begin(); it != commmands.end(); it++) {
         delete *it;
@@ -166,7 +166,6 @@ namespace irc {
 	}
 
 	static ACommand * getCommandFromDict(std::string cmd) {
-		// TODO : Emit error when undefined command
 		if (cmd == "PASS") {
       return new CommandPASS();
     } else if (cmd == "JOIN") {
@@ -235,7 +234,7 @@ namespace irc {
 
         cmd->setParams(params);
       }
-    } catch (IrcSpecificException & e) {
+    } catch (IrcSpecificResponse & e) {
       for (std::vector<ACommand *>::iterator it = cmdList.begin(); it != cmdList.end(); it++) {
         delete *it;
       }
