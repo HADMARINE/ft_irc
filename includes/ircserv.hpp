@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:35:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/10 16:49:16 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/10 18:41:04 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,11 @@ namespace irc {
         void disconnectUser(User * user); // Disconnect totally from server
 
         std::vector<ACommand *> parseCommandStr(std::string & str);
+        std::string formatResponse(std::string & message);
+        std::string formatResponse(User * origin, std::string & message);
+        std::string formatResponse(IrcSpecificResponse message);
+        std::string formatResponse(std::string & message);
+        
     protected:
     private:
         Ircserv();
