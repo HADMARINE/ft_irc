@@ -6,13 +6,13 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 21:40:47 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/10 16:58:32 by root             ###   ########.fr       */
+/*   Updated: 2024/09/10 17:06:05 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_irc.hpp"
-
 #pragma once
+
+#include "ft_irc.hpp"
 
 namespace irc {
 
@@ -38,8 +38,11 @@ namespace irc {
 			void				setUserLimit(int limit);
 			void				changeInviteOnly();
 			void				changeTopicRestrict();
+
 			void				addOperator(User * user);
+			void				removeOperator(User * user);
 			bool				isOperator(User * user);
+
 			void 				addUser(User * user);
 			void 				removeUser(User * user);
 			void 				inviteUser(User * user);
