@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/11 18:02:44 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/11 18:45:30 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -436,7 +436,9 @@ namespace irc {
     std::stringstream ss;
     ss << ":" << this->getHostname() << " ";
     if (message.getNumeric() != 0) {
-      ss << message.getCode() << " ";
+      std::ostringstream oss;
+      oss << std::setfill('0') << std::setw(3) << message.getNumeric();
+      ss << oss.str() << " ";
     }
     ss << message.getMessage() << "\r\n";
     return ss.str();
