@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:11:03 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/10 22:19:31 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/11 17:58:07 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 #include "ACommand.hpp"
 #include "Commands.hpp"
 #include "IrcSpecificResponse.hpp"
+#include "NumericResponse.hpp"
 #include "Errors.hpp"
 
 namespace irc {
