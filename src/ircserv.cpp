@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/10 22:44:39 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/11 14:01:11 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,13 @@ namespace irc {
 		servPoll.revents = 0;
 		_pfds.push_back(servPoll);
 		freeaddrinfo(addrinfo);
+    this->_hostname = conf.hostname;
 	}
 
   Ircserv & Ircserv::operator=(const Ircserv & rhs) {
-    if (this != &rhs) {
+    if (this == &rhs) {
+      return *this;
+    }
       this->_password = rhs._password;
       this->_isServerShut = rhs._isServerShut;
       this->_serverSock = rhs._serverSock;
@@ -70,7 +73,6 @@ namespace irc {
       this->_users = rhs._users;
       this->_channels = rhs._channels;
       this->_operators = rhs._operators;
-    }
     return *this;
   }
 
@@ -90,6 +92,7 @@ namespace irc {
       throw std::runtime_error("Failed to accept connection");
 
     User user(fd);
+    user.setHostname("localhost");
     this->_users.push_back(user);
 
     pfd.fd = fd;
@@ -379,8 +382,10 @@ namespace irc {
   }
 
 
-  void Ircserv::sendToAll(std::string & message) { // TODO : test this
-    this->sendToSpecificDestination(message, this->_users);
+  void Ircserv::sendToAll(std::string & message) {
+    for (std::vector<Channel>::iterator it = this->_channels.begin(); it != this->_channels.end(); it++) {
+      this->sendToSpecificDestination(message, it.base());
+    }
   }
 
   void Ircserv::sendToSpecificDestination(std::string & message, User * user) {
@@ -406,6 +411,13 @@ namespace irc {
         break;
       }
     }
+
+    for (std::vector<struct pollfd>::iterator it = this->_pfds.begin(); it != this->_pfds.end(); it++) {
+      if (it->fd == user->getSocketfd()) {
+        this->_pfds.erase(it);
+        break;
+      }
+    }
   }
 
   void Ircserv::disconnectUser(User * user) {
@@ -421,7 +433,7 @@ namespace irc {
   
   std::string Ircserv::formatResponse(IrcSpecificResponse message) {
     std::stringstream ss;
-    ss << ":" << this->getDomain() << " ";
+    ss << ":" << this->getHostname() << " ";
     if (message.getNumeric() != 0) {
       ss << message.getCode() << " ";
     }
@@ -431,10 +443,6 @@ namespace irc {
 
   std::string Ircserv::formatResponse(User * origin, std::string & message) {
     std::stringstream ss;
-    ss << ":" << origin->getNickname();
-    if (!origin->getRealname().empty()) {
-
-    }
     ss << ":" << origin->getNickname() << "!" << origin->getUsername() << "@" << origin->getHostname() << " " << message << "\r\n";
     return ss.str();
   }

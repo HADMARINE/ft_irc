@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:35:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/10 18:41:04 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/11 13:57:23 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 namespace irc {
 
     class ACommand;
+    class IrcSpecificResponse;
 
     class Ircserv {
     public:
@@ -34,6 +35,10 @@ namespace irc {
         std::vector<User> & getUsers() { return this->_users; }
         const std::string & getPassword() const { return this->_password; }
         std::vector<Channel> & getChannels() { return this->_channels; }
+        const std::string & getMotd() const { return this->_motd; }
+        const std::string & getHostname() const { return this->_hostname; }
+
+        void setMotd(std::string & motd) { this->_motd = motd; }
 
 
         User * findUserByFd(int fd); // User * can be null
@@ -55,7 +60,6 @@ namespace irc {
         std::string formatResponse(std::string & message);
         std::string formatResponse(User * origin, std::string & message);
         std::string formatResponse(IrcSpecificResponse message);
-        std::string formatResponse(std::string & message);
         
     protected:
     private:
@@ -64,11 +68,15 @@ namespace irc {
         int _serverSock;
         std::string _password;
         bool *_isServerShut;
+        std::string _hostname;
+
+
         std::vector<struct pollfd> _pfds;
 
         std::vector<User> _users;
 		std::vector<Channel> _channels;
 		std::vector<t_server_op> _operators;
+        std::string _motd;
     };
 
 }
