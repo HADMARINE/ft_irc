@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/11 17:55:05 by root             ###   ########.fr       */
+/*   Updated: 2024/09/11 18:02:44 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ namespace irc {
     _pfds.push_back(pfd);
 
     this->clientMessage(fd);
-    this->sendToSpecificDestination(this->formatResponse(RPLWelcome(&user.getNickname())), &user);
+    this->sendToSpecificDestination(this->formatResponse(RPLWelcome(user.getNickname())), &user);
     DCMD(std::cout << "Client " << fd << " connected" << std::endl);
 	}
 
@@ -389,19 +389,19 @@ namespace irc {
     }
   }
 
-  void Ircserv::sendToSpecificDestination(std::string & message, User * user) {
+  void Ircserv::sendToSpecificDestination(const std::string & message, User * user) {
     if (send(user->getSocketfd(), message.c_str(), message.size(), 0) < 0) {
       throw std::runtime_error("Failed to send message");
     }
   }
 
-  void Ircserv::sendToSpecificDestination(std::string & message, std::vector<User *> users) {
+  void Ircserv::sendToSpecificDestination(const std::string & message, std::vector<User *> users) {
     for (std::vector<User *>::iterator it = users.begin(); it != users.end(); it++) {
       this->sendToSpecificDestination(message, *it);
     }
   }
 
-  void Ircserv::sendToSpecificDestination(std::string & message, Channel * channel) {
+  void Ircserv::sendToSpecificDestination(const std::string & message, Channel * channel) {
     this->sendToSpecificDestination(message, channel->getUsers());
   }
 
