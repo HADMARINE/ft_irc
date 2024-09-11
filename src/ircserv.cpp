@@ -6,7 +6,11 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/09/11 18:51:45 by root             ###   ########.fr       */
+=======
+/*   Updated: 2024/09/11 18:45:30 by lhojoon          ###   ########.fr       */
+>>>>>>> 316b12087e3e2830a64b21d72bbfe4835f1c47c2
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -440,7 +444,9 @@ namespace irc {
     std::stringstream ss;
     ss << ":" << this->getHostname() << " ";
     if (message.getNumeric() != 0) {
-      ss << message.getCode() << " ";
+      std::ostringstream oss;
+      oss << std::setfill('0') << std::setw(3) << message.getNumeric();
+      ss << oss.str() << " ";
     }
     ss << message.getMessage() << "\r\n";
     return ss.str();

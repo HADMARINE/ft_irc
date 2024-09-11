@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 18:06:27 by bfaisy            #+#    #+#             */
-/*   Updated: 2024/09/10 17:52:04 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/11 18:26:35 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ namespace irc {
 		if (option == "+k")
 		{
 			std::string password = this->_params.at(2);
-			return (channel->SetPasswordRequired(true), channel->setPassword(password), 0);
+			return (channel->setPasswordRequired(true), channel->setPassword(password), 0);
 		}
 		if (option == "-k")
-			return (channel->SetPasswordRequired(false), 0);
+			return (channel->setPasswordRequired(false), 0);
 		if (option == "+o")
 		{
 			std::string user = this->_params.at(2);
