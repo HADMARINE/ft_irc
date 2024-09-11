@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 21:40:47 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/10 17:43:37 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/11 14:01:55 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ namespace irc {
 		public:
 			Channel(std::string name);
 			//Channel(Channel &cpy);
-			Channel &operator=(Channel &cpy);
+			Channel &operator=(const Channel &cpy);
 			~Channel();
 
 			const std::string & getName() const;

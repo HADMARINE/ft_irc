@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:29:50 by enorie            #+#    #+#             */
-/*   Updated: 2024/09/10 17:44:00 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/11 14:51:04 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,23 @@
 
 namespace irc {
 	Channel::Channel(std::string name) : _name(name), _topic(""), _channelPassword(""), _userLimit(-1), _onInvite(false), _topicRestriction(false) {}
+	Channel & Channel::operator=(const Channel &cpy) {
+		if (this == &cpy) {
+			return *this;
+		}
+		_name = cpy._name;
+		_topic = cpy._topic;
+		_channelPassword = cpy._channelPassword;
+		_users = cpy._users;
+		_operators = cpy._operators;
+		_invitedUsers = cpy._invitedUsers;
+		_userLimit = cpy._userLimit;
+		_onInvite = cpy._onInvite;
+		_topicRestriction = cpy._topicRestriction;
+		_isPasswordRequired = cpy._isPasswordRequired;
+		_isUserLimit = cpy._isUserLimit;
+		return *this;
+	}
 	Channel::~Channel() {};
 
 	const std::string & Channel::getName() const { return (_name); }
