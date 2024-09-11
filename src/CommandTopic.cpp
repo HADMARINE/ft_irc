@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandTopic.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:32:24 by bfaisy            #+#    #+#             */
-/*   Updated: 2024/09/10 16:34:29 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/11 16:39:57 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ namespace irc {
 			ss = "Current topic for channel " + channelName + ": " + currentTopic;
 			server->sendToSpecificDestination(ss, channel);
 			return 0;
+			jhgf
 		}
 
 		if (!channel->isOperator(user)) {
