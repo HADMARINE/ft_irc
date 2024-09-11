@@ -6,11 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/09/11 18:51:45 by root             ###   ########.fr       */
-=======
-/*   Updated: 2024/09/11 18:45:30 by lhojoon          ###   ########.fr       */
->>>>>>> 316b12087e3e2830a64b21d72bbfe4835f1c47c2
+/*   Updated: 2024/09/11 18:52:26 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +101,7 @@ namespace irc {
     _pfds.push_back(pfd);
 
     this->clientMessage(fd);
-    this->sendToSpecificDestination(this->formatResponse(RPLWelcome(user.getNickname())), &user);
+    this->sendToSpecificDestination(this->formatResponse(RPLWelcome(&user)), &user);
 	}
 
 

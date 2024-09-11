@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Commands.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 13:42:22 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/11 18:52:22 by root             ###   ########.fr       */
+/*   Updated: 2024/09/11 18:55:02 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ namespace irc {
     };
 
 	class CommandUSER : public ACommand {
-        int resolve(User * user);
+        int resolve(Ircserv * server, User * user);
         std::vector<std::string> setParamsMiddleware(std::vector<std::string> params);
     };
 
