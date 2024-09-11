@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircstruct.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:05:10 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/10 15:38:56 by root             ###   ########.fr       */
+/*   Updated: 2024/09/11 13:45:26 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ typedef struct s_exec_conf {
     short port; // 0 ~ 65535
     std::string portStr;
     bool *isServerShut;
+    std::string hostname;
 } t_irc_exec_conf;
 
 typedef struct s_server_op
