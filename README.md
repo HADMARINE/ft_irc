@@ -36,6 +36,7 @@ namespace irc {
 * How to open socket server in cpp : https://www.geeksforgeeks.org/socket-programming-in-cpp/
 * Visual map of structure around user : https://www.linuxjournal.com/sites/default/files/inline-images/Erlang%20IRC%20Datamodel.png
 * Standard doc : https://datatracker.ietf.org/doc/html/rfc1459
+* Modern standard doc : https://modern.ircdocs.horse/
 * Reference with examples : https://dd.ircdocs.horse/refs/commands
 
 ## How to use
