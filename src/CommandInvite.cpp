@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:24:01 by bfaisy            #+#    #+#             */
-/*   Updated: 2024/09/10 17:53:22 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/11 18:35:13 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ namespace irc {
 		if (!channel->isOperator(operatorUser)) {
 			throw NoPrivileges();
 		}
-		server->inviteUserToChannel(channelName, targetUser); // en dev
+		channel->inviteUser(targetUser);
 		msg = "You have been invited to join the channel: " + channelName;
 		server->sendToSpecificDestination(msg, targetUser);
 
