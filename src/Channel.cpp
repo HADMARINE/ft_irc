@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:29:50 by enorie            #+#    #+#             */
-/*   Updated: 2024/09/11 14:51:04 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/11 15:03:27 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,18 @@ namespace irc {
 			throw UserOnChannel(user->getNickname(), this->getName());
 		}
 		_users.push_back(user);
+	}
+
+	void	Channel::removeOperator(User * user) {
+		std::vector<User *>::iterator it;
+		for (it = _operators.begin(); it != _operators.end(); it++)
+		{
+			if ((*it) == user)
+			{
+				_operators.erase(it);
+				return ;
+			}
+		}
 	}
 
 	bool	Channel::isOperator(User * user)
