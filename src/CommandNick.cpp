@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 17:28:34 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/11 13:24:05 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/11 14:59:56 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,22 @@ namespace irc {
         if (params.size() != 1) {
             throw TooManyParameters("1", params.size());
         }
+        if (!checkNickValidity(params.at(0))) {
+            throw ErroneusNickName(params.at(0));
+        }
         return params;
+    }
+
+    bool CommandNICK::checkNickValidity(const std::string & nick) {
+        if (nick.find_first_of(" ,*?!@") != std::string::npos) {
+            return false;
+        }
+        if (nick.find_first_of("$:") == 0) {
+            return false;
+        }
+        if (nick.find_first_of(".") != std::string::npos) {
+            return false;
+        }
+        return true;
     }
 }
