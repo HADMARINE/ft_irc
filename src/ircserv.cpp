@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/11 14:01:11 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/11 17:55:05 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ namespace irc {
     _pfds.push_back(pfd);
 
     this->clientMessage(fd);
-    
+    this->sendToSpecificDestination(this->formatResponse(RPLWelcome(&user.getNickname())), &user);
     DCMD(std::cout << "Client " << fd << " connected" << std::endl);
 	}
 
@@ -147,9 +147,9 @@ namespace irc {
             throw std::runtime_error("Some error while command execution occured"); // TODO : precise error
         }
       }
-      
+
       for (std::vector<ACommand *>::iterator it = commmands.begin(); it != commmands.end(); it++) {
-        delete *it;  
+        delete *it;
       }
     } catch (IrcSpecificResponse & e) {
       // TODO : send error to client
@@ -190,6 +190,8 @@ namespace irc {
       return new CommandPASS();
     } else if (cmd == "JOIN") {
       return new CommandJOIN();
+    } else if (cmd == "NICK") {
+      return new CommandNICK();
     } else if (cmd == "KICK") {
       return new CommandKICK();
     } else if (cmd == "QUIT") {
@@ -200,12 +202,12 @@ namespace irc {
 
 	std::vector<ACommand *> Ircserv::parseCommandStr(std::string & str) {
 		std::vector<std::string> cmdLines = split(str, "\r\n");
-    
+
 
     // Remove invalid lists
     std::vector<std::vector<std::string>::iterator> vIt;
     for (std::vector<std::string>::iterator it = cmdLines.begin(); it != cmdLines.end(); it++) {
-      if (it->empty()) { 
+      if (it->empty()) {
         vIt.push_back(it);
         continue;
       }
@@ -238,7 +240,7 @@ namespace irc {
         // Remove invalid parameters - empty
         std::vector<std::vector<std::string>::iterator> vIt;
         for (std::vector<std::string>::iterator it = params.begin(); it != params.end(); it++) {
-          if (it->empty()) { 
+          if (it->empty()) {
             vIt.push_back(it);
             continue;
           }
@@ -305,7 +307,7 @@ namespace irc {
 
   User * Ircserv::findUserByFd(int fd) {
     User * foundUser = NULL;
-    
+
     for (std::vector<User>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
       if ((*it).getSocketfd() == fd)
         foundUser = it.base();
@@ -316,59 +318,58 @@ namespace irc {
 
 	User * Ircserv::findUserByFdSafe(int fd) {
     User * foundUser = NULL;
-    
+
     for (std::vector<User>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
       if ((*it).getSocketfd() == fd)
         foundUser = it.base();
     }
-    
+
     if (foundUser == NULL) {
       throw UserNotFound();
     }
-    
     return foundUser;
   }
 
   User * Ircserv::findUserByNick(std::string & nick) {
     User * foundUser = NULL;
-    
+
     for (std::vector<User>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
       if ((*it).getNickname() == nick)
         foundUser = it.base();
     }
-    
+
     return foundUser;
   }
 
   User * Ircserv::findUserByNickSafe(std::string & nick) {
     User * foundUser = NULL;
-    
+
     for (std::vector<User>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
       if ((*it).getNickname() == nick)
         foundUser = it.base();
     }
-    
+
     if (foundUser == NULL) {
       throw NoSuchNick(nick);
     }
-    
+
     return foundUser;
   }
 
   Channel * Ircserv::findChannelByName(std::string & name) {
     Channel * foundChannel = NULL;
-    
+
     for (std::vector<Channel>::iterator it = this->_channels.begin(); it != this->_channels.end(); it++) {
       if ((*it).getName() == name)
         foundChannel = it.base();
     }
-    
+
     return foundChannel;
   }
 
   Channel * Ircserv::findChannelByNameSafe(std::string & name) {
     Channel * foundChannel = NULL;
-    
+
     for (std::vector<Channel>::iterator it = this->_channels.begin(); it != this->_channels.end(); it++) {
       if ((*it).getName() == name)
         foundChannel = it.base();
@@ -377,7 +378,7 @@ namespace irc {
     if (foundChannel == NULL) {
       throw NoSuchChannel();
     }
-    
+
     return foundChannel;
   }
 
@@ -430,7 +431,7 @@ namespace irc {
     ss << message << "\r\n";
     return ss.str();
   }
-  
+
   std::string Ircserv::formatResponse(IrcSpecificResponse message) {
     std::stringstream ss;
     ss << ":" << this->getHostname() << " ";

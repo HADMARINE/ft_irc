@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   NumericResponses.cpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 15:05:22 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/11 15:07:08 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/11 17:50:44 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ namespace irc {
     // 002
     class RPLYourHost : public IrcSpecificResponse {
     public:
-        YourHost() {
+        RPLYourHost() {
             this->setCode("RPL_YOURHOST");
             this->setNumeric(2);
             this->setMessage(":Your host is <servername>, running version <ver>");
@@ -36,7 +36,7 @@ namespace irc {
     // 003
     class RPLCreated : public IrcSpecificResponse {
     public:
-        Created() {
+        RPLCreated() {
             this->setCode("RPL_CREATED");
             this->setNumeric(3);
             this->setMessage(":This server was created <date>");
@@ -44,9 +44,9 @@ namespace irc {
     };
 
     // 004
-    class MyInfo : public IrcSpecificResponse {
+    class RPLMyInfo : public IrcSpecificResponse {
     public:
-        MyInfo() {
+        RPLMyInfo() {
             this->setCode("RPL_MYINFO");
             this->setNumeric(4);
             this->setMessage("<servername> <version> <available user modes> <available channel modes>");
@@ -54,9 +54,9 @@ namespace irc {
     };
 
     // 005
-    class Isupport : public IrcSpecificResponse {
+    class RPLIsupport : public IrcSpecificResponse {
     public:
-        Isupport() {
+        RPLIsupport() {
             this->setCode("RPL_ISUPPORT");
             this->setNumeric(5);
             this->setMessage(":are supported by this server");
@@ -64,9 +64,9 @@ namespace irc {
     };
 
     // 251
-    class LUserClient : public IrcSpecificResponse {
+    class RPLLUserClient : public IrcSpecificResponse {
     public:
-        LUserClient() {
+        RPLLUserClient() {
             this->setCode("RPL_LUSERCLIENT");
             this->setNumeric(251);
             this->setMessage(":There are <integer> users and <integer> services on <integer> servers");
