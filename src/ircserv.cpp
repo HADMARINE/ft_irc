@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/12 17:08:53 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/12 17:38:27 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,8 @@ namespace irc {
       return new CommandMODE();
     } else if (cmd == "CAP") {
     	return NULL;
+    } else if (cmd == "PRIVMSG") {
+      return new CommandPRIVMSG();
     }
  		throw UnknownCommand(cmd);
 	}
