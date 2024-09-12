@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   NumericResponce.hpp                                :+:      :+:    :+:   */
+/*   NumericResponse.hpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 17:44:38 by root              #+#    #+#             */
-/*   Updated: 2024/09/11 17:50:10 by root             ###   ########.fr       */
+/*   Updated: 2024/09/11 18:51:49 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ namespace irc {
     // 001
     class RPLWelcome : public IrcSpecificResponse {
     public:
-        RPLWelcome(const std::string & nick);
+        RPLWelcome(User * user);
     };
 
     // 002

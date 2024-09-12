@@ -6,7 +6,7 @@
 #    By: root <root@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/07 14:13:59 by lhojoon           #+#    #+#              #
-#    Updated: 2024/09/11 17:51:31 by root             ###   ########.fr        #
+#    Updated: 2024/09/11 18:49:32 by root             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRCS_RAW =	main.cpp \
 			CommandKick.cpp \
 			CommandNick.cpp \
 			CommandQuit.cpp \
+			CommandUser.cpp \
 			NumericResponse.cpp
 
 SRCS = $(addprefix $(DIR)/,$(SRCS_RAW))

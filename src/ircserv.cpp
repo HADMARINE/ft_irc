@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/11 19:10:38 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/11 18:52:26 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,7 @@ namespace irc {
     _pfds.push_back(pfd);
 
     this->clientMessage(fd);
-    this->sendToSpecificDestination(this->formatResponse(RPLWelcome(user.getNickname())), &user);
-    DCMD(std::cout << "Client " << fd << " connected" << std::endl);
+    this->sendToSpecificDestination(this->formatResponse(RPLWelcome(&user)), &user);
 	}
 
 
@@ -127,7 +126,7 @@ namespace irc {
       clientDisconnect(fd);
       return;
     }
-
+    std::cout << messageBuff << std::endl;
     std::vector<ACommand *> commmands;
 
     try {
@@ -186,16 +185,20 @@ namespace irc {
 	}
 
 	static ACommand * getCommandFromDict(std::string cmd) {
-		if (cmd == "PASS") {
-      return new CommandPASS();
+	if (cmd == "PASS") {
+    	return new CommandPASS();
+    } else if (cmd == "USER") {
+    	return new CommandUSER();
     } else if (cmd == "JOIN") {
-      return new CommandJOIN();
+    	return new CommandJOIN();
     } else if (cmd == "NICK") {
-      return new CommandNICK();
+    	return new CommandNICK();
     } else if (cmd == "KICK") {
-      return new CommandKICK();
+    	return new CommandKICK();
     } else if (cmd == "QUIT") {
-      return new CommandQUIT();
+    	return new CommandQUIT();
+    } else if (cmd == "CAP") {
+    	return NULL;
     }
  		throw UnknownCommand(cmd);
 	}
@@ -250,11 +253,12 @@ namespace irc {
         }
 
         cmd = getCommandFromDict(params.front());
-        cmdList.push_back(cmd);
-
-        params.erase(params.begin());
-
-        cmd->setParams(params);
+        if (cmd)
+        {
+			cmdList.push_back(cmd);
+			params.erase(params.begin());
+			cmd->setParams(params);
+        }
       }
     } catch (IrcSpecificResponse & e) {
       for (std::vector<ACommand *>::iterator it = cmdList.begin(); it != cmdList.end(); it++) {

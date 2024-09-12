@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   NumericResponse.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 15:05:22 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/11 18:10:49 by root             ###   ########.fr       */
+/*   Updated: 2024/09/11 18:51:12 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,14 @@
 
 namespace irc {
     // 001
-        RPLWelcome::RPLWelcome(const std::string & nick) {
+        RPLWelcome::RPLWelcome(User * user) {
             this->setCode("RPL_WELCOME");
             this->setNumeric(1);
-            this->setMessage(":Welcome to the Internet Relay Network " + nick);
+            std::stringstream ss;
+            ss << ":Welcome to the Internet Relay Network " << user->getNickname();
+            if (!user->getUsername().empty() && !user->getRealname().empty())
+                ss << "!" << user->getUsername() << "@" << user->getRealname();
+            this->setMessage(ss.str());
         }
 
     // 002
