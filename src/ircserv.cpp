@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/12 16:28:46 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/12 17:08:53 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ namespace irc {
         delete *it;
       }
     } catch (IrcSpecificResponse & e) {
-      // TODO : send error to client
+      this->sendToSpecificDestination(this->formatResponse(e), this->findUserByFdSafe(fd));
       for (std::vector<ACommand *>::iterator it = commmands.begin(); it != commmands.end(); it++) {
         delete *it;
       }
