@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:26:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/12 17:41:37 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/12 18:02:58 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,23 @@ namespace irc {
             std::string targetCpy  = target.substr(1);
             Channel * channel = server->findChannelByNameSafe(targetCpy);
             users = channel->getUsers();
-        } else if (target.find_first_of("%#") == 0 || target.find_first_of("@%#") == 0) {
-            std::string targetCpy = target.substr(1);
+        } else if (target.find_first_of("%#") == 0) {
+            std::string targetCpy = target.substr(2);
+            Channel * channel = server->findChannelByNameSafe(targetCpy);
+            users = channel->getOperators();
+        } else if (target.find_first_of("@%#") == 0) {
+            std::string targetCpy = target.substr(3);
             Channel * channel = server->findChannelByNameSafe(targetCpy);
             users = channel->getOperators();
         } else {
             User * targetUser = server->findUserByNickSafe(target);
             users.push_back(targetUser);
+        }
+        for (std::vector<User *>::iterator it = users.begin(); it != users.end(); it++) {
+            if (*it == user) {
+                users.erase(it);
+                break;
+            }
         }
         return users;
     }
