@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:09:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/11 19:02:16 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/12 17:51:45 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ namespace irc {
           Channel newChannel(channelName);
           newChannel.addUser(user);
           newChannel.addOperator(user);
-          server->getChannels().push_back(newChannel);
+          server->addChannel(newChannel);
           msg = "You created the " + channelName + " channel\n";
           server->sendToSpecificDestination(msg, &newChannel);
           return (0);
