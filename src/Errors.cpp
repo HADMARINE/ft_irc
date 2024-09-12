@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Errors.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:21:34 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/11 13:59:37 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/12 20:50:19 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,10 +146,10 @@ namespace irc {
         this->setMessage(ss.str());
     }
 
-    UserOnChannel::UserOnChannel() {
+    UserOnChannel::UserOnChannel(User *user) {
         this->setCode("ERR_USERONCHANNEL");
         this->setNumeric(443);
-        this->setMessage(":is already on channel");
+        this->setMessage(user->getUsername() + " " + user->getNickname() + ":is already on channel");
     }
 
     UserOnChannel::UserOnChannel(std::string nick, std::string channel) {

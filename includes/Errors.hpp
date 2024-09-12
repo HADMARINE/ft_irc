@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Errors.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:14:05 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/10 22:49:25 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/12 20:48:05 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ namespace irc {
     // 443
     class UserOnChannel : public IrcSpecificResponse {
     public:
-        UserOnChannel();
+        UserOnChannel(User *user);
         UserOnChannel(std::string nick, std::string channel);
     };
 

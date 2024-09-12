@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:09:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/12 19:19:03 by root             ###   ########.fr       */
+/*   Updated: 2024/09/12 20:45:02 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ namespace irc {
             newChannel.addUser(user);
             newChannel.addOperator(user);
             server->addChannel(newChannel);
+			server->sendToSpecificDestination(": " + user->getUsername() + " JOIN #" + newChannel.getName() + "\r\n", user);
+			server->sendToSpecificDestination(server->formatResponse(RPLNamReply(user, &newChannel)), user);
+			server->sendToSpecificDestination(server->formatResponse(RPLEndOfNames(user, &newChannel)), user);
             msg = "You created the " + channelName + " channel\n";
             server->sendToSpecificDestination(msg, &newChannel);
             return (0);
@@ -43,7 +46,7 @@ namespace irc {
 		throw PasswordMisMatch();
 		}
 		channel->addUser(user);
-		server->sendToSpecificDestination(": " + user->getUsername() + " JOIN " + channel->getName(), user);
+		server->sendToSpecificDestination(": " + user->getUsername() + " JOIN " + channel->getName() + "\r\n", user);
 		server->sendToSpecificDestination(server->formatResponse(RPLTopic(user, channel)), user);
 		server->sendToSpecificDestination(server->formatResponse(RPLNamReply(user, channel)), user);
 		server->sendToSpecificDestination(server->formatResponse(RPLEndOfNames(user, channel)), user);
