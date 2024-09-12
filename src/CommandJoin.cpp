@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandJoin.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:09:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/10 17:01:05 by root             ###   ########.fr       */
+/*   Updated: 2024/09/11 19:02:16 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ namespace irc {
         if (params.empty()) {
             throw NeedMoreParams();
         }
-        if (params.size() != 2) {
-            throw TooManyParameters("2", params.size());
+        if (params.size() > 2) {
+            throw TooManyParameters("1-2", params.size());
         }
         return params;
     }

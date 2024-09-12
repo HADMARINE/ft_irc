@@ -389,7 +389,7 @@ namespace irc {
 
   void Ircserv::sendToAll(std::string & message) {
     for (std::vector<Channel>::iterator it = this->_channels.begin(); it != this->_channels.end(); it++) {
-      this->sendToSpecificDestination(message, it.base());
+      this->sendToSpecificDestination(message, &(*it));
     }
   }
 
