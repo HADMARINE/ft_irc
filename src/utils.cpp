@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:48:44 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/11 13:46:15 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/12 15:43:50 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ namespace irc {
         std::vector<std::string> svalues;
         while ((next = s.find(delimiter, last)) != std::string::npos) {
             svalues.push_back(s.substr(last, next - last));
-            last = next + 1;
+            last = next + delimiter.length();
         } 
         svalues.push_back(s.substr(last));
         return svalues;
