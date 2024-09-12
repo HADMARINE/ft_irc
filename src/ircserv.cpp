@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/11 18:52:26 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/12 15:47:17 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,6 @@ namespace irc {
       clientDisconnect(fd);
       return;
     }
-    std::cout << messageBuff << std::endl;
     std::vector<ACommand *> commmands;
 
     try {
@@ -185,7 +184,8 @@ namespace irc {
 	}
 
 	static ACommand * getCommandFromDict(std::string cmd) {
-	if (cmd == "PASS") {
+    DCMD(std::cout << "CMD : " << cmd << std::endl);
+    if (cmd == "PASS") {
     	return new CommandPASS();
     } else if (cmd == "USER") {
     	return new CommandUSER();
@@ -224,9 +224,8 @@ namespace irc {
       cmdLines.erase(*it);
     }
 
-
-
 		std::vector<ACommand *> cmdList;
+    
     try  {
       std::string cmdStr;
       std::vector<std::string> params;
