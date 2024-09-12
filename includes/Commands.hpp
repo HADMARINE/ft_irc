@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 13:42:22 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/11 18:55:02 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/12 15:30:00 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,25 @@ namespace irc {
         int resolve(Ircserv * server, User * user);
         std::vector<std::string> setParamsMiddleware(std::vector<std::string> params);
     };
+    
     class CommandINVITE : public ACommand {
         int resolve(Ircserv *server, User *operatorUser);
         std::vector<std::string> setParamsMiddleware(std::vector<std::string> params);
     };
+    
     class CommandTOPIC : public ACommand {
         int resolve(Ircserv *server, User *user);
         std::vector<std::string> setParamsMiddleware(std::vector<std::string> params);
     };
+    
     class CommandMODE : public ACommand {
         int resolve(Ircserv *server, User *user);
         std::vector<std::string> setParamsMiddleware(std::vector<std::string> params);
+    };
+
+    class CommandPRIVMSG : public ACommand {
+        int resolve(Ircserv *server, User *user);
+        std::vector<std::string> setParamsMiddleware(std::vector<std::string> params);
+        void permissionCheckMiddleware(Ircserv *server, User *user);
     };
 }
