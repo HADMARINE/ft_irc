@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 18:38:42 by root              #+#    #+#             */
-/*   Updated: 2024/09/11 18:55:30 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/12 16:13:01 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ namespace irc {
 		(void)serv;
         user->setRealname(_params.at(3));
 		user->setUsername(_params.at(0));
+        serv->sendToSpecificDestination(serv->formatResponse(RPLWelcome(user)), user);
+        // TODO : send des trucs 001~006
         return 0;
     }
     std::vector<std::string> CommandUSER::setParamsMiddleware(std::vector<std::string> params) {

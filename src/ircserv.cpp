@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/12 15:47:17 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/12 16:11:50 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ namespace irc {
     _pfds.push_back(pfd);
 
     this->clientMessage(fd);
-    this->sendToSpecificDestination(this->formatResponse(RPLWelcome(&user)), &user);
 	}
 
 
@@ -247,6 +246,7 @@ namespace irc {
             continue;
           }
         }
+
         for (std::vector<std::vector<std::string>::iterator>::iterator it = vIt.begin(); it != vIt.end(); it++) {
           params.erase(*it);
         }
@@ -254,9 +254,9 @@ namespace irc {
         cmd = getCommandFromDict(params.front());
         if (cmd)
         {
-			cmdList.push_back(cmd);
-			params.erase(params.begin());
-			cmd->setParams(params);
+          cmdList.push_back(cmd);
+          params.erase(params.begin());
+          cmd->setParams(params);
         }
       }
     } catch (IrcSpecificResponse & e) {
