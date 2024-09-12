@@ -6,14 +6,14 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:29:50 by enorie            #+#    #+#             */
-/*   Updated: 2024/09/11 18:34:29 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/12 16:22:12 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.hpp"
 
 namespace irc {
-	Channel::Channel(std::string name) : _name(name), _topic(""), _channelPassword(""), _userLimit(-1), _onInvite(false), _topicRestriction(false) {}
+	Channel::Channel(std::string name) : _name(name), _topic(""), _channelPassword(""), _userLimit(-1), _onInvite(false), _topicRestriction(false), _isPasswordRequired(false), _isUserLimit(false){}
 	Channel & Channel::operator=(const Channel &cpy) {
 		if (this == &cpy) {
 			return *this;

@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:35:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/11 18:02:05 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/12 17:48:32 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ namespace irc {
         std::vector<Channel> & getChannels() { return this->_channels; }
         const std::string & getMotd() const { return this->_motd; }
         const std::string & getHostname() const { return this->_hostname; }
+
+        void addChannel(Channel channel);
 
         void setMotd(std::string & motd) { this->_motd = motd; }
 

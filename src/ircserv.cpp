@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/12 18:16:09 by root             ###   ########.fr       */
+/*   Updated: 2024/09/12 18:50:43 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ namespace irc {
     _pfds.push_back(pfd);
 
     this->clientMessage(fd);
-    this->sendToSpecificDestination(this->formatResponse(RPLWelcome(&user)), &user);
 	}
 
 
@@ -149,7 +148,7 @@ namespace irc {
         delete *it;
       }
     } catch (IrcSpecificResponse & e) {
-      // TODO : send error to client
+      this->sendToSpecificDestination(this->formatResponse(e), this->findUserByFdSafe(fd));
       for (std::vector<ACommand *>::iterator it = commmands.begin(); it != commmands.end(); it++) {
         delete *it;
       }
@@ -196,8 +195,14 @@ namespace irc {
     	return new CommandKICK();
     } else if (cmd == "QUIT") {
     	return new CommandQUIT();
+    } else if (cmd == "TOPIC"){
+      return new CommandTOPIC();
+    } else if (cmd == "MODE"){
+      return new CommandMODE();
     } else if (cmd == "CAP") {
     	return NULL;
+    } else if (cmd == "PRIVMSG") {
+      return new CommandPRIVMSG();
     }
  		throw UnknownCommand(cmd);
 	}
@@ -246,6 +251,7 @@ namespace irc {
             continue;
           }
         }
+
         for (std::vector<std::vector<std::string>::iterator>::iterator it = vIt.begin(); it != vIt.end(); it++) {
           params.erase(*it);
         }
@@ -253,9 +259,9 @@ namespace irc {
         cmd = getCommandFromDict(params.front());
         if (cmd)
         {
-			cmdList.push_back(cmd);
-			params.erase(params.begin());
-			cmd->setParams(params);
+          cmdList.push_back(cmd);
+          params.erase(params.begin());
+          cmd->setParams(params);
         }
       }
     } catch (IrcSpecificResponse & e) {
@@ -450,6 +456,10 @@ namespace irc {
     std::stringstream ss;
     ss << ":" << origin->getNickname() << "!" << origin->getUsername() << "@" << origin->getHostname() << " " << message << "\r\n";
     return ss.str();
+  }
+
+  void Ircserv::addChannel(Channel channel) {
+    this->_channels.push_back(channel);
   }
 
 }
