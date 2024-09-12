@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:32:24 by bfaisy            #+#    #+#             */
-/*   Updated: 2024/09/12 16:24:05 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/12 17:38:11 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,8 @@ namespace irc {
 	int CommandTOPIC::resolve(Ircserv *server, User *user) {
 		Channel *channel;
 		std::string ss;
-
 		std::string channelName = this->_params.at(0);
 		channel = server->findChannelByNameSafe(channelName);
-
-		if (this->_params.size() == 1) {
-			std::string currentTopic = channel->getTopic();
-			std::cout << "I";
-			ss = "Current topic for channel " + channelName + ": " + currentTopic;
-			server->sendToSpecificDestination(ss, channel);
-			return 0;
-		}
-
 		if (!channel->isOperator(user)) {
 			throw NoPrivileges();
 		}
@@ -35,11 +25,20 @@ namespace irc {
     		throw IsTopicRestricted();
     	}
 
+		if (this->_params.size() == 1) { // ca ne marche pas parce que issi bloque si jamais c'est 1
+			std::string currentTopic = channel->getTopic();
+			std::cout << "I";
+			ss = "Current topic for channel " + channelName + ": " + currentTopic;
+			server->sendToSpecificDestination(ss, channel);
+			return 0;
+		}
+
+
+
 		std::string newTopic = this->_params.at(1);
 
 		channel->setTopic(newTopic);
 		ss ="The topic for channel " + channelName + " has been changed to: " + newTopic;
-
 		server->sendToSpecificDestination(ss, channel);
 
 		return 0;

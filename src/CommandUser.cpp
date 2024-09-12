@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 18:38:42 by root              #+#    #+#             */
-/*   Updated: 2024/09/12 16:41:43 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/12 16:51:06 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@ namespace irc {
 	int CommandUSER::resolve(Ircserv * serv, User * user) {
        std::cout << user->getNickname() << user->getPendingpassword() << std::endl;
         if (user->getPendingpassword() != serv->getPassword())
+        {
+            serv->disconnectUser(user);
             throw PasswordMisMatch();
+        }
         if (user->getNickname().empty())
             throw NoNicknameGiven();
         user->setRealname(_params.at(3));
