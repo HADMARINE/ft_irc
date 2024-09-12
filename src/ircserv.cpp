@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/12 18:50:43 by root             ###   ########.fr       */
+/*   Updated: 2024/09/12 19:39:42 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -449,6 +449,7 @@ namespace irc {
       ss << oss.str() << " ";
     }
     ss << message.getMessage() << "\r\n";
+    std::cout << ss.str() << std::endl;
     return ss.str();
   }
 

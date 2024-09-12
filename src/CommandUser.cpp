@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandUser.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 18:38:42 by root              #+#    #+#             */
-/*   Updated: 2024/09/12 16:51:06 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/12 19:59:57 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,13 @@ namespace irc {
         if (user->getNickname().empty())
             throw NoNicknameGiven();
         user->setRealname(_params.at(3));
-		user->setUsername(_params.at(0));
+		    user->setUsername(_params.at(0));
         user->setIsRegistered(true);
         serv->sendToSpecificDestination(serv->formatResponse(RPLWelcome(user)), user);
+        serv->sendToSpecificDestination(serv->formatResponse(RPLYourHost(user)), user);
+        serv->sendToSpecificDestination(serv->formatResponse(RPLCreated(user)), user);
+        serv->sendToSpecificDestination(serv->formatResponse(RPLMyInfo(user)), user);
+        serv->sendToSpecificDestination(serv->formatResponse(RPLIsupport(user)), user);
         return 0;
     }
     std::vector<std::string> CommandUSER::setParamsMiddleware(std::vector<std::string> params) {

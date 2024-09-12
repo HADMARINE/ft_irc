@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 17:44:38 by root              #+#    #+#             */
-/*   Updated: 2024/09/12 18:20:03 by root             ###   ########.fr       */
+/*   Updated: 2024/09/12 19:57:40 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,25 +24,25 @@ namespace irc {
     // 002
     class RPLYourHost : public IrcSpecificResponse {
     public:
-        RPLYourHost();
+        RPLYourHost(User * user);
     };
 
     // 003
     class RPLCreated : public IrcSpecificResponse {
     public:
-        RPLCreated();
+        RPLCreated(User * user);
     };
 
     // 004
     class RPLMyInfo : public IrcSpecificResponse {
     public:
-        RPLMyInfo();
+        RPLMyInfo(User * user);
     };
 
     // 005
     class RPLIsupport : public IrcSpecificResponse {
     public:
-        RPLIsupport();
+        RPLIsupport(User * user);
     };
 
     // 251

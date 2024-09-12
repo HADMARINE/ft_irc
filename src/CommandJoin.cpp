@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandJoin.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:09:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/12 17:59:22 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/12 19:19:03 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,25 @@ namespace irc {
         }
 		// ADD LOOP TO JOIN MULTIPLE CHANNELS WHEN MULTIPLE ARGS
 		std::string password = channel->getPassword();
-        if (channel->getUsers().size() == channel->getUserLimit()) {
-        	throw ChannelFull();
+			if (channel->getUsers().size() == channel->getUserLimit()) {
+			throw ChannelFull();
 		}
 		if (channel->isInviteOnly() && !channel->isInvitedUser(user)) {
-			throw InviteOnlyChan();
+		throw InviteOnlyChan();
 		}
 		if (password != "" && password != this->_params.at(1)) {
-			throw PasswordMisMatch();
+		throw PasswordMisMatch();
 		}
-        channel->addUser(user);
-        msg = user->getNickname() + " has joined the channel\n";
-        server->sendToSpecificDestination(msg, channel);
+		channel->addUser(user);
+		server->sendToSpecificDestination(": " + user->getUsername() + " JOIN " + channel->getName(), user);
+		server->sendToSpecificDestination(server->formatResponse(RPLTopic(user, channel)), user);
+		server->sendToSpecificDestination(server->formatResponse(RPLNamReply(user, channel)), user);
+		server->sendToSpecificDestination(server->formatResponse(RPLEndOfNames(user, channel)), user);
+		msg = user->getNickname() + " has joined the channel\n";
+		server->sendToSpecificDestination(msg, channel);
 		msg = channel->getTopic();
 		server->sendToSpecificDestination(msg, user);
-        return 0;
+		return 0;
     }
 
     std::vector<std::string> CommandJOIN::setParamsMiddleware(std::vector<std::string> params) {
