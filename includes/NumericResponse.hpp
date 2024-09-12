@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   NumericResponse.hpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 17:44:38 by root              #+#    #+#             */
-/*   Updated: 2024/09/11 18:51:49 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/12 18:20:03 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,22 @@ namespace irc {
     public:
        RPLLUserClient();
     };
+
+    // 332
+    class RPLTopic : public IrcSpecificResponse {
+    public:
+		RPLTopic(User *user, Channel *channel);
+    };
+
+	// 353
+	class RPLNamReply : public IrcSpecificResponse {
+	public:
+		RPLNamReply(User *user, Channel *channel);
+	};
+
+	// 366
+	class RPLEndOfNames : public IrcSpecificResponse {
+	public:
+		RPLEndOfNames(User *user, Channel *channel);
+	};
 }

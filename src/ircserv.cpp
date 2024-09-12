@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/12 15:47:17 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/12 18:16:09 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,6 @@ namespace irc {
       return;
     }
     std::vector<ACommand *> commmands;
-
     try {
       int CRLFPos = getCRLFPos(messageBuff, sizeof(messageBuff) / sizeof(char)); // check crlf position
       if (CRLFPos < 0 || CRLFPos >= 512) {
@@ -225,7 +224,7 @@ namespace irc {
     }
 
 		std::vector<ACommand *> cmdList;
-    
+
     try  {
       std::string cmdStr;
       std::vector<std::string> params;
