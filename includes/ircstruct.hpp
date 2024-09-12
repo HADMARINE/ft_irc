@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:05:10 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/11 13:45:26 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/12 18:40:23 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct s_exec_conf {
     std::string portStr;
     bool *isServerShut;
     std::string hostname;
+    std::time_t time;
 } t_irc_exec_conf;
 
 typedef struct s_server_op

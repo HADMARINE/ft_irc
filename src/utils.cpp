@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:48:44 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/12 15:43:50 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/12 18:39:53 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ namespace irc {
         conf.portStr = portStr;
         conf.isServerShut = isServerShut;
         conf.hostname = "localhost";
+        conf.time = std::time(0);
 
         return conf;
     }

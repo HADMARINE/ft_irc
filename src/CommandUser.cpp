@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 18:38:42 by root              #+#    #+#             */
-/*   Updated: 2024/09/12 19:59:57 by root             ###   ########.fr       */
+/*   Updated: 2024/09/12 20:18:06 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,10 @@ namespace irc {
         user->setRealname(_params.at(3));
 		    user->setUsername(_params.at(0));
         user->setIsRegistered(true);
+        std::time_t t = std::time(0);
         serv->sendToSpecificDestination(serv->formatResponse(RPLWelcome(user)), user);
-        serv->sendToSpecificDestination(serv->formatResponse(RPLYourHost(user)), user);
-        serv->sendToSpecificDestination(serv->formatResponse(RPLCreated(user)), user);
+        serv->sendToSpecificDestination(serv->formatResponse(RPLYourHost(user, serv->getHostname(), "Yv2")), user);
+        serv->sendToSpecificDestination(serv->formatResponse(RPLCreated(user, &t)), user);
         serv->sendToSpecificDestination(serv->formatResponse(RPLMyInfo(user)), user);
         serv->sendToSpecificDestination(serv->formatResponse(RPLIsupport(user)), user);
         return 0;

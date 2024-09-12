@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 15:05:22 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/12 19:59:24 by root             ###   ########.fr       */
+/*   Updated: 2024/09/12 20:07:24 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,26 @@ namespace irc {
 	}
 
     // 002
-	RPLYourHost::RPLYourHost(User * user) {
-		this->setCode("RPL_YOURHOST");
-		this->setNumeric(2);
-		std::stringstream ss;
-		ss << user->getUsername() << " :Your host is ft_irc42";
-		this->setMessage(ss.str());
-	}
+        RPLYourHost::RPLYourHost(User * user, std::string hostname, std::string version) {
+            this->setCode("RPL_YOURHOST");
+            this->setNumeric(2);
+            std::stringstream ss;
+            ss << user->getUsername() << " :Your host is " << hostname << ", running version " << version;
+            this->setMessage(ss.str());
+        }
 
     // 003
-	RPLCreated::RPLCreated(User * user) {
-		this->setCode("RPL_CREATED");
-		this->setNumeric(3);
-		std::stringstream ss;
-		ss << user->getUsername() << " :This server was created <datetime>";
-		this->setMessage(ss.str());
-	}
+        RPLCreated::RPLCreated(User * user, std::time_t * time) {
+            this->setCode("RPL_CREATED");
+            this->setNumeric(3);
+            std::tm * now = std::localtime(time);
+            std::stringstream ss;
+            ss << user->getUsername() << " :This server was created "
+            << (now->tm_year + 1900) << '-'
+            << (now->tm_mon + 1) << '-'
+            <<  now->tm_mday << ' ' << now->tm_hour << ':' << now->tm_min << ':' << now->tm_sec;
+            this->setMessage(ss.str());
+        }
 
     // 004
 	RPLMyInfo::RPLMyInfo(User * user) {

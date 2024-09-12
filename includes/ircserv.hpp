@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:35:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/12 17:48:32 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/12 18:41:47 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ namespace irc {
         int _serverSock;
         std::string _password;
         bool *_isServerShut;
+        std::time_t _time;
         std::string _hostname;
 
 
