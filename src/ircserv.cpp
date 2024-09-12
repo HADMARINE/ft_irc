@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/12 17:49:09 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/12 18:50:56 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ namespace irc {
       return;
     }
     std::vector<ACommand *> commmands;
+    std::cout << "fucking : " << messageBuff << std::endl;
 
     try {
       int CRLFPos = getCRLFPos(messageBuff, sizeof(messageBuff) / sizeof(char)); // check crlf position
@@ -183,7 +184,7 @@ namespace irc {
 	}
 
 	static ACommand * getCommandFromDict(std::string cmd) {
-    DCMD(std::cout << "CMD : " << cmd << std::endl);
+    DCMD(std::cout << "CMD : [" << cmd << "]" << std::endl);
     if (cmd == "PASS") {
     	return new CommandPASS();
     } else if (cmd == "USER") {
