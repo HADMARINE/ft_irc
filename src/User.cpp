@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:29:47 by enorie            #+#    #+#             */
-/*   Updated: 2024/09/10 16:52:56 by root             ###   ########.fr       */
+/*   Updated: 2024/09/12 16:46:03 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ namespace irc {
 
 	int			User::getSocketfd() const { return (_socketfd); }
 	const std::string & User::getRealname() const { return (_realname); }
-	const std::string & User::getNickname() const { return (_realname); }
+	const std::string & User::getNickname() const { return (_nickname); }
 	const std::string & User::getUsername() const { return (_username); }
 	const std::string & User::getHostname() const { return (_hostname); }
 	const std::string & User::getPendingpassword() const { return (_pendingPassword); }

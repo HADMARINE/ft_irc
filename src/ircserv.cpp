@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/12 16:11:50 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/12 16:28:46 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,10 @@ namespace irc {
     	return new CommandKICK();
     } else if (cmd == "QUIT") {
     	return new CommandQUIT();
+    } else if (cmd == "TOPIC"){
+      return new CommandTOPIC();
+    } else if (cmd == "MODE"){
+      return new CommandMODE();
     } else if (cmd == "CAP") {
     	return NULL;
     }

@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 18:06:27 by bfaisy            #+#    #+#             */
-/*   Updated: 2024/09/11 18:26:35 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/12 16:31:26 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ namespace irc {
 		std::string channelName = this->_params.at(0);
 		std::string option = this->_params.at(1);
 		
-		
+		channel = server->findChannelByNameSafe(channelName);
 		if (!channel->isOperator(user)) {
 			throw NoPrivileges();  
 		}
