@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/12 17:38:27 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/12 17:49:09 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -457,6 +457,10 @@ namespace irc {
     std::stringstream ss;
     ss << ":" << origin->getNickname() << "!" << origin->getUsername() << "@" << origin->getHostname() << " " << message << "\r\n";
     return ss.str();
+  }
+
+  void Ircserv::addChannel(Channel channel) {
+    this->_channels.push_back(channel);
   }
 
 }
