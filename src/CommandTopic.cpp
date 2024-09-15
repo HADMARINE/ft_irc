@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:32:24 by bfaisy            #+#    #+#             */
-/*   Updated: 2024/09/15 15:20:51 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/15 15:21:31 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ namespace irc {
 		if (this->_params.size() == 1) { // ca ne marche pas parce que issi bloque si jamais c'est 1
 			std::string currentTopic = channel->getTopic();
 			std::cout << "I";
-			ss = ":localhost 332 " + user->getNickname() + " #" + channelName + " :" + newTopic + "\r\n";
+			ss = ":localhost 332 " + user->getNickname() + " #" + channelName + " :" + currentTopic + "\r\n";
 			server->sendToSpecificDestination(ss, channel);
 			return 0;
 		}
