@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:18:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/15 16:33:26 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/15 17:14:19 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ namespace irc {
         std::string comment = this->_params.at(3);
         std::string msg;
         Channel *channel ;
+        std::string nick;
         
         std::cout << channelName<<  targetUserNickname << std::endl;
         channel = server->findChannelByNameSafe(channelName);
@@ -29,9 +30,9 @@ namespace irc {
         if (!channel->isUserInChannel(targetUser)) {
             throw UserNotInChannel(targetUser->getNickname(), channel->getName()); 
         }
-        
+        nick = server->findNickbyUser(user);
         channel->removeUser(targetUser);
-        msg = "KICK #" + channelName + " " + targetUserNickname + " :" + comment + "\r\n";
+        msg = nick + "KICK #" + channelName + " " + targetUserNickname + " :" + comment + "\r\n";
         server->sendToSpecificDestination(msg, channel);
 
         return 0;
