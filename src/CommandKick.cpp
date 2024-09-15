@@ -6,13 +6,13 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:18:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/15 17:14:19 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/15 18:08:28 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.hpp"
 
-namespace irc {
+namespace irc { // faut faire la fonction qui envoie des msg a partir des gens dans le chan sinon la commande kick bien
     int CommandKICK::resolve(Ircserv * server, User * user) {
         std::string channelName = this->_params.at(0);
         std::string targetUserNickname = this->_params.at(2);
@@ -32,8 +32,10 @@ namespace irc {
         }
         nick = server->findNickbyUser(user);
         channel->removeUser(targetUser);
-        msg = nick + "KICK #" + channelName + " " + targetUserNickname + " :" + comment + "\r\n";
+        msg = ":" + nick + " KICK #" + channelName + " " + targetUserNickname + " :" + comment + "\r\n";
         server->sendToSpecificDestination(msg, channel);
+        msg = ":localhost KICK by " + nick + "\r\n"; // les priv msg ne fonctionne pas encore
+        server->sendToSpecificDestination(server->formatResponse(user, msg), targetUser);
 
         return 0;
     }

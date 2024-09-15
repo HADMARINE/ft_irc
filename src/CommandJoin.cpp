@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandJoin.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:09:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/12 20:45:02 by root             ###   ########.fr       */
+/*   Updated: 2024/09/15 17:25:02 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,9 @@ namespace irc {
 		}
 		channel->addUser(user);
 		server->sendToSpecificDestination(": " + user->getUsername() + " JOIN " + channel->getName() + "\r\n", user);
-		server->sendToSpecificDestination(server->formatResponse(RPLTopic(user, channel)), user);
-		server->sendToSpecificDestination(server->formatResponse(RPLNamReply(user, channel)), user);
-		server->sendToSpecificDestination(server->formatResponse(RPLEndOfNames(user, channel)), user);
-		msg = user->getNickname() + " has joined the channel\n";
-		server->sendToSpecificDestination(msg, channel);
+		// server->sendToSpecificDestination(server->formatResponse(RPLTopic(user, channel)), user);
+		// server->sendToSpecificDestination(server->formatResponse(RPLNamReply(user, channel)), user);
+		// server->sendToSpecificDestination(server->formatResponse(RPLEndOfNames(user, channel)), user);
 		msg = channel->getTopic();
 		server->sendToSpecificDestination(msg, user);
 		return 0;
