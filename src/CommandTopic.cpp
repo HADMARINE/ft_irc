@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:32:24 by bfaisy            #+#    #+#             */
-/*   Updated: 2024/09/12 17:38:11 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/15 15:20:51 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ namespace irc {
 		if (this->_params.size() == 1) { // ca ne marche pas parce que issi bloque si jamais c'est 1
 			std::string currentTopic = channel->getTopic();
 			std::cout << "I";
-			ss = "Current topic for channel " + channelName + ": " + currentTopic;
+			ss = ":localhost 332 " + user->getNickname() + " #" + channelName + " :" + newTopic + "\r\n";
 			server->sendToSpecificDestination(ss, channel);
 			return 0;
 		}
@@ -38,7 +38,7 @@ namespace irc {
 		std::string newTopic = this->_params.at(1);
 
 		channel->setTopic(newTopic);
-		ss ="The topic for channel " + channelName + " has been changed to: " + newTopic;
+		ss = ":localhost 332 " + user->getNickname() + " #" + channelName + " :" + newTopic + "\r\n";
 		server->sendToSpecificDestination(ss, channel);
 
 		return 0;
