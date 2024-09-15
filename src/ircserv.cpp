@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/15 15:26:26 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/15 16:17:32 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -381,8 +381,8 @@ namespace irc {
     Channel * foundChannel = NULL;
 
     for (std::vector<Channel>::iterator it = this->_channels.begin(); it != this->_channels.end(); it++) {
-      if ((*it).getName() == name)
-        foundChannel = it.base();
+      if ((*it).getName() == name){
+        foundChannel = it.base();}
     }
 
     if (foundChannel == NULL) {

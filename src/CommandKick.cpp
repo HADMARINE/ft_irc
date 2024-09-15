@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:18:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/09 17:50:38 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/15 16:33:26 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,14 @@
 namespace irc {
     int CommandKICK::resolve(Ircserv * server, User * user) {
         std::string channelName = this->_params.at(0);
-        std::string targetUserNickname = this->_params.at(1);
+        std::string targetUserNickname = this->_params.at(2);
+        std::string comment = this->_params.at(3);
         std::string msg;
+        Channel *channel ;
         
-        Channel *channel = server->findChannelByName(channelName);
+        std::cout << channelName<<  targetUserNickname << std::endl;
+        channel = server->findChannelByNameSafe(channelName);
         User *targetUser = server->findUserByNickSafe(targetUserNickname);
-
         if (!channel->isOperator(user)) {
             throw NoPrivileges();
         }
@@ -29,7 +31,7 @@ namespace irc {
         }
         
         channel->removeUser(targetUser);
-        msg = targetUserNickname + " has been kicked from the channel by " + user->getNickname();
+        msg = "KICK #" + channelName + " " + targetUserNickname + " :" + comment + "\r\n";
         server->sendToSpecificDestination(msg, channel);
 
         return 0;
@@ -39,9 +41,17 @@ namespace irc {
         if (params.empty()) {
             throw NeedMoreParams();
         }
-        if (params.size() != 2) {
-            throw TooManyParameters("2", params.size());
+        if (params.size() < 2) {
+            throw TooManyParameters("3 or 4", params.size());
         }
+        if (params.at(0)[0] != '#') {
+			throw UnknownCommand();
+		}
+		params.at(0) = params.at(0).substr(1);
+        if (params.at(2)[0] != ':') {
+			throw UnknownCommand();
+		}
+		params.at(2) = params.at(2).substr(1);
         return params;
     }
 }
