@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:29:50 by enorie            #+#    #+#             */
-/*   Updated: 2024/09/12 16:22:12 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/15 15:48:35 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,9 +126,11 @@ namespace irc {
 	}
 
 	bool Channel::isInvitedUser(User * user) {
-		for (std::vector<User *>::iterator it = _invitedUsers.begin(); it != _users.end(); it++) {
-			if ((*it) == user) {
-				return true;
+		if (_invitedUsers.empty() == false){
+			for (std::vector<User *>::iterator it = _invitedUsers.begin(); it != _users.end(); it++) {
+				if ((*it) == user) {
+					return true;
+				}
 			}
 		}
 		return false;

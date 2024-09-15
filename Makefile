@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+         #
+#    By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/07 14:13:59 by lhojoon           #+#    #+#              #
-#    Updated: 2024/09/12 17:41:25 by lhojoon          ###   ########.fr        #
+#    Updated: 2024/09/15 15:27:03 by bfaisy           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,8 @@ SRCS_RAW =	main.cpp \
 			CommandMode.cpp \
 			CommandTopic.cpp \
  			NumericResponse.cpp \
-			CommandPrivmsg.cpp
+			CommandPrivmsg.cpp \
+			CommandInvite.cpp
 
 SRCS = $(addprefix $(DIR)/,$(SRCS_RAW))
 OBJS = $(SRCS:cpp=o)
