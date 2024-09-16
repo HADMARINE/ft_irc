@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:26:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/16 18:01:01 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/16 18:19:56 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,26 @@ namespace irc {
 
     // TODO : test authority to send message to channel
     static std::vector<User *> getDestinatingUsersList(std::string & target, Ircserv * server, User * user) {
-        (void)user;
         std::vector<User *> users;
+        Channel * channel;
         if (target[0] == '#') {
             std::string targetCpy  = target.substr(1);
-            Channel * channel = server->findChannelByNameSafe(targetCpy);
+            channel = server->findChannelByNameSafe(targetCpy);
             users = channel->getUsers();
         } else if (target.find_first_of("%#") == 0) {
             std::string targetCpy = target.substr(2);
-            Channel * channel = server->findChannelByNameSafe(targetCpy);
+            channel = server->findChannelByNameSafe(targetCpy);
             users = channel->getOperators();
         } else if (target.find_first_of("@%#") == 0) {
             std::string targetCpy = target.substr(3);
-            Channel * channel = server->findChannelByNameSafe(targetCpy);
+            channel = server->findChannelByNameSafe(targetCpy);
             users = channel->getOperators();
         } else {
             User * targetUser = server->findUserByNickSafe(target);
             users.push_back(targetUser);
+        }
+        if (!channel->isUserInChannel(user)) {
+            throw CannotSendToChan(channel->getName());
         }
         for (std::vector<User *>::iterator it = users.begin(); it != users.end(); it++) {
             if (*it == user) {
