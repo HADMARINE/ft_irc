@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:35:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/16 12:17:28 by root             ###   ########.fr       */
+/*   Updated: 2024/09/16 18:03:18 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ namespace irc {
         void disconnectUser(User * user); // Disconnect totally from server
 
         std::vector<ACommand *> parseCommandStr(std::string & str);
-        std::string formatResponse(std::string & message);
-        std::string formatResponse(User * origin, std::string & message);
+        std::string formatResponse(std::string message);
+        std::string formatResponse(User * origin, std::string message);
         std::string formatResponse(IrcSpecificResponse message);
 
     protected:

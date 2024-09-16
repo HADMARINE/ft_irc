@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandInvite.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:24:01 by bfaisy            #+#    #+#             */
-/*   Updated: 2024/09/15 15:42:42 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/16 17:42:42 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ namespace irc {
 		throw NoPrivileges();
 	}
 	channel->inviteUser(targetUser);
-	msg = ":localhost INVITE " + targetUserNickname + " #" + channelName + "\r\n";
+	msg = ":localhost INVITE " + targetUserNickname + " #" + channelName;
 	server->sendToSpecificDestination(msg, targetUser);
 
 	return 0;
