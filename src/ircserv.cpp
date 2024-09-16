@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/15 17:49:15 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/16 18:03:33 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -410,7 +410,8 @@ namespace irc {
   }
 
   void Ircserv::sendToSpecificDestination(const std::string & message, User * user) {
-    if (send(user->getSocketfd(), message.c_str(), message.size(), 0) < 0) {
+    std::string newMesage = message + "\r\n";
+    if (send(user->getSocketfd(), newMesage.c_str(), message.size(), 0) < 0) {
       throw std::runtime_error("Failed to send message");
     }
   }
@@ -446,10 +447,8 @@ namespace irc {
     this->removeUser(user);
   }
 
-  std::string Ircserv::formatResponse(std::string & message) {
-    std::stringstream ss;
-    ss << message << "\r\n";
-    return ss.str();
+  std::string Ircserv::formatResponse(std::string message) {
+    return message;
   }
 
   std::string Ircserv::formatResponse(IrcSpecificResponse message) {
@@ -460,14 +459,14 @@ namespace irc {
       oss << std::setfill('0') << std::setw(3) << message.getNumeric();
       ss << oss.str() << " ";
     }
-    ss << message.getMessage() << "\r\n";
+    ss << message.getMessage();
     std::cout << ss.str() << std::endl;
     return ss.str();
   }
 
-  std::string Ircserv::formatResponse(User * origin, std::string & message) {
+  std::string Ircserv::formatResponse(User * origin, std::string message) {
     std::stringstream ss;
-    ss << ":" << origin->getNickname() << "!" << origin->getUsername() << "@" << origin->getHostname() << " " << message << "\r\n";
+    ss << ":" << origin->getNickname() << "!" << origin->getUsername() << "@" << origin->getHostname() << " " << message;
     return ss.str();
   }
 
