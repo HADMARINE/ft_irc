@@ -25,7 +25,7 @@ namespace irc {
 * Réception des clients *
 * Lecture / Envoi *
 * Clôture de connection*
-* Lise des commandes à implementer (cocher * après le nom de commande une fois implémenté)
+* Liste des commandes à implementer (cocher * après le nom de commande une fois implémenté)
     * PASS *
     * NICK
     * KICK
