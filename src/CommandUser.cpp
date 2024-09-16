@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 18:38:42 by root              #+#    #+#             */
-/*   Updated: 2024/09/12 20:18:06 by root             ###   ########.fr       */
+/*   Updated: 2024/09/16 12:28:20 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ namespace irc {
         serv->sendToSpecificDestination(serv->formatResponse(RPLCreated(user, &t)), user);
         serv->sendToSpecificDestination(serv->formatResponse(RPLMyInfo(user)), user);
         serv->sendToSpecificDestination(serv->formatResponse(RPLIsupport(user)), user);
+        std::cout << user->getHostname() << " " << user->getNickname() << " " << user->getRealname() << " " << user->getUsername() << std::endl;
         return 0;
     }
     std::vector<std::string> CommandUSER::setParamsMiddleware(std::vector<std::string> params) {

@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 15:05:22 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/12 20:41:54 by root             ###   ########.fr       */
+/*   Updated: 2024/09/16 12:36:02 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,14 @@ namespace irc {
 		this->setNumeric(353);
 		std::stringstream ss;
 		std::vector<User *>	users;
-		ss << user->getUsername() << " = " << channel->getName() << " :";
+		ss << user->getNickname() << " = " << channel->getName() << " :";
 		users = channel->getUsers();
 		for (std::vector<User *>::iterator it = users.begin(); it != users.end(); ++it) {
+      std::cout << (*it)->getNickname() << " USERNAME" << std::endl;
 			if (channel->isOperator(*it))
-				ss << " @" << (*it)->getUsername();
+				ss << " @" << (*it)->getNickname();
 			else
-				ss << " " << (*it)->getUsername();
+				ss << " " << (*it)->getNickname();
 		}
 		this->setMessage(ss.str());
 	}
@@ -99,6 +100,6 @@ namespace irc {
 	RPLEndOfNames::RPLEndOfNames(User *user, Channel *channel) {
 		this->setCode("RPL_ENDOFNAMES");
 		this->setNumeric(366);
-		this->setMessage(user->getUsername() + " " + channel->getName() + " :End of /NAMES list.");
+		this->setMessage(user->getNickname() + " " + channel->getName() + " :End of /NAMES list.");
 	}
 }

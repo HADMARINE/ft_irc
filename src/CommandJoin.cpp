@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:09:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/12 20:45:02 by root             ###   ########.fr       */
+/*   Updated: 2024/09/16 12:18:56 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ namespace irc {
             newChannel.addUser(user);
             newChannel.addOperator(user);
             server->addChannel(newChannel);
-			server->sendToSpecificDestination(": " + user->getUsername() + " JOIN #" + newChannel.getName() + "\r\n", user);
 			server->sendToSpecificDestination(server->formatResponse(RPLNamReply(user, &newChannel)), user);
 			server->sendToSpecificDestination(server->formatResponse(RPLEndOfNames(user, &newChannel)), user);
+			server->sendToSpecificDestination(": " + user->getUsername() + " JOIN #" + newChannel.getName() + "\r\n", &newChannel);
             msg = "You created the " + channelName + " channel\n";
             server->sendToSpecificDestination(msg, &newChannel);
             return (0);
@@ -45,11 +45,12 @@ namespace irc {
 		if (password != "" && password != this->_params.at(1)) {
 		throw PasswordMisMatch();
 		}
+		std::cout << channel->getName() << "THIS IS THE JOIN" << std::endl;
 		channel->addUser(user);
-		server->sendToSpecificDestination(": " + user->getUsername() + " JOIN " + channel->getName() + "\r\n", user);
-		server->sendToSpecificDestination(server->formatResponse(RPLTopic(user, channel)), user);
+		//server->sendToSpecificDestination(server->formatResponse(RPLTopic(user, channel)), user);
 		server->sendToSpecificDestination(server->formatResponse(RPLNamReply(user, channel)), user);
 		server->sendToSpecificDestination(server->formatResponse(RPLEndOfNames(user, channel)), user);
+		server->sendToSpecificDestination(": " + user->getUsername() + " JOIN #" + channel->getName() + "\r\n", channel);
 		msg = user->getNickname() + " has joined the channel\n";
 		server->sendToSpecificDestination(msg, channel);
 		msg = channel->getTopic();

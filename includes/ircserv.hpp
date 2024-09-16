@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:35:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/12 18:41:47 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/16 12:17:28 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ namespace irc {
         std::string formatResponse(std::string & message);
         std::string formatResponse(User * origin, std::string & message);
         std::string formatResponse(IrcSpecificResponse message);
-        
+
     protected:
     private:
         Ircserv();
