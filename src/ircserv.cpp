@@ -351,6 +351,16 @@ namespace irc {
     return foundUser;
   }
 
+  std::string Ircserv::findNickbyUser(User *user)
+  {
+    for (std::vector<User>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
+      if (user == it.base()){
+        const std::string nick = (*it).getNickname();
+        return (nick);}
+    }
+    return "";
+  }
+
   User * Ircserv::findUserByNickSafe(std::string & nick) {
     User * foundUser = NULL;
 

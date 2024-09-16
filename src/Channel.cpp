@@ -6,14 +6,14 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:29:50 by enorie            #+#    #+#             */
-/*   Updated: 2024/09/15 15:48:35 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/16 18:25:13 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.hpp"
 
 namespace irc {
-	Channel::Channel(std::string name) : _name(name), _topic(""), _channelPassword(""), _userLimit(-1), _onInvite(false), _topicRestriction(false), _isPasswordRequired(false), _isUserLimit(false){}
+	Channel::Channel(std::string name) : _name(name), _topic(""), _channelPassword(""), _userLimit(-1), _onInvite(false), _topicRestriction(true), _isPasswordRequired(false), _isUserLimit(false){}
 	Channel & Channel::operator=(const Channel &cpy) {
 		if (this == &cpy) {
 			return *this;
@@ -43,6 +43,7 @@ namespace irc {
 	std::vector<User *>	Channel::getOperators() const { return (_operators); }
 	std::vector<User *>	Channel::getInvitedUsers() const { return (_invitedUsers); }
 	void				Channel::setPasswordRequired(bool cond) {_isPasswordRequired = cond;}
+	bool				Channel::isPasswordRequired() {return _isPasswordRequired ;}
 	void				Channel::setName(std::string & name) { _name = name; }
 	void				Channel::setTopic(std::string & topic) { _topic = topic; }
 	void				Channel::setPassword(std::string & password) { _channelPassword = password; }
@@ -126,13 +127,12 @@ namespace irc {
 	}
 
 	bool Channel::isInvitedUser(User * user) {
-		if (_invitedUsers.empty() == false){
+		if (!_invitedUsers.empty()){
 			for (std::vector<User *>::iterator it = _invitedUsers.begin(); it != _users.end(); it++) {
 				if ((*it) == user) {
 					return true;
 				}
-			}
-		}
+		}}
 		return false;
 	}
 

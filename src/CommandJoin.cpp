@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandJoin.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:09:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/16 18:03:44 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/16 18:24:18 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,28 +29,30 @@ namespace irc {
             server->addChannel(newChannel);
 			server->sendToSpecificDestination(server->formatResponse(RPLNamReply(user, &newChannel)), user);
 			server->sendToSpecificDestination(server->formatResponse(RPLEndOfNames(user, &newChannel)), user);
-			server->sendToSpecificDestination(": " + user->getUsername() + " JOIN #" + newChannel.getName(), &newChannel);
+			server->sendToSpecificDestination(": " + user->getUsername() + " JOIN #" + newChannel.getName() + "\r\n", &newChannel);
             msg = "You created the " + channelName + " channel\n";
             server->sendToSpecificDestination(msg, &newChannel);
             return (0);
         }
 		// ADD LOOP TO JOIN MULTIPLE CHANNELS WHEN MULTIPLE ARGS
 		std::string password = channel->getPassword();
-        if (channel->getUsers().size() == channel->getUserLimit()) {
-            throw ChannelFull();
+		if (channel->getUsers().size() == channel->getUserLimit()) {
+			throw ChannelFull();
 		}
 		if (channel->isInviteOnly() && !channel->isInvitedUser(user)) {
-            throw InviteOnlyChan();
+		    throw InviteOnlyChan();
 		}
-		if (password != "" && password != this->_params.at(1)) {
-            throw PasswordMisMatch();
+        if (channel->isPasswordRequired() ==  true && _params.size() != 2)
+            throw TooManyParameters("2", _params.size());
+		if (channel->isPasswordRequired() ==  true && password != this->_params.at(1)) {
+		    throw PasswordMisMatch();
 		}
 		std::cout << channel->getName() << "THIS IS THE JOIN" << std::endl;
 		channel->addUser(user);
 		//server->sendToSpecificDestination(server->formatResponse(RPLTopic(user, channel)), user);
 		server->sendToSpecificDestination(server->formatResponse(RPLNamReply(user, channel)), user);
 		server->sendToSpecificDestination(server->formatResponse(RPLEndOfNames(user, channel)), user);
-		server->sendToSpecificDestination(server->formatResponse(user, "JOIN #" + channel->getName()), channel);
+		server->sendToSpecificDestination(": " + user->getUsername() + " JOIN #" + channel->getName() + "\r\n", channel);
 		msg = user->getNickname() + " has joined the channel\n";
 		server->sendToSpecificDestination(msg, channel);
 		msg = channel->getTopic();

@@ -47,6 +47,7 @@ namespace irc {
         User * findUserByFdSafe(int fd); // User * cannot be null, throw when null
         User * findUserByNick(std::string & nick); // User * can be null
         User * findUserByNickSafe(std::string & nick); // User * cannot be null, throw when null
+        std::string findNickbyUser(User *user);
         Channel * findChannelByName(std::string & name);
         Channel * findChannelByNameSafe(std::string & name);
 
