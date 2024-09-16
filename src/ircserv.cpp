@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/16 12:38:53 by root             ###   ########.fr       */
+/*   Updated: 2024/09/15 17:49:15 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -349,6 +349,16 @@ namespace irc {
     }
 
     return foundUser;
+  }
+
+  std::string Ircserv::findNickbyUser(User *user)
+  {
+    for (std::vector<User>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
+      if (user == it.base()){
+        const std::string nick = (*it).getNickname();
+        return (nick);}
+    }
+    return "";
   }
 
   User * Ircserv::findUserByNickSafe(std::string & nick) {

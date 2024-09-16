@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:35:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/16 12:17:28 by root             ###   ########.fr       */
+/*   Updated: 2024/09/15 17:01:04 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ namespace irc {
         User * findUserByFdSafe(int fd); // User * cannot be null, throw when null
         User * findUserByNick(std::string & nick); // User * can be null
         User * findUserByNickSafe(std::string & nick); // User * cannot be null, throw when null
+        std::string findNickbyUser(User *user);
         Channel * findChannelByName(std::string & name);
         Channel * findChannelByNameSafe(std::string & name);
 
