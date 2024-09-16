@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:09:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/16 18:24:18 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/16 18:57:29 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,17 @@ namespace irc {
 		if (channel->isInviteOnly() && !channel->isInvitedUser(user)) {
 		    throw InviteOnlyChan();
 		}
-        if (channel->isPasswordRequired() ==  true && _params.size() != 2)
-            throw TooManyParameters("2", _params.size());
-		if (channel->isPasswordRequired() ==  true && password != this->_params.at(1)) {
-		    throw PasswordMisMatch();
-		}
+        
+        if (channel->isPasswordRequired() ==  true )
+        {
+            if ( _params.size() != 2)
+                throw TooManyParameters("need password", _params.size());
+            std::string joinpass = this->_params.at(1);
+            std::cout << joinpass << std::endl;
+            if (password != joinpass) {
+                throw PasswordMisMatch();
+            }
+        }
 		std::cout << channel->getName() << "THIS IS THE JOIN" << std::endl;
 		channel->addUser(user);
 		//server->sendToSpecificDestination(server->formatResponse(RPLTopic(user, channel)), user);
