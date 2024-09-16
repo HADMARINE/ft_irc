@@ -31,6 +31,8 @@ namespace irc {
     * KICK
     *
 * Permission checker globale
+* MOTD 
+* Parser exception selon commandes
 
 ## Liens utils
 * How to open socket server in cpp : https://www.geeksforgeeks.org/socket-programming-in-cpp/
