@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:26:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/16 18:19:56 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/16 18:48:12 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ namespace irc {
     // TODO : test authority to send message to channel
     static std::vector<User *> getDestinatingUsersList(std::string & target, Ircserv * server, User * user) {
         std::vector<User *> users;
-        Channel * channel;
+        Channel * channel = NULL;
         if (target[0] == '#') {
             std::string targetCpy  = target.substr(1);
             channel = server->findChannelByNameSafe(targetCpy);
