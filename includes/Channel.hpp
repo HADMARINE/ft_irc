@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 21:40:47 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/11 18:26:22 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/16 18:24:59 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ namespace irc {
 			void				addOperator(User * user);
 			void				removeOperator(User * user);
 			bool				isOperator(User * user);
-
+			bool				isPasswordRequired();
 			void 				addUser(User * user);
 			void 				removeUser(User * user);
 			void 				inviteUser(User * user);
