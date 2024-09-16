@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:26:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/16 18:48:12 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/16 18:49:20 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ namespace irc {
             User * targetUser = server->findUserByNickSafe(target);
             users.push_back(targetUser);
         }
-        if (!channel->isUserInChannel(user)) {
+        if (channel && !channel->isUserInChannel(user)) {
             throw CannotSendToChan(channel->getName());
         }
         for (std::vector<User *>::iterator it = users.begin(); it != users.end(); it++) {
