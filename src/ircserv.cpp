@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/16 18:03:33 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/16 18:33:24 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -401,7 +401,7 @@ namespace irc {
 
   void Ircserv::sendToSpecificDestination(const std::string & message, User * user) {
     std::string newMesage = message + "\r\n";
-    if (send(user->getSocketfd(), newMesage.c_str(), message.size(), 0) < 0) {
+    if (send(user->getSocketfd(), newMesage.c_str(), newMesage.size(), 0) < 0) {
       throw std::runtime_error("Failed to send message");
     }
   }
