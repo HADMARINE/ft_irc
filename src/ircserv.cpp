@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/16 12:17:32 by root             ###   ########.fr       */
+/*   Updated: 2024/09/16 12:38:53 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,6 +201,8 @@ namespace irc {
       return new CommandMODE();
     } else if (cmd == "CAP") {
     	return NULL;
+    } else if (cmd == "INVITE"){
+      return new CommandINVITE();
     } else if (cmd == "PRIVMSG") {
       return new CommandPRIVMSG();
     }
