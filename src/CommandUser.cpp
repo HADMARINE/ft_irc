@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandUser.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 18:38:42 by root              #+#    #+#             */
-/*   Updated: 2024/09/16 12:28:20 by root             ###   ########.fr       */
+/*   Updated: 2024/09/17 13:49:23 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@ namespace irc {
             serv->disconnectUser(user);
             throw PasswordMisMatch();
         }
-        if (user->getNickname().empty())
+        if (user->getNickname().empty()) {
+            serv->disconnectUser(user);
             throw NoNicknameGiven();
+        }
         user->setRealname(_params.at(3));
 		    user->setUsername(_params.at(0));
         user->setIsRegistered(true);
