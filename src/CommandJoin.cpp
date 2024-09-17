@@ -49,7 +49,7 @@ namespace irc {
             std::string joinpass = this->_params.at(1);
             std::cout << joinpass << std::endl;
             if (password != joinpass) {
-                throw PasswordMisMatch();
+                throw BadKey();
             }
         }
 		std::cout << channel->getName() << "THIS IS THE JOIN" << std::endl;
