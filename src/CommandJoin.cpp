@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:09:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/16 18:57:29 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/17 13:36:35 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ namespace irc {
         if (channel->isPasswordRequired() ==  true )
         {
             if ( _params.size() != 2)
-                throw TooManyParameters("need password", _params.size());
+                throw NeedMoreParams();
             std::string joinpass = this->_params.at(1);
             std::cout << joinpass << std::endl;
             if (password != joinpass) {

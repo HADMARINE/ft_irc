@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Errors.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:21:34 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/12 20:50:19 by root             ###   ########.fr       */
+/*   Updated: 2024/09/17 13:57:39 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,6 @@ namespace irc {
 
     PasswordMisMatch::PasswordMisMatch() {
         this->setCode("ERR_PASSWDMISMATCH");
-        this->setNumeric(464);
         this->setMessage(":Password incorrect");
     }
 
@@ -198,6 +197,12 @@ namespace irc {
         std::stringstream ss;
         ss << channel << " :Cannot join channel (+i)";
         this->setMessage(ss.str());
+    }
+    BadKey::BadKey()
+    {
+        this->setCode("ERR_BADCHANNELKEY");
+        this->setNumeric(475);
+        this->setMessage("Cannot join channel (+k) - bad key");
     }
 
     NoPrivileges::NoPrivileges() {

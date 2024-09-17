@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Errors.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:14:05 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/12 20:48:05 by root             ###   ########.fr       */
+/*   Updated: 2024/09/17 13:56:18 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,12 @@ namespace irc {
     public:
         InviteOnlyChan();
         InviteOnlyChan(std::string channel);
+    };
+
+    // 475
+    class BadKey : public IrcSpecificResponse {
+      public :
+        BadKey();
     };
 
     // 481
