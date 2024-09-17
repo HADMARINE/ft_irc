@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:35:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/16 18:03:18 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/17 15:21:25 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ namespace irc {
 
         void removeUser(User * user); // remove user from _users
         void disconnectUser(User * user); // Disconnect totally from server
+        void motd(Ircserv *server);
 
         std::vector<ACommand *> parseCommandStr(std::string & str);
         std::string formatResponse(std::string message);
