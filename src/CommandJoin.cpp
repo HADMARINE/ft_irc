@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:09:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/17 15:42:23 by root             ###   ########.fr       */
+/*   Updated: 2024/09/17 16:01:46 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ namespace irc {
                 throw BadKey();
             }
         }
+		std::cout << user->getNickname() << std::endl;
 		channel->addUser(user);
 		server->sendToSpecificDestination(server->formatResponse(user, "JOIN #" + channel->getName()), channel);
 		server->sendToSpecificDestination(server->formatResponse(RPLNamReply(user, channel)), user);

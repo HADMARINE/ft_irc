@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/17 15:35:30 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/17 16:24:34 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,6 +201,10 @@ namespace irc {
     } else if (cmd == "MODE"){
       return new CommandMODE();
     } else if (cmd == "CAP") {
+    	return NULL;
+    } else if (cmd == "PING") {
+    	return NULL;
+    } else if (cmd == "WHOIS") {
     	return NULL;
     } else if (cmd == "INVITE"){
       return new CommandINVITE();
@@ -419,7 +423,7 @@ namespace irc {
 
   void Ircserv::sendToSpecificDestination(const std::string & message, std::vector<User *> users) {
     for (std::vector<User *>::iterator it = users.begin(); it != users.end(); it++) {
-      this->sendToSpecificDestination(message, *it);
+      this->sendToSpecificDestination(message, (*it));
     }
   }
 
@@ -470,7 +474,7 @@ namespace irc {
     ss << ":" << origin->getClientInfo() << " " << message;
     return ss.str();
   }
-  
+
   void Ircserv::sendAnnouncementToChannel(const std::string & message, Channel * channel) {
     std::string newMessage = ":" + this->getHostname() + " PRIVMSG #" + channel->getName() + ": " + message + "\r\n";
     this->sendToSpecificDestination(newMessage, channel);
@@ -504,5 +508,3 @@ namespace irc {
   // }
 
 }
-
-
