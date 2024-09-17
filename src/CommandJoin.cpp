@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandJoin.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:09:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/17 13:36:35 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/17 14:24:13 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,10 @@ namespace irc {
             newChannel.addUser(user);
             newChannel.addOperator(user);
             server->addChannel(newChannel);
+            server->sendToSpecificDestination(server->formatResponse(RPLTopic(user, channel)), user);
 			server->sendToSpecificDestination(server->formatResponse(RPLNamReply(user, &newChannel)), user);
 			server->sendToSpecificDestination(server->formatResponse(RPLEndOfNames(user, &newChannel)), user);
-			server->sendToSpecificDestination(": " + user->getUsername() + " JOIN #" + newChannel.getName() + "\r\n", &newChannel);
-            msg = "You created the " + channelName + " channel\n";
-            server->sendToSpecificDestination(msg, &newChannel);
+            server->sendToSpecificDestination(server->formatResponse(user, "JOIN #" + newChannel.getName()), &newChannel);
             return (0);
         }
 		// ADD LOOP TO JOIN MULTIPLE CHANNELS WHEN MULTIPLE ARGS
@@ -43,7 +42,7 @@ namespace irc {
 		    throw InviteOnlyChan();
 		}
         
-        if (channel->isPasswordRequired() ==  true )
+        if (channel->isPasswordRequired() == true)
         {
             if ( _params.size() != 2)
                 throw NeedMoreParams();
@@ -55,14 +54,10 @@ namespace irc {
         }
 		std::cout << channel->getName() << "THIS IS THE JOIN" << std::endl;
 		channel->addUser(user);
-		//server->sendToSpecificDestination(server->formatResponse(RPLTopic(user, channel)), user);
+		server->sendToSpecificDestination(server->formatResponse(RPLTopic(user, channel)), user);
 		server->sendToSpecificDestination(server->formatResponse(RPLNamReply(user, channel)), user);
 		server->sendToSpecificDestination(server->formatResponse(RPLEndOfNames(user, channel)), user);
-		server->sendToSpecificDestination(": " + user->getUsername() + " JOIN #" + channel->getName() + "\r\n", channel);
-		msg = user->getNickname() + " has joined the channel\n";
-		server->sendToSpecificDestination(msg, channel);
-		msg = channel->getTopic();
-		server->sendToSpecificDestination(msg, user);
+        server->sendToSpecificDestination(server->formatResponse(user, "JOIN #" + channel->getName()), channel);
 		return 0;
     }
 
