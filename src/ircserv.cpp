@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/17 15:06:54 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/17 15:35:30 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -468,6 +468,11 @@ namespace irc {
     std::stringstream ss;
     ss << ":" << origin->getClientInfo() << " " << message;
     return ss.str();
+  }
+  
+  void Ircserv::sendAnnouncementToChannel(const std::string & message, Channel * channel) {
+    std::string newMessage = ":" + this->getHostname() + " PRIVMSG #" + channel->getName() + ": " + message + "\r\n";
+    this->sendToSpecificDestination(newMessage, channel);
   }
 
   void Ircserv::addChannel(Channel channel) {

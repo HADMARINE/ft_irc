@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:35:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/16 18:03:18 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/17 15:31:05 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ namespace irc {
         Channel * findChannelByNameSafe(std::string & name);
 
         void sendToAll(std::string & message);
+        void sendAnnouncementToChannel(const std::string & message, Channel * channel);
         void sendToSpecificDestination(const std::string & message, User * user);
         void sendToSpecificDestination(const std::string & message, std::vector<User *> users);
         void sendToSpecificDestination(const std::string & message, Channel * channel);
