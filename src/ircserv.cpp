@@ -6,10 +6,10 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/17 15:06:54 by lhojoon          ###   ########.fr       */
-/*   Updated: 2024/09/17 15:21:00 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/17 15:28:36 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "ft_irc.hpp"
 
@@ -475,28 +475,28 @@ namespace irc {
     this->_channels.push_back(channel);
   }
 
-  void	Ircserv::motd(Ircserv *server)
-  {
+  // void	Ircserv::motd(Ircserv *server) // en cours
+  // {
 
-    client->sendToSpecificDestination(375, client->getNickname() + " :- [ft_irc] Message of the day - ");
+  //   server->sendToSpecificDestination(375, client->getNickname() + " :- [ft_irc] Message of the day - ");
 
-    std::ifstream motd_file("Motd.txt");
-    if (motd_file.is_open())
-    {
-      std::string line;
-      while (getline(motd_file, line))
-        client->sendMessage(372, client->getNickname() + " :" + line);
-      motd_file.close();
-    }
-    else
-    {
-      std::cerr << "Error: could not open motd file" << std::endl;
-      client->sendMessage(422, client->getNickname() + " :No MOTD file found");
-      return ;
-    }
+  //   std::ifstream motd_file("Motd.txt");
+  //   if (motd_file.is_open())
+  //   {
+  //     std::string line;
+  //     while (getline(motd_file, line))
+  //       client->sendMessage(372, client->getNickname() + " :" + line);
+  //     motd_file.close();
+  //   }
+  //   else
+  //   {
+  //     std::cerr << "Error: could not open motd file" << std::endl;
+  //     client->sendMessage(422, client->getNickname() + " :No MOTD file found");
+  //     return ;
+  //   }
 
-    client->sendMessage(376, client->getNickname() + " :- End of MOTD command -");
-  }
+  //   client->sendMessage(376, client->getNickname() + " :- End of MOTD command -");
+  // }
 
 }
 
