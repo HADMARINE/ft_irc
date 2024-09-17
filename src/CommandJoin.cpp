@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:09:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/17 13:36:35 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/17 13:58:31 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ namespace irc {
             std::string joinpass = this->_params.at(1);
             std::cout << joinpass << std::endl;
             if (password != joinpass) {
-                throw PasswordMisMatch();
+                throw BadKey();
             }
         }
 		std::cout << channel->getName() << "THIS IS THE JOIN" << std::endl;

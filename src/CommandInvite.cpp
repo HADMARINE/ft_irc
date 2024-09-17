@@ -3,10 +3,11 @@
 /*                                                        :::      ::::::::   */
 /*   CommandInvite.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:24:01 by bfaisy            #+#    #+#             */
 /*   Updated: 2024/09/17 14:16:30 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/17 14:14:29 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +32,9 @@ namespace irc {
 
 		return 0;
 	}
+	msg = ":localhost INVITE " + targetUserNickname + " #" + channelName;
+	server->sendToSpecificDestination(msg, targetUser);
+	channel->inviteUser(targetUser);
 
     std::vector<std::string> CommandINVITE::setParamsMiddleware(std::vector<std::string> params) {
         if (params.empty()) {
