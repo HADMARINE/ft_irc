@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:19:41 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/07 13:56:14 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/17 14:52:16 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int main(int argc, char **argv)
         std::cerr << "Launch failed : " << e.what() << std::endl;
         return 1;
     }
-    
     std::cout << "La SNCF et ses équipes vous souhaitent un agréable voyage. À bientôt !" << std::endl;
     return 0;
 }
