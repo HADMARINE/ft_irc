@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:24:01 by bfaisy            #+#    #+#             */
-/*   Updated: 2024/09/16 17:42:42 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/17 14:16:30 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,22 @@
 
 namespace irc {
 	int CommandINVITE::resolve(Ircserv *server, User *operatorUser) {
+		std::string targetUserNickname = this->_params.at(0);
+		std::string channelName = this->_params.at(1);
+		std::cout << channelName << std::endl;
+		std::string msg;
+		Channel *channel;
 
-	std::string targetUserNickname = this->_params.at(0);
-	std::string channelName = this->_params.at(1);
-	std::cout << channelName << std::endl;
-	std::string msg;
-	Channel *channel;
+		User *targetUser = server->findUserByNickSafe(targetUserNickname);
+		channel = server->findChannelByNameSafe(channelName);
+		if (!channel->isOperator(operatorUser)) {
+			throw NoPrivileges();
+		}
+		channel->inviteUser(targetUser);
+		msg = "INVITE " + targetUserNickname + " #" + channelName;
+		server->sendToSpecificDestination(server->formatResponse(operatorUser, msg), targetUser);
 
-	User *targetUser = server->findUserByNickSafe(targetUserNickname);
-	channel = server->findChannelByNameSafe(channelName);
-	if (!channel->isOperator(operatorUser)) {
-		throw NoPrivileges();
-	}
-	channel->inviteUser(targetUser);
-	msg = ":localhost INVITE " + targetUserNickname + " #" + channelName;
-	server->sendToSpecificDestination(msg, targetUser);
-
-	return 0;
+		return 0;
 	}
 
     std::vector<std::string> CommandINVITE::setParamsMiddleware(std::vector<std::string> params) {
