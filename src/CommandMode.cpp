@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 18:06:27 by bfaisy            #+#    #+#             */
-/*   Updated: 2024/09/17 15:47:07 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/17 15:52:39 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,15 @@ namespace irc {
 		if (option == "+i")
 			return (server->sendToSpecificDestination(":" + user->getNickname() + " MODE #" + channelName + " +i" , channel) ,channel->changeInviteOnly(true), 0);
 		if (option == "-i")
-			return (channel->changeInviteOnly(false), 0);
+			return (server->sendToSpecificDestination(":" + user->getNickname() + " MODE #" + channelName + " -i" , channel) ,channel->changeInviteOnly(false), 0);
 		if (option == "+t")
-			return (channel->changeTopicRestrict(true), 0);
+			return (server->sendToSpecificDestination(":" + user->getNickname() + " MODE #" + channelName + " +t" , channel) ,channel->changeTopicRestrict(true), 0);
 		if (option == "-t")
-			return (channel->changeTopicRestrict(false), 0);
+			return (server->sendToSpecificDestination(":" + user->getNickname() + " MODE #" + channelName + " -i" , channel) ,channel->changeTopicRestrict(false), 0);
 		if (option == "+k")
 		{
 			std::string password = this->_params.at(2);
-			return (channel->setPasswordRequired(true), channel->setPassword(password), 0);
+			return (server->sendToSpecificDestination(":" + user->getNickname() + " MODE #" + channelName + " +k" , channel) ,channel->setPasswordRequired(true), channel->setPassword(password), 0);
 		}
 		if (option == "-k")
 			return (channel->setPasswordRequired(false), 0);
