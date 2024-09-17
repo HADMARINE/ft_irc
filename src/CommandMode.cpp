@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 18:06:27 by bfaisy            #+#    #+#             */
-/*   Updated: 2024/09/17 15:52:39 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/17 15:59:14 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,28 +39,28 @@ namespace irc {
 			return (server->sendToSpecificDestination(":" + user->getNickname() + " MODE #" + channelName + " +k" , channel) ,channel->setPasswordRequired(true), channel->setPassword(password), 0);
 		}
 		if (option == "-k")
-			return (channel->setPasswordRequired(false), 0);
+			return (server->sendToSpecificDestination(":" + user->getNickname() + " MODE #" + channelName + " -k" , channel) ,channel->setPasswordRequired(false), 0);
 		if (option == "+o")
 		{
-			std::string user = this->_params.at(2);
+			std::string user1 = this->_params.at(2);
 			User *userop;
-			userop = server->findUserByNickSafe(user);
-			return (channel->addOperator(userop), 0);
+			userop = server->findUserByNickSafe(user1);
+			return (server->sendToSpecificDestination(":" + user->getNickname() + " MODE #" + channelName + " +o" , channel) ,channel->addOperator(userop), 0);
 		}
 		if (option == "-o")
 		{
-			std::string user = this->_params.at(2);
+			std::string user1 = this->_params.at(2);
 			User *userop;
-			userop = server->findUserByNickSafe(user);
-			return (channel->removeOperator(userop), 0);
+			userop = server->findUserByNickSafe(user1);
+			return (server->sendToSpecificDestination(":" + user->getNickname() + " MODE #" + channelName + " -o" , channel) ,channel->removeOperator(userop), 0);
 		}
 		if (option == "+l")
 		{
 			std::string nbr = this->_params.at(2);
-			return (channel->isUserLimit(true), channel->setUserLimit(std::atoi((nbr.c_str()))), 0);
+			return (server->sendToSpecificDestination(":" + user->getNickname() + " MODE #" + channelName + " +l" , channel) ,channel->isUserLimit(true), channel->setUserLimit(std::atoi((nbr.c_str()))), 0);
 		}
 		if (option == "-l")
-			return (channel->isUserLimit(false), 0);
+			return (server->sendToSpecificDestination(":" + user->getNickname() + " MODE #" + channelName + " -l" , channel) ,channel->isUserLimit(false), 0);
 		return 0;
 	}
 
