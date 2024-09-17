@@ -6,6 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
+/*   Updated: 2024/09/17 15:06:54 by lhojoon          ###   ########.fr       */
 /*   Updated: 2024/09/17 15:21:00 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -466,7 +467,7 @@ namespace irc {
 
   std::string Ircserv::formatResponse(User * origin, std::string message) {
     std::stringstream ss;
-    ss << ":" << origin->getNickname() << "!" << origin->getUsername() << "@" << origin->getHostname() << " " << message;
+    ss << ":" << origin->getClientInfo() << " " << message;
     return ss.str();
   }
 

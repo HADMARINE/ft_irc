@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:09:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/17 14:24:13 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/17 14:31:33 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ namespace irc {
             newChannel.addUser(user);
             newChannel.addOperator(user);
             server->addChannel(newChannel);
-            server->sendToSpecificDestination(server->formatResponse(RPLTopic(user, channel)), user);
+            server->sendToSpecificDestination(server->formatResponse(RPLTopic(user, &newChannel)), user);
 			server->sendToSpecificDestination(server->formatResponse(RPLNamReply(user, &newChannel)), user);
 			server->sendToSpecificDestination(server->formatResponse(RPLEndOfNames(user, &newChannel)), user);
             server->sendToSpecificDestination(server->formatResponse(user, "JOIN #" + newChannel.getName()), &newChannel);

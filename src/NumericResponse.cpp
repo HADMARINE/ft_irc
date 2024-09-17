@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   NumericResponse.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 15:05:22 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/17 14:22:38 by root             ###   ########.fr       */
+/*   Updated: 2024/09/17 15:09:36 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,7 @@ namespace irc {
 		this->setCode("RPL_WELCOME");
 		this->setNumeric(1);
 		std::stringstream ss;
-		ss << user->getUsername() << " :Welcome to the Internet Relay Network " << user->getNickname();
-		if (!user->getUsername().empty() && !user->getRealname().empty())
-			ss << "!" << user->getUsername() << "@" << user->getRealname();
+		ss << user->getNickname() << " :Welcome to the Internet Relay Network " << user->getClientInfo();
 		this->setMessage(ss.str());
 	}
 
@@ -29,7 +27,7 @@ namespace irc {
             this->setCode("RPL_YOURHOST");
             this->setNumeric(2);
             std::stringstream ss;
-            ss << user->getUsername() << " :Your host is " << hostname << ", running version " << version;
+            ss << user->getNickname() << " :Your host is " << hostname << ", running version " << version;
             this->setMessage(ss.str());
         }
 
@@ -39,10 +37,13 @@ namespace irc {
             this->setNumeric(3);
             std::tm * now = std::localtime(time);
             std::stringstream ss;
-            ss << user->getUsername() << " :This server was created "
+            ss << user->getNickname() << " :This server was created "
             << (now->tm_year + 1900) << '-'
-            << (now->tm_mon + 1) << '-'
-            <<  now->tm_mday << ' ' << now->tm_hour << ':' << now->tm_min << ':' << now->tm_sec;
+            << std::setfill('0') << std::setw(2) << (now->tm_mon + 1) << '-'
+            << std::setfill('0') << std::setw(2) <<  now->tm_mday << ' '
+			<< std::setfill('0') << std::setw(2) << now->tm_hour << ':'
+			<< std::setfill('0') << std::setw(2) << now->tm_min << ':'
+			<< std::setfill('0') << std::setw(2) << now->tm_sec;
             this->setMessage(ss.str());
         }
 
@@ -51,7 +52,7 @@ namespace irc {
 		this->setCode("RPL_MYINFO");
 		this->setNumeric(4);
 		std::stringstream ss;
-		ss << user->getUsername() << "<servername> <version> <available user modes> <available channel modes>";
+		ss << user->getNickname() << "<servername> <version> <available user modes> <available channel modes>";
 		this->setMessage(ss.str());
 	}
 
@@ -60,7 +61,7 @@ namespace irc {
 		this->setCode("RPL_ISUPPORT");
 		this->setNumeric(5);
 		std::stringstream ss;
-		ss << user->getUsername() << " :are supported by this server";
+		ss << user->getNickname() << " :are supported by this server";
 		this->setMessage(":are supported by this server");
 	}
 
@@ -75,7 +76,9 @@ namespace irc {
 	RPLTopic::RPLTopic(User *user, Channel *channel) {
 		this->setCode("RPL_TOPIC");
 		this->setNumeric(332);
-		this->setMessage(user->getUsername() + " " + channel->getName() + " :" + channel->getTopic());
+		std::stringstream ss;
+		ss << user->getNickname() << " #" << channel->getName() << " :" << channel->getTopic();	
+		this->setMessage(ss.str());
 	}
 
 	// 353
@@ -84,11 +87,12 @@ namespace irc {
 		this->setNumeric(353);
 		std::stringstream ss;
 		std::vector<User *>	users;
-		ss << user->getNickname() << " @ #" << channel->getName() << " :";
+		// TODO : faut changer le symbole selon les types des channels - public = secret @ private *
+		ss << user->getNickname() << " = #" << channel->getName() << " :";
 		users = channel->getUsers();
 		for (std::vector<User *>::iterator it = users.begin(); it != users.end(); ++it) {
-      if (it != users.begin())
-        ss << " ";
+			if (it != users.begin())
+				ss << " ";
 			if (channel->isOperator(*it))
 				ss << "@" << (*it)->getNickname();
 			else
@@ -101,6 +105,8 @@ namespace irc {
 	RPLEndOfNames::RPLEndOfNames(User *user, Channel *channel) {
 		this->setCode("RPL_ENDOFNAMES");
 		this->setNumeric(366);
-		this->setMessage(user->getNickname() + " #" + channel->getName() + " :End of /NAMES list.");
+		std::stringstream ss;
+		ss << user->getNickname() << " #" << channel->getName() << " :End of /NAMES list.";
+		this->setMessage(ss.str());
 	}
 }

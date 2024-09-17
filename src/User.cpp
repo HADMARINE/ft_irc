@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:29:47 by enorie            #+#    #+#             */
-/*   Updated: 2024/09/12 16:46:03 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/17 15:03:16 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ namespace irc {
 	const std::string & User::getUsername() const { return (_username); }
 	const std::string & User::getHostname() const { return (_hostname); }
 	const std::string & User::getPendingpassword() const { return (_pendingPassword); }
+	std::string User::getClientInfo() const { return (_nickname + "!" + _username + "@" + _hostname); }
 	bool User::getIsRegistered() const { return _isRegistered; }
 
 	void		User::setSocketfd(int fd) { _socketfd = fd; }
