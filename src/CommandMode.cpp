@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 18:06:27 by bfaisy            #+#    #+#             */
-/*   Updated: 2024/09/12 16:31:26 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/17 15:47:07 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ namespace irc {
 			throw NoPrivileges();  
 		}
 		if (option == "+i")
-			return (channel->changeInviteOnly(true), 0);
+			return (server->sendToSpecificDestination(":" + user->getNickname() + " MODE #" + channelName + " +i" , channel) ,channel->changeInviteOnly(true), 0);
 		if (option == "-i")
 			return (channel->changeInviteOnly(false), 0);
 		if (option == "+t")
