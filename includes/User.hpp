@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 21:50:27 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/10 16:51:05 by root             ###   ########.fr       */
+/*   Updated: 2024/09/17 15:02:58 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ namespace irc {
 		const std::string & getNickname() const;
 		const std::string & getUsername() const;
 		const std::string & getHostname() const;
+		std::string getClientInfo() const;
 		const std::string & getPendingpassword() const;
         bool          getIsRegistered() const;
 
