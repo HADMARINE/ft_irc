@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/17 16:24:34 by root             ###   ########.fr       */
+/*   Updated: 2024/09/18 12:12:22 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -458,7 +458,7 @@ namespace irc {
 
   std::string Ircserv::formatResponse(IrcSpecificResponse message) {
     std::stringstream ss;
-    ss << ":" << this->getHostname() << " ";
+    ss << ": ";
     if (message.getNumeric() != 0) {
       std::ostringstream oss;
       oss << std::setfill('0') << std::setw(3) << message.getNumeric();
