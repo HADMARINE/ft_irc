@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   NumericResponse.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 15:05:22 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/17 15:09:36 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/18 13:48:28 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,21 @@ namespace irc {
 		this->setMessage(":There are <integer> users and <integer> services on <integer> servers");
 	}
 
+	// 331
+	RPLNoTopic::RPLNoTopic(User *user, Channel *channel) {
+		this->setCode("RPL_NOTOPIC");
+		this->setNumeric(331);
+		std::stringstream ss;
+		ss << user->getNickname() << " #" << channel->getName() << " :No topic is set";
+		this->setMessage(ss.str());
+	}
+
     // 332
 	RPLTopic::RPLTopic(User *user, Channel *channel) {
 		this->setCode("RPL_TOPIC");
 		this->setNumeric(332);
 		std::stringstream ss;
-		ss << user->getNickname() << " #" << channel->getName() << " :" << channel->getTopic();	
+		ss << user->getNickname() << " #" << channel->getName() << " " << channel->getTopic();
 		this->setMessage(ss.str());
 	}
 

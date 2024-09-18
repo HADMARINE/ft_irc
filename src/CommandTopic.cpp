@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandTopic.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:32:24 by bfaisy            #+#    #+#             */
-/*   Updated: 2024/09/17 14:41:18 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/18 13:59:27 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 namespace irc {
 	int CommandTOPIC::resolve(Ircserv *server, User *user) {
-		
+
 		Channel *channel;
 		std::string ss;
 		std::string channelName = this->_params.at(0);
@@ -28,21 +28,15 @@ namespace irc {
 
 		if (this->_params.size() == 1) { // ca ne marche pas parce que issi bloque si jamais c'est 1
 			std::string currentTopic = channel->getTopic();
-			std::cout << "I";
-			ss = ":localhost 332 " + user->getNickname() + " #" + channelName + " :" + currentTopic + "\r\n";
-			server->sendToSpecificDestination(ss, channel);
+			if (currentTopic == "")
+				server->sendToSpecificDestination(server->formatResponse(RPLNoTopic(user, channel)), channel);
+			else
+				server->sendToSpecificDestination(server->formatResponse(RPLTopic(user, channel)), channel);
 			return 0;
 		}
-
-
-		
 		std::string newTopic = this->_params.at(1);
-
-		std::cout<< "test here "<< std::endl;
 		channel->setTopic(newTopic);
-		ss = ":localhost 332 " + user->getNickname() + " #" + channelName + " :" + newTopic + "\r\n";
-		server->sendToSpecificDestination(ss, channel);
-
+		server->sendToSpecificDestination(server->formatResponse(RPLTopic(user, channel)), channel);
 		return 0;
 	}
 
@@ -52,10 +46,6 @@ namespace irc {
         if (params.size() == 0) {
             throw NeedMoreParams();
         }
-        if (params.size() > 2) {
-            throw TooManyParameters("2", params.size());
-        }
-
 		if (params.at(0)[0] != '#') {
 			throw UnknownCommand();
 		}

@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:09:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/17 16:01:46 by root             ###   ########.fr       */
+/*   Updated: 2024/09/18 13:42:26 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ namespace irc {
 			server->sendToSpecificDestination(server->formatResponse(user, "JOIN #" + newChannel.getName()), &newChannel);
 			server->sendToSpecificDestination(server->formatResponse(RPLNamReply(user, &newChannel)), user);
 			server->sendToSpecificDestination(server->formatResponse(RPLEndOfNames(user, &newChannel)), user);
-			server->sendToSpecificDestination(server->formatResponse(RPLTopic(user, &newChannel)), user);
-
+			server->sendToSpecificDestination(server->formatResponse(RPLNoTopic(user, &newChannel)), user);
             return (0);
         }
 		// ADD LOOP TO JOIN MULTIPLE CHANNELS WHEN MULTIPLE ARGS
@@ -53,13 +52,14 @@ namespace irc {
                 throw BadKey();
             }
         }
-		std::cout << user->getNickname() << std::endl;
 		channel->addUser(user);
 		server->sendToSpecificDestination(server->formatResponse(user, "JOIN #" + channel->getName()), channel);
 		server->sendToSpecificDestination(server->formatResponse(RPLNamReply(user, channel)), user);
 		server->sendToSpecificDestination(server->formatResponse(RPLEndOfNames(user, channel)), user);
-		server->sendToSpecificDestination(server->formatResponse(RPLTopic(user, channel)), user);
-
+		if (channel->getTopic() == "")
+			server->sendToSpecificDestination(server->formatResponse(RPLNoTopic(user, channel)), user);
+		else
+			server->sendToSpecificDestination(server->formatResponse(RPLTopic(user, channel)), user);
 		return 0;
     }
 
