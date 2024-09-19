@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:26:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/19 15:25:31 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/19 16:34:39 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,7 @@ namespace irc {
         std::stringstream ss;
 
         ss << "PRIVMSG ";
-        std::string dest = this->_params.at(0);
-        std::string msg = this->_params.at(1);
-        User *target = server->findUserByNickSafe(dest);
-        server->sendToSpecificDestination(msg, target);
+
         std::vector<User *> users = getDestinatingUsersList(_params.at(0), server, user);
         for (std::vector<std::string>::iterator it = _params.begin(); it != _params.end(); it++) {
             ss << *it << " ";
@@ -76,4 +73,5 @@ namespace irc {
         (void)server;
         (void)user;
     }
+
 }

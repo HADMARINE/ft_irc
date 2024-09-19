@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Commands.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 13:42:22 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/12 15:30:00 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/19 16:34:45 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ namespace irc {
     };
 
     class CommandPRIVMSG : public ACommand {
+        // void CommandPRIVMSG::Msg(Ircserv * server, User * user);
         int resolve(Ircserv *server, User *user);
         std::vector<std::string> setParamsMiddleware(std::vector<std::string> params);
         void permissionCheckMiddleware(Ircserv *server, User *user);
