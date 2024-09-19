@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:18:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/15 18:08:28 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/19 15:09:56 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ namespace irc { // faut faire la fonction qui envoie des msg a partir des gens d
         channel->removeUser(targetUser);
         msg = ":" + nick + " KICK #" + channelName + " " + targetUserNickname + " :" + comment + "\r\n";
         server->sendToSpecificDestination(msg, channel);
-        msg = ":localhost KICK by " + nick + "\r\n"; // les priv msg ne fonctionne pas encore
-        server->sendToSpecificDestination(server->formatResponse(user, msg), targetUser);
+        server->sendToSpecificDestination(msg, targetUser);
 
         return 0;
     }
@@ -44,7 +43,7 @@ namespace irc { // faut faire la fonction qui envoie des msg a partir des gens d
         if (params.empty()) {
             throw NeedMoreParams();
         }
-        if (params.size() < 2) {
+        if (params.size() != 4) {
             throw TooManyParameters("3 or 4", params.size());
         }
         if (params.at(0)[0] != '#') {
