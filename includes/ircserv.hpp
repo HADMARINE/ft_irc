@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:35:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/19 18:27:28 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/23 16:01:52 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ namespace irc {
 
         void removeUser(User * user); // remove user from _users
         void disconnectUser(User * user); // Disconnect totally from server
-        void motd(Ircserv *server);
+        void motd(int userfd);
         // void Ircserv::Msg(Ircserv * server, User * user);
 
         std::vector<ACommand *> parseCommandStr(std::string & str);

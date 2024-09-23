@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/19 16:34:22 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/23 16:02:18 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ namespace irc {
     pfd.events = POLLIN;
     pfd.revents = 0;
     _pfds.push_back(pfd);
-
+    this->motd(fd);
     this->clientMessage(fd);
 	}
 
@@ -485,27 +485,30 @@ namespace irc {
     this->_channels.push_back(channel);
   }
 
-  // void	Ircserv::motd(Ircserv *server) // en cours
-  // {
+  void	Ircserv::motd(int userfd) // en cours
+  {
+    User *user = this->findUserByFdSafe(userfd);
+    std::string str = " :- [ft_irc] Message of the day - ";
+    this->sendToSpecificDestination(str, user);
 
-  //   server->sendToSpecificDestination(375, client->getNickname() + " :- [ft_irc] Message of the day - ");
-
-  //   std::ifstream motd_file("Motd.txt");
-  //   if (motd_file.is_open())
-  //   {
-  //     std::string line;
-  //     while (getline(motd_file, line))
-  //       client->sendMessage(372, client->getNickname() + " :" + line);
-  //     motd_file.close();
-  //   }
-  //   else
-  //   {
-  //     std::cerr << "Error: could not open motd file" << std::endl;
-  //     client->sendMessage(422, client->getNickname() + " :No MOTD file found");
-  //     return ;
-  //   }
-
-  //   client->sendMessage(376, client->getNickname() + " :- End of MOTD command -");
-  // }
+    std::ifstream motd_file("Motd.txt");
+    if (motd_file.is_open())
+    {
+      std::string line;
+      while (getline(motd_file, line)){
+        str = " :" + line;
+        this->sendToSpecificDestination(str, user);;}
+      motd_file.close();
+    }
+    else
+    {
+      std::cerr << "Error: could not open motd file" << std::endl;
+      str =  ":No MOTD file found";
+      this->sendToSpecificDestination(str, user);
+      return ;
+    }
+    str = " :- End of MOTD command -";
+    this->sendToSpecificDestination(str, user);
+  }
 
 }
