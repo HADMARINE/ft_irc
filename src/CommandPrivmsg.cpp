@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:26:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/24 16:32:32 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/24 16:35:48 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ namespace irc {
 
         ss << "PRIVMSG ";
         std::string &target = _params.at(0);
+        std::cout << target << std::endl;
         if (server->findChannelByName(target))
         {
             std::vector<User *> users = getDestinatingUsersList(target, server, user);
