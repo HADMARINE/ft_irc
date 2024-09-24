@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:26:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/24 16:35:48 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/24 17:06:35 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ namespace irc {
 
         ss << "PRIVMSG ";
         std::string &target = _params.at(0);
-        std::cout << target << std::endl;
-        if (server->findChannelByName(target))
+        std::string targetcpy = target.substr(1);
+        if (server->findChannelByName(targetcpy))
         {
             std::vector<User *> users = getDestinatingUsersList(target, server, user);
             for (std::vector<std::string>::iterator it = _params.begin(); it != _params.end(); it++) {
@@ -67,12 +67,9 @@ namespace irc {
         else if (server->findUserByNick(target))
         {
             User *user1 = server->findUserByNick(target);
-            for (std::vector<std::string>::iterator it = _params.begin(); it != _params.end(); it++) {
-                ss << *it << " ";
-            }
-
-            std::string str = ss.str();
-            server->sendToSpecificDestination(server->formatResponse(user, str), user1);
+            std::string msg  = _params.at(1);
+            std::string str = ":" + user->getNickname() + " PRIVMSG " + target +" "+ msg;
+            server->sendToSpecificDestination(str, user1);
         }
         else
             throw ErroneusNickName();
