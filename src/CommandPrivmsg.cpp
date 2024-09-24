@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:26:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/19 16:34:39 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/24 16:32:32 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,34 @@ namespace irc {
     }
 
     int CommandPRIVMSG::resolve(Ircserv * server, User * user) {
+        
+        
         std::stringstream ss;
 
         ss << "PRIVMSG ";
+        std::string &target = _params.at(0);
+        if (server->findChannelByName(target))
+        {
+            std::vector<User *> users = getDestinatingUsersList(target, server, user);
+            for (std::vector<std::string>::iterator it = _params.begin(); it != _params.end(); it++) {
+                ss << *it << " ";
+            }
 
-        std::vector<User *> users = getDestinatingUsersList(_params.at(0), server, user);
-        for (std::vector<std::string>::iterator it = _params.begin(); it != _params.end(); it++) {
-            ss << *it << " ";
+            std::string str = ss.str();
+            server->sendToSpecificDestination(server->formatResponse(user, str), users);
         }
+        else if (server->findUserByNick(target))
+        {
+            User *user1 = server->findUserByNick(target);
+            for (std::vector<std::string>::iterator it = _params.begin(); it != _params.end(); it++) {
+                ss << *it << " ";
+            }
 
-        std::string str = ss.str();
-        server->sendToSpecificDestination(server->formatResponse(user, str), users);
-
+            std::string str = ss.str();
+            server->sendToSpecificDestination(server->formatResponse(user, str), user1);
+        }
+        else
+            throw ErroneusNickName();
         return 0;
     }
 

@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 13:42:22 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/19 16:34:45 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/24 16:04:51 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ namespace irc {
     };
 
     class CommandPRIVMSG : public ACommand {
-        // void CommandPRIVMSG::Msg(Ircserv * server, User * user);
+        int msg(Ircserv * server, User * user);
         int resolve(Ircserv *server, User *user);
         std::vector<std::string> setParamsMiddleware(std::vector<std::string> params);
         void permissionCheckMiddleware(Ircserv *server, User *user);

@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/24 16:12:38 by root             ###   ########.fr       */
+/*   Updated: 2024/09/24 16:22:42 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ namespace irc {
 
       int commandReturnCode;
       for (std::vector<ACommand *>::iterator it = commmands.begin(); it != commmands.end(); it++) {
-        commandReturnCode = (*it)->resolve(this, this->findUserByFdSafe(fd));
+        commandReturnCode = (*it)->resolve(this, this->findUserByFdSafe(fd)); //
         if (commandReturnCode != 0) {
             throw std::runtime_error("Some error while command execution occured"); // TODO : precise error
         }
@@ -425,6 +425,7 @@ namespace irc {
 
   void Ircserv::sendToSpecificDestination(const std::string & message, std::vector<User *> users) {
     for (std::vector<User *>::iterator it = users.begin(); it != users.end(); it++) {
+      std::cout << "-\n";
       this->sendToSpecificDestination(message, (*it));
     }
   }
