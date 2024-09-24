@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/23 16:02:18 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/24 16:12:38 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ namespace irc {
     if (fd < 0)
       throw std::runtime_error("Failed to accept connection");
 
-    User user(fd);
-    user.setHostname("localhost");
+    User *user = new User(fd);
+    user->setHostname("localhost");
     this->_users.push_back(user);
 
     pfd.fd = fd;
@@ -108,13 +108,14 @@ namespace irc {
 	void  Ircserv::clientDisconnect(int fd) {
     for (std::vector<pollfd>::iterator it = _pfds.begin(); it != _pfds.end(); it++)
     {
-      if (it->fd == fd)
-      {
-      _pfds.erase(it);
-      close(fd);
-      DCMD(std::cout << "Client " << fd << " disconnected" << std::endl);
-      break;
-      }
+		if (it->fd == fd)
+		{
+			_pfds.erase(it);
+			close(fd);
+			delete findUserByFdSafe(fd);
+			DCMD(std::cout << "Client " << fd << " disconnected" << std::endl);
+			break;
+		}
     }
 	}
 
@@ -209,7 +210,7 @@ namespace irc {
     } else if (cmd == "INVITE"){
       return new CommandINVITE();
     } else if (cmd == "PRIVMSG") {
-      
+
       return new CommandPRIVMSG();
     }
  		throw UnknownCommand(cmd);
@@ -324,9 +325,9 @@ namespace irc {
   User * Ircserv::findUserByFd(int fd) {
     User * foundUser = NULL;
 
-    for (std::vector<User>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
-      if ((*it).getSocketfd() == fd)
-        foundUser = it.base();
+    for (std::vector<User *>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
+      if ((*it)->getSocketfd() == fd)
+        foundUser = (*it);
     }
 
     return foundUser;
@@ -335,9 +336,9 @@ namespace irc {
 	User * Ircserv::findUserByFdSafe(int fd) {
     User * foundUser = NULL;
 
-    for (std::vector<User>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
-      if ((*it).getSocketfd() == fd)
-        foundUser = it.base();
+    for (std::vector<User *>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
+      if ((*it)->getSocketfd() == fd)
+        foundUser = (*it);
     }
 
     if (foundUser == NULL) {
@@ -349,9 +350,9 @@ namespace irc {
   User * Ircserv::findUserByNick(std::string & nick) {
     User * foundUser = NULL;
 
-    for (std::vector<User>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
-      if ((*it).getNickname() == nick)
-        foundUser = it.base();
+    for (std::vector<User *>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
+      if ((*it)->getNickname() == nick)
+        foundUser = (*it);
     }
 
     return foundUser;
@@ -359,9 +360,9 @@ namespace irc {
 
   std::string Ircserv::findNickbyUser(User *user)
   {
-    for (std::vector<User>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
-      if (user == it.base()){
-        const std::string nick = (*it).getNickname();
+    for (std::vector<User *>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
+      if (user == (*it)){
+        const std::string nick = (*it)->getNickname();
         return (nick);}
     }
     return "";
@@ -370,9 +371,9 @@ namespace irc {
   User * Ircserv::findUserByNickSafe(std::string & nick) {
     User * foundUser = NULL;
 
-    for (std::vector<User>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
-      if ((*it).getNickname() == nick)
-        foundUser = it.base();
+    for (std::vector<User *>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
+      if ((*it)->getNickname() == nick)
+        foundUser = (*it);
     }
 
     if (foundUser == NULL) {
@@ -433,8 +434,8 @@ namespace irc {
   }
 
   void Ircserv::removeUser(User * user) {
-    for (std::vector<User>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
-      if (it.base() == user) {
+    for (std::vector<User *>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
+      if ((*it) == user) {
         this->_users.erase(it);
         break;
       }

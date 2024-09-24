@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:35:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/23 16:01:52 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/24 16:07:28 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ namespace irc {
         void bindLoop();
         int readFromConfigFile(char *filename);
 
-        std::vector<User> & getUsers() { return this->_users; }
+        std::vector<User *> & getUsers() { return this->_users; }
         const std::string & getPassword() const { return this->_password; }
         std::vector<Channel> & getChannels() { return this->_channels; }
         const std::string & getMotd() const { return this->_motd; }
@@ -80,7 +80,7 @@ namespace irc {
 
         std::vector<struct pollfd> _pfds;
 
-        std::vector<User> _users;
+        std::vector<User *> _users;
 		std::vector<Channel> _channels;
 		std::vector<t_server_op> _operators;
         std::string _motd;
