@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandJoin.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:09:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/19 14:59:48 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/25 09:03:30 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,21 @@ namespace irc {
 			throw ChannelFull();
 		}
 		if (channel->isInviteOnly() && !channel->isInvitedUser(user)) {
-            server->sendToSpecificDestination(server->formatResponse(user, "473 " + user->getNickname() +  " #" + channelName +  " :Cannot join channel (+i)"), user);
+            server->sendToSpecificDestination(server->formatResponse(InviteOnlyChan(channel->getName())), user);
 		    throw InviteOnlyChan();
 		}
 
         if (channel->isPasswordRequired() == true)
         {
-            if ( _params.size() != 2){
-                server->sendToSpecificDestination(server->formatResponse(user, "475 " + user->getNickname() +  " #" + channelName +  " :Cannot join channel (+k)"), user);
-                throw NeedMoreParams();}
+            if (_params.size() != 2) {
+                // server->sendToSpecificDestination(server->formatResponse(BadKey(channel->getName())), user);
+                throw BadKey(channel->getName());
+            }
             std::string joinpass = this->_params.at(1);
             std::cout << joinpass << std::endl;
             if (password != joinpass) {
-                server->sendToSpecificDestination(server->formatResponse(user, "475 " + user->getNickname() +  " #" + channelName +  " :Cannot join channel (+k)"), user);
-                throw BadKey();
+                // server->sendToSpecificDestination(server->formatResponse(BadKey(channel->getName())), user);
+                throw BadKey(channel->getName());
             }
         }
 		channel->addUser(user);
