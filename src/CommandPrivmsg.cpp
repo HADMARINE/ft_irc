@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:26:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/25 16:07:09 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/25 16:19:42 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ namespace irc {
         else if (server->findUserByNick(target))
         {
             std::cout << "I" << std::endl;
-            User *user1 = server->findUserByNick(target);
+            User *user1 = server->findUserByNickSafe(target);
             if (_params.at(1).empty())
                 throw NeedMoreParams();
             std::string msg  = _params.at(1);

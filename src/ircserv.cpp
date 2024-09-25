@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/25 15:34:35 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/25 16:28:23 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,6 @@ namespace irc {
     pfd.events = POLLIN;
     pfd.revents = 0;
     _pfds.push_back(pfd);
-    this->sendToSpecificDestination("motd", findUserByFdSafe(fd)); // use this
-    this->motd(fd);
     this->clientMessage(fd);
 	}
 
@@ -499,9 +497,8 @@ namespace irc {
     this->_channels.push_back(channel);
   }
 
-  void	Ircserv::motd(int userfd)
+  void	Ircserv::motd(User *user)
   {
-    User *user = this->findUserByFdSafe(userfd);
     std::string str = " :- [ft_irc] Message of the day - ";
     this->sendToSpecificDestination(str, user);
 

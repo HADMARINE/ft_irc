@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandUser.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 18:38:42 by root              #+#    #+#             */
-/*   Updated: 2024/09/25 09:14:10 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/25 16:29:12 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ namespace irc {
             serv->disconnectUser(user);
             throw NoNicknameGiven();
         }
+        serv->sendToSpecificDestination("motd", (user)); // use this
+        serv->motd(user);
         user->setRealname(_params.at(3));
 		    user->setUsername(_params.at(0));
         user->setIsRegistered(true);
