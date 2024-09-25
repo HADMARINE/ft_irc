@@ -17,14 +17,16 @@
 namespace irc {
     class IrcSpecificResponse {
     public:
-        IrcSpecificResponse() : _numeric(0), _code("UNDEFINED"), _message("Unknown error occured") {}
-        IrcSpecificResponse(std::string code, std::string message) : _numeric(0), _code(code), _message(message) {}
+        IrcSpecificResponse() : _numeric(0), _code("UNDEFINED"), _message("Unknown error occured"), _disconnectAfterEmit(false) {}
+        IrcSpecificResponse(std::string code, std::string message) : _numeric(0), _code(code), _message(message), _disconnectAfterEmit(false) {}
         void setNumeric(unsigned short numeric) { this->_numeric = numeric; }
         unsigned short getNumeric() const { return this->_numeric; }
         void setCode(std::string code) { this->_code = code; }
         std::string getCode() const { return this->_code; }
         void setMessage(std::string message) { this->_message = message; }
         std::string getMessage() const { return this->_message; }
+        bool getDisconnectAfterEmit() const { return this->_disconnectAfterEmit; }
+        void setDisconnectAfterEmit(bool disconnectAfterEmit) { this->_disconnectAfterEmit = disconnectAfterEmit; }
 
         std::string what() {
             return this->getMessage();
@@ -33,5 +35,6 @@ namespace irc {
         unsigned short _numeric;
         std::string _code;
         std::string _message;
+        bool _disconnectAfterEmit;
     };
 }
