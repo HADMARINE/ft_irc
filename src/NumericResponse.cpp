@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 15:05:22 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/25 09:14:46 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/25 15:01:45 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ namespace irc {
 		this->setCode("RPL_TOPIC");
 		this->setNumeric(332);
 		std::stringstream ss;
-		ss << user->getNickname() << " #" << channel->getName() << " " << channel->getTopic();
+		ss << user->getNickname() << " #" << channel->getName() << " :" << channel->getTopic();
 		this->setMessage(ss.str());
 	}
 
@@ -96,7 +96,7 @@ namespace irc {
 		this->setNumeric(353);
 		std::stringstream ss;
 		std::vector<User *>	users;
-		// TODO : faut changer le symbole selon les types des channels - public = secret @ private *
+		// TODO (maybe) : faut changer le symbole selon les types des channels - public = secret @ private *
 		ss << user->getNickname() << " = #" << channel->getName() << " :";
 		users = channel->getUsers();
 		for (std::vector<User *>::iterator it = users.begin(); it != users.end(); ++it) {
