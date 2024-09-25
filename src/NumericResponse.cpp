@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   NumericResponse.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 15:05:22 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/25 15:01:45 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/25 17:00:59 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ namespace irc {
 	}
 
 	// 331
-	RPLNoTopic::RPLNoTopic(User *user, Channel *channel) {
+	RPLNoTopic::RPLNoTopic(User *user, Channel * channel) {
 		this->setCode("RPL_NOTOPIC");
 		this->setNumeric(331);
 		std::stringstream ss;
@@ -82,7 +82,7 @@ namespace irc {
 	}
 
     // 332
-	RPLTopic::RPLTopic(User *user, Channel *channel) {
+	RPLTopic::RPLTopic(User *user, Channel * channel) {
 		this->setCode("RPL_TOPIC");
 		this->setNumeric(332);
 		std::stringstream ss;
@@ -91,7 +91,7 @@ namespace irc {
 	}
 
 	// 353
-	RPLNamReply::RPLNamReply(User *user, Channel *channel) {
+	RPLNamReply::RPLNamReply(User *user, Channel * channel) {
 		this->setCode("RPL_NAMREPLY");
 		this->setNumeric(353);
 		std::stringstream ss;
@@ -111,7 +111,7 @@ namespace irc {
 	}
 
 	// 366
-	RPLEndOfNames::RPLEndOfNames(User *user, Channel *channel) {
+	RPLEndOfNames::RPLEndOfNames(User *user, Channel * channel) {
 		this->setCode("RPL_ENDOFNAMES");
 		this->setNumeric(366);
 		std::stringstream ss;
