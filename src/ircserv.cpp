@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/25 09:24:11 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/25 14:56:16 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,10 @@ namespace irc {
   }
 
   Ircserv::~Ircserv() {
-      std::cout << "Server shutting down..." << std::endl;
+    std::cout << "Server shutting down..." << std::endl;
+    for (std::vector<User *>::iterator it = _users.begin(); it != _users.end(); it++) {
+      delete *it;
+    }
   }
 
 	void  Ircserv::clientConnect() {
@@ -92,7 +95,7 @@ namespace irc {
     if (fd < 0)
       throw std::runtime_error("Failed to accept connection");
 
-    User *user = new User(fd);
+    User * user = new User(fd);
     user->setHostname("localhost");
     this->_users.push_back(user);
 
@@ -112,6 +115,7 @@ namespace irc {
       if (it->fd == fd) {
         close(fd);
         DCMD(std::cout << "Client " << fd << " disconnected" << std::endl);
+        _pfds.erase(it);
         break;
       }
     }
@@ -438,16 +442,15 @@ namespace irc {
   }
 
   void Ircserv::removeUser(User * user) {
+    for (std::vector<Channel>::iterator it = this->_channels.begin(); it != this->_channels.end(); it++) {
+      if (it->isUserInChannel(user))
+        it->removeUser(user);
+    }
+    
     for (std::vector<User *>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
       if ((*it) == user) {
         this->_users.erase(it);
-        break;
-      }
-    }
-
-    for (std::vector<struct pollfd>::iterator it = this->_pfds.begin(); it != this->_pfds.end(); it++) {
-      if (it->fd == user->getSocketfd()) {
-        this->_pfds.erase(it);
+        delete user;
         break;
       }
     }
