@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:09:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/25 09:03:30 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/25 14:26:12 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ namespace irc {
 		// ADD LOOP TO JOIN MULTIPLE CHANNELS WHEN MULTIPLE ARGS
 		std::string password = channel->getPassword();
 		if (channel->getUsers().size() == channel->getUserLimit()) {
-            server->sendToSpecificDestination(server->formatResponse(user, "471 " + user->getNickname() +  " #" + channelName +  " :Cannot join channel (+l)"), user);
-			throw ChannelFull();
+            // server->sendToSpecificDestination(server->formatResponse(ChannelIsFull(channel->getName())), user);
+			throw ChannelIsFull(channel->getName());
 		}
 		if (channel->isInviteOnly() && !channel->isInvitedUser(user)) {
-            server->sendToSpecificDestination(server->formatResponse(InviteOnlyChan(channel->getName())), user);
+            // server->sendToSpecificDestination(server->formatResponse(InviteOnlyChan(channel->getName())), user);
 		    throw InviteOnlyChan();
 		}
 
