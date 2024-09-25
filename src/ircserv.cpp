@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/25 14:56:16 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/25 15:24:12 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -493,7 +493,7 @@ namespace irc {
     this->_channels.push_back(channel);
   }
 
-  void	Ircserv::motd(int userfd) // en cours
+  void	Ircserv::motd(int userfd)
   {
     User *user = this->findUserByFdSafe(userfd);
     std::string str = " :- [ft_irc] Message of the day - ";

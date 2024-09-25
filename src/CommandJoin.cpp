@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandJoin.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:09:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/25 15:02:51 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/25 15:20:32 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,24 +36,24 @@ namespace irc {
 		// ADD LOOP TO JOIN MULTIPLE CHANNELS WHEN MULTIPLE ARGS
 		std::string password = channel->getPassword();
 		if (channel->getUsers().size() == channel->getUserLimit()) {
-            // server->sendToSpecificDestination(server->formatResponse(ChannelIsFull(channel->getName())), user);
+            server->sendToSpecificDestination(server->formatResponse(ChannelIsFull(channel->getName())), user);
 			throw ChannelIsFull(channel->getName());
 		}
 		if (channel->isInviteOnly() && !channel->isInvitedUser(user)) {
-            // server->sendToSpecificDestination(server->formatResponse(InviteOnlyChan(channel->getName())), user);
+            server->sendToSpecificDestination(server->formatResponse(InviteOnlyChan(channel->getName())), user);
 		    throw InviteOnlyChan();
 		}
 
         if (channel->isPasswordRequired() == true)
         {
             if (_params.size() != 2) {
-                // server->sendToSpecificDestination(server->formatResponse(BadKey(channel->getName())), user);
+                server->sendToSpecificDestination(server->formatResponse(BadKey(channel->getName())), user);
                 throw BadKey(channel->getName());
             }
             std::string joinpass = this->_params.at(1);
             std::cout << joinpass << std::endl;
             if (password != joinpass) {
-                // server->sendToSpecificDestination(server->formatResponse(BadKey(channel->getName())), user);
+                server->sendToSpecificDestination(server->formatResponse(BadKey(channel->getName())), user);
                 throw BadKey(channel->getName());
             }
         }
