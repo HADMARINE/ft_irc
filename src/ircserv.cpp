@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/25 08:34:43 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/25 09:24:11 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ namespace irc {
     pfd.events = POLLIN;
     pfd.revents = 0;
     _pfds.push_back(pfd);
+    this->sendToSpecificDestination("motd", findUserByFdSafe(fd)); // use this
     this->motd(fd);
     this->clientMessage(fd);
 	}
@@ -108,14 +109,11 @@ namespace irc {
 	void  Ircserv::clientDisconnect(int fd) {
     for (std::vector<pollfd>::iterator it = _pfds.begin(); it != _pfds.end(); it++)
     {
-		if (it->fd == fd)
-		{
-			_pfds.erase(it);
-			close(fd);
-			delete findUserByFdSafe(fd);
-			DCMD(std::cout << "Client " << fd << " disconnected" << std::endl);
-			break;
-		}
+      if (it->fd == fd) {
+        close(fd);
+        DCMD(std::cout << "Client " << fd << " disconnected" << std::endl);
+        break;
+      }
     }
 	}
 
@@ -124,7 +122,7 @@ namespace irc {
     memset(messageBuff, 0, sizeof(messageBuff));
 
     if (recv(fd, messageBuff, sizeof(messageBuff) - 1, 0) <= 0) {
-      clientDisconnect(fd);
+      disconnectUser(findUserByFdSafe(fd));
       return;
     }
     std::vector<ACommand *> commmands;
@@ -155,6 +153,10 @@ namespace irc {
         delete *it;
       }
       DCMD(std::cerr << "Client " << fd << " : Application Error : " << e.getMessage() << std::endl);
+      if (e.getDisconnectAfterEmit()) {
+        DCMD(std::cerr << "Client " << fd << " : Disconnecting client caused by disconnect emit" << std::endl);
+        disconnectUser(findUserByFdSafe(fd));
+      }
     } catch (std::exception & e) {
       for (std::vector<ACommand *>::iterator it = commmands.begin(); it != commmands.end(); it++) {
         delete *it;
@@ -184,6 +186,7 @@ namespace irc {
 	}
 
 	static ACommand * getCommandFromDict(std::string cmd) {
+    std::transform(cmd.begin(), cmd.end(), cmd.begin(), toupper);
     DCMD(std::cout << "CMD : " << cmd << std::endl);
     if (cmd == "PASS") {
     	return new CommandPASS();
@@ -211,6 +214,8 @@ namespace irc {
       return new CommandINVITE();
     } else if (cmd == "PRIVMSG") {
       return new CommandPRIVMSG();
+    } else if (cmd == "MOTD") {
+      return NULL; // TODO : new CommandMOTD();
     }
  		throw UnknownCommand(cmd);
 	}
@@ -424,7 +429,6 @@ namespace irc {
 
   void Ircserv::sendToSpecificDestination(const std::string & message, std::vector<User *> users) {
     for (std::vector<User *>::iterator it = users.begin(); it != users.end(); it++) {
-      std::cout << "-\n";
       this->sendToSpecificDestination(message, (*it));
     }
   }
@@ -460,7 +464,7 @@ namespace irc {
 
   std::string Ircserv::formatResponse(IrcSpecificResponse message) {
     std::stringstream ss;
-    ss << ": ";
+    ss << ":" << this->_hostname << " ";
     if (message.getNumeric() != 0) {
       std::ostringstream oss;
       oss << std::setfill('0') << std::setw(3) << message.getNumeric();
