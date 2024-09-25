@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   CommandPrivmsg.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:26:48 by lhojoon           #+#    #+#             */
 /*   Updated: 2024/09/25 17:22:44 by bfaisy           ###   ########.fr       */
@@ -66,8 +66,7 @@ namespace irc {
         }
         else if (server->findUserByNick(target))
         {
-            std::cout << "I" << std::endl;
-            User *user1 = server->findUserByNickSafe(target);
+            User * user1 = server->findUserByNickSafe(target);
             if (_params.at(1).empty())
                 throw NeedMoreParams();
             std::string msg  = _params.at(1);
