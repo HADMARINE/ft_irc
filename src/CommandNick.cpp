@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandNick.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 17:28:34 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/12 16:44:42 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/25 09:44:44 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 /*
 
-TODO
+TODO : Verify nickname rules
 Nickname rules : 
 
 They MUST NOT contain any of the following characters: space (' ', 0x20), comma (',', 0x2C), asterisk ('*', 0x2A), question mark ('?', 0x3F), exclamation mark ('!', 0x21), at sign ('@', 0x40).
