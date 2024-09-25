@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:21:34 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/25 08:58:36 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/25 14:30:42 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,20 @@ namespace irc {
         this->setMessage(nick + " :Password incorrect");
     }
 
+    ChannelIsFull::ChannelIsFull() {
+        this->setCode("ERR_CHANNELISFULL");
+        this->setMessage(":Cannot join channel (+l)");
+        this->setNumeric(471);
+    }
+
+    ChannelIsFull::ChannelIsFull(std::string channel) {
+        this->setCode("ERR_CHANNELISFULL");
+        std::stringstream ss;
+        ss << channel << ":Cannot join channel (+l)";
+        this->setMessage(ss.str());
+        this->setNumeric(471);
+    }
+
     InviteOnlyChan::InviteOnlyChan() {
         this->setCode("ERR_INVITEONLYCHAN");
         this->setNumeric(473);
@@ -224,11 +238,6 @@ namespace irc {
         this->setCode("TOPIC_RESTRICTED");
         this->setMessage(":Permission Denied- This channel is topic restricted");
     }
-
-	ChannelFull::ChannelFull() {
-		this->setCode("CHANNEL_FULL");
-        this->setMessage(":Can't join the channel because it's full");
-	}
 
     TooManyParameters::TooManyParameters() {
         this->setCode("TOO_MANY_PARAMETERS");
@@ -275,5 +284,7 @@ namespace irc {
         ss << nick << "  " << channel << " :is already invited";
         this->setMessage(ss.str());
     }
+
+
 
 }

@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:14:05 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/25 08:57:39 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/25 14:25:38 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,13 @@ namespace irc {
         PasswordMisMatch(std::string nick);
     };
 
+    // 471
+    class ChannelIsFull : public IrcSpecificResponse {
+    public:
+        ChannelIsFull();
+        ChannelIsFull(std::string channel);
+    };
+
     // 473
     class InviteOnlyChan : public IrcSpecificResponse {
     public:
@@ -131,11 +138,6 @@ namespace irc {
     };
 
     // ~~~ Custom exceptions from here which are not defined in RFC1459 ~~~
-
-	class ChannelFull : public IrcSpecificResponse {
-    public:
-        ChannelFull();
-    };
 
     class IsTopicRestricted : public IrcSpecificResponse {
     public:
