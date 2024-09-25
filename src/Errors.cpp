@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Errors.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:21:34 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/25 14:30:42 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/25 17:01:30 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,10 +192,10 @@ namespace irc {
         this->setNumeric(471);
     }
 
-    ChannelIsFull::ChannelIsFull(std::string channel) {
+    ChannelIsFull::ChannelIsFull(User * user, Channel * channel) {
         this->setCode("ERR_CHANNELISFULL");
         std::stringstream ss;
-        ss << channel << ":Cannot join channel (+l)";
+        ss << user->getNickname() << " #" << channel->getName() << " :Cannot join channel (+l)";
         this->setMessage(ss.str());
         this->setNumeric(471);
     }
@@ -206,11 +206,11 @@ namespace irc {
         this->setMessage(":Cannot join channel (+i)");
     }
 
-    InviteOnlyChan::InviteOnlyChan(std::string channel) {
+    InviteOnlyChan::InviteOnlyChan(User * user, Channel * channel) {
         this->setCode("ERR_INVITEONLYCHAN");
         this->setNumeric(473);
         std::stringstream ss;
-        ss << channel << " :Cannot join channel (+i)";
+        ss << user->getNickname() << " #" << channel->getName() << " :Cannot join channel (+i)";
         this->setMessage(ss.str());
     }
     
@@ -220,11 +220,11 @@ namespace irc {
         this->setMessage("Cannot join channel (+k)");
     }
 
-    BadKey::BadKey(std::string channel) {
+    BadKey::BadKey(User * user, Channel * channel) {
         this->setCode("ERR_BADCHANNELKEY");
         this->setNumeric(475);
         std::stringstream ss;
-        ss << channel << " :Cannot join channel (+k)";
+        ss << user->getNickname() << " #" << channel->getName() << " :Cannot join channel (+k)";
         this->setMessage(ss.str());
     }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Errors.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:14:05 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/25 14:25:38 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/25 16:59:33 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,21 +114,21 @@ namespace irc {
     class ChannelIsFull : public IrcSpecificResponse {
     public:
         ChannelIsFull();
-        ChannelIsFull(std::string channel);
+        ChannelIsFull(User * user, Channel * channel);
     };
 
     // 473
     class InviteOnlyChan : public IrcSpecificResponse {
     public:
         InviteOnlyChan();
-        InviteOnlyChan(std::string channel);
+        InviteOnlyChan(User * user, Channel * channel);
     };
 
     // 475
     class BadKey : public IrcSpecificResponse {
     public:
         BadKey();
-        BadKey(std::string channel);
+        BadKey(User * user, Channel * channel);
     };
 
     // 481
