@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:35:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/24 16:07:28 by root             ###   ########.fr       */
+/*   Updated: 2024/09/25 15:33:06 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ namespace irc {
         Channel * findChannelByNameSafe(std::string & name);
 
         void sendToAll(std::string & message);
+        void sendToAllServer(std::string & message);
         void sendAnnouncementToChannel(const std::string & message, Channel * channel);
         void sendToSpecificDestination(const std::string & message, User * user);
         void sendToSpecificDestination(const std::string & message, std::vector<User *> users);

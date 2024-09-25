@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandQuit.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:17:00 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/25 09:18:29 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/09/25 15:39:43 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,12 @@
 
 namespace irc {
     int CommandQUIT::resolve(Ircserv * server, User * user) {
-        std::string msg = user->getNickname() + " has left the channel"; // TODO : what? not a standard !!
-        server->sendToAll(msg);
+        std::string msg;
+        if (_params.at(0).empty())
+            msg = server->formatResponse(user,"QUIT");
+        else
+            msg = server->formatResponse(user, "QUIT " + _params.at(0)); 
+        server->sendToAllServer(msg);
         server->disconnectUser(user);
         return 0;
     }

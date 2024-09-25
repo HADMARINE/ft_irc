@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/25 15:24:12 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/25 15:34:35 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -421,6 +421,12 @@ namespace irc {
   void Ircserv::sendToAll(std::string & message) {
     for (std::vector<Channel>::iterator it = this->_channels.begin(); it != this->_channels.end(); it++) {
       this->sendToSpecificDestination(message, &(*it));
+    }
+  }
+
+  void Ircserv::sendToAllServer(std::string & message) { //jsp si sendToAll envoie bien a tt les users donc j'ai fait ca
+    for (std::vector<User *>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
+      this->sendToSpecificDestination(message, *it);
     }
   }
 
