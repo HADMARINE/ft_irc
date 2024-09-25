@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Errors.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:21:34 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/18 12:18:55 by root             ###   ########.fr       */
+/*   Updated: 2024/09/25 08:58:36 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,11 +199,19 @@ namespace irc {
         ss << channel << " :Cannot join channel (+i)";
         this->setMessage(ss.str());
     }
-    BadKey::BadKey()
-    {
+    
+    BadKey::BadKey() {
         this->setCode("ERR_BADCHANNELKEY");
         this->setNumeric(475);
-        this->setMessage("Cannot join channel (+k) - bad key");
+        this->setMessage("Cannot join channel (+k)");
+    }
+
+    BadKey::BadKey(std::string channel) {
+        this->setCode("ERR_BADCHANNELKEY");
+        this->setNumeric(475);
+        std::stringstream ss;
+        ss << channel << " :Cannot join channel (+k)";
+        this->setMessage(ss.str());
     }
 
     NoPrivileges::NoPrivileges() {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Errors.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:14:05 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/18 12:17:47 by root             ###   ########.fr       */
+/*   Updated: 2024/09/25 08:57:39 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,8 +119,9 @@ namespace irc {
 
     // 475
     class BadKey : public IrcSpecificResponse {
-      public :
+    public:
         BadKey();
+        BadKey(std::string channel);
     };
 
     // 481
