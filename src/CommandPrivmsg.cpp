@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:26:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/25 16:19:42 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/25 17:22:44 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ namespace irc {
             if (_params.at(1).empty())
                 throw NeedMoreParams();
             std::string msg  = _params.at(1);
-            std::string str = server->formatResponse(user, "PRIVMSG " + target +" " + msg);
+            std::string str = server->formatResponse(user, "MSG " + user->getNickname() +" " + msg);
             std::cout << str << std::endl;
             server->sendToSpecificDestination(str, user1);
         }
