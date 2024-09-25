@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandKick.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:18:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/19 15:09:56 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/09/25 09:14:15 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ namespace irc { // faut faire la fonction qui envoie des msg a partir des gens d
         }
         nick = server->findNickbyUser(user);
         channel->removeUser(targetUser);
-        msg = ":" + nick + " KICK #" + channelName + " " + targetUserNickname + " :" + comment + "\r\n";
+        msg = ":" + nick + " KICK #" + channelName + " " + targetUserNickname + " :" + comment;
         server->sendToSpecificDestination(msg, channel);
         server->sendToSpecificDestination(msg, targetUser);
 
@@ -44,7 +44,7 @@ namespace irc { // faut faire la fonction qui envoie des msg a partir des gens d
             throw NeedMoreParams();
         }
         if (params.size() != 4) {
-            throw TooManyParameters("3 or 4", params.size());
+            throw TooManyParameters("3-4", params.size());
         }
         if (params.at(0)[0] != '#') {
 			throw UnknownCommand();
