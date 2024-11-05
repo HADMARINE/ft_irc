@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:32:24 by bfaisy            #+#    #+#             */
-/*   Updated: 2024/09/18 14:18:40 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/11/05 18:00:09 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ namespace irc {
     		throw IsTopicRestricted();
     	}
 
-		if (this->_params.size() == 1) { // ca ne marche pas parce que issi bloque si jamais c'est 1
+		if (this->_params.size() == 1) {
 			std::string currentTopic = channel->getTopic();
 			if (currentTopic == "")
 				server->sendToSpecificDestination(server->formatResponse(RPLNoTopic(user, channel)), channel);
@@ -34,7 +34,7 @@ namespace irc {
 				server->sendToSpecificDestination(server->formatResponse(RPLTopic(user, channel)), channel);
 			return 0;
 		}
-		std::string newTopic = this->_params.at(1);
+		std::string newTopic = this->_params.at(1).substr(1);
 		channel->setTopic(newTopic);
 		server->sendToSpecificDestination(server->formatResponse(RPLTopic(user, channel)), channel);
 		return 0;
