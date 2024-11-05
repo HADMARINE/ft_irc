@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:35:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/25 16:28:45 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/11/05 23:34:31 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ namespace irc {
         std::string formatResponse(std::string message);
         std::string formatResponse(User * origin, std::string message);
         std::string formatResponse(IrcSpecificResponse message);
+        std::string formatResponse(User * origin, IrcSpecificResponse message);
 
     protected:
     private:

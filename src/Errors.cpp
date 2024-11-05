@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Errors.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:21:34 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/25 17:01:30 by marvin           ###   ########.fr       */
+/*   Updated: 2024/11/05 21:29:33 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,6 +232,15 @@ namespace irc {
         this->setCode("ERR_NOPRIVILEGES");
         this->setNumeric(481);
         this->setMessage(":Permission Denied- You're not an IRC operator");
+    }
+
+    ChanNoPrivsNeeded::ChanNoPrivsNeeded(User * user, Channel * channel) {
+        this->setCode("ERR_CHANOPRIVSNEEDED");
+        this->setNumeric(482);
+        std::stringstream ss;
+        ss << user->getNickname() << " #" << channel->getName();
+        ss << " :You're not channel operator";
+        this->setMessage(ss.str());
     }
 
     IsTopicRestricted::IsTopicRestricted() {
