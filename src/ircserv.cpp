@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/25 16:28:23 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/11/06 09:53:05 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ namespace irc {
       disconnectUser(findUserByFdSafe(fd));
       return;
     }
+    std::cout << "received == " << messageBuff;
     std::vector<ACommand *> commmands;
     try {
       int CRLFPos = getCRLFPos(messageBuff, sizeof(messageBuff) / sizeof(char)); // check crlf position
@@ -450,7 +451,7 @@ namespace irc {
       if (it->isUserInChannel(user))
         it->removeUser(user);
     }
-    
+
     for (std::vector<User *>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
       if ((*it) == user) {
         this->_users.erase(it);
@@ -478,7 +479,7 @@ namespace irc {
       ss << oss.str() << " ";
     }
     ss << message.getMessage();
-    std::cout << ss.str() << std::endl;
+    std::cout<< "sent == " << ss.str() << std::endl;
     return ss.str();
   }
 

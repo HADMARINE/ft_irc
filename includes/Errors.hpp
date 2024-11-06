@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Errors.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:14:05 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/25 16:59:33 by marvin           ###   ########.fr       */
+/*   Updated: 2024/11/06 08:59:46 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,13 @@ namespace irc {
     // 481
     class NoPrivileges : public IrcSpecificResponse {
     public:
-        NoPrivileges();
+        NoPrivileges(User * user);
+    };
+
+     // 482
+    class ChanOprivIsNeeded : public IrcSpecificResponse {
+    public:
+        ChanOprivIsNeeded(User * user, Channel * channel);
     };
 
     // ~~~ Custom exceptions from here which are not defined in RFC1459 ~~~

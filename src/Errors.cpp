@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Errors.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:21:34 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/25 17:01:30 by marvin           ###   ########.fr       */
+/*   Updated: 2024/11/06 10:47:44 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,7 +213,7 @@ namespace irc {
         ss << user->getNickname() << " #" << channel->getName() << " :Cannot join channel (+i)";
         this->setMessage(ss.str());
     }
-    
+
     BadKey::BadKey() {
         this->setCode("ERR_BADCHANNELKEY");
         this->setNumeric(475);
@@ -228,10 +228,17 @@ namespace irc {
         this->setMessage(ss.str());
     }
 
-    NoPrivileges::NoPrivileges() {
+    NoPrivileges::NoPrivileges(User * user) {
         this->setCode("ERR_NOPRIVILEGES");
         this->setNumeric(481);
-        this->setMessage(":Permission Denied- You're not an IRC operator");
+        this->setMessage(user->getNickname() + " :Permission Denied- You're not an IRC operator");
+    }
+    ChanOprivIsNeeded::ChanOprivIsNeeded(User * user, Channel * channel) {
+        this->setCode("ERR_CHANOPRIVNEEDED");
+        this->setNumeric(482);
+        std::stringstream ss;
+        ss << user->getNickname() << " #" << channel->getName() << " :You' re not channel operator";
+        this->setMessage(ss.str());
     }
 
     IsTopicRestricted::IsTopicRestricted() {

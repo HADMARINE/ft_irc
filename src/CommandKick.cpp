@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandKick.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:18:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/25 09:14:15 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/11/06 08:47:54 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,15 @@ namespace irc { // faut faire la fonction qui envoie des msg a partir des gens d
         std::string msg;
         Channel *channel ;
         std::string nick;
-        
+
         std::cout << channelName<<  targetUserNickname << std::endl;
         channel = server->findChannelByNameSafe(channelName);
         User *targetUser = server->findUserByNickSafe(targetUserNickname);
         if (!channel->isOperator(user)) {
-            throw NoPrivileges();
+            throw NoPrivileges(user);
         }
         if (!channel->isUserInChannel(targetUser)) {
-            throw UserNotInChannel(targetUser->getNickname(), channel->getName()); 
+            throw UserNotInChannel(targetUser->getNickname(), channel->getName());
         }
         nick = server->findNickbyUser(user);
         channel->removeUser(targetUser);

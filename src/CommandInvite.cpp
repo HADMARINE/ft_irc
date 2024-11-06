@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandInvite.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:24:01 by bfaisy            #+#    #+#             */
-/*   Updated: 2024/09/17 14:33:40 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/11/06 08:47:44 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ namespace irc {
 		User *targetUser = server->findUserByNickSafe(targetUserNickname);
 		channel = server->findChannelByNameSafe(channelName);
 		if (!channel->isOperator(operatorUser)) {
-			throw NoPrivileges();
+			throw NoPrivileges(operatorUser);
 		}
 			msg = ":" + operatorUser->getNickname() + " INVITE " + targetUserNickname + " #" + channelName;
 			server->sendToSpecificDestination(msg, targetUser);

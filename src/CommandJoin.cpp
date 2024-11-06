@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandJoin.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:09:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/25 16:52:47 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/11/06 11:11:22 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ namespace irc {
             newChannel.addUser(user);
             newChannel.addOperator(user);
             server->addChannel(newChannel);
-			server->sendToSpecificDestination(server->formatResponse(RPLNamReply(user, &newChannel)), user);
-			server->sendToSpecificDestination(server->formatResponse(RPLEndOfNames(user, &newChannel)), user);
-			server->sendToSpecificDestination(server->formatResponse(RPLNoTopic(user, &newChannel)), user);
+            server->sendToSpecificDestination(server->formatResponse(user->getNickname() + " JOIN :#" + newChannel.getName()), user);
+			      server->sendToSpecificDestination(server->formatResponse(RPLNamReply(user, &newChannel)), user);
+			      server->sendToSpecificDestination(server->formatResponse(RPLEndOfNames(user, &newChannel)), user);
             return (0);
         }
 		// ADD LOOP TO JOIN MULTIPLE CHANNELS WHEN MULTIPLE ARGS
@@ -52,20 +52,19 @@ namespace irc {
                 throw BadKey(user, channel);
             }
         }
-		channel->addUser(user);
-		server->sendToSpecificDestination(server->formatResponse(RPLNamReply(user, channel)), user);
-		server->sendToSpecificDestination(server->formatResponse(RPLEndOfNames(user, channel)), user);
-		if (channel->getTopic() == "")
-			server->sendToSpecificDestination(server->formatResponse(RPLNoTopic(user, channel)), user);
-		else
-			server->sendToSpecificDestination(server->formatResponse(RPLTopic(user, channel)), user);
-        std::vector<User *> users = channel->getUsers();
-        for (std::vector<User *>::iterator it = users.begin(); it != users.end(); it++) {
-            if (*it == user) {
-                users.erase(it);
-                break;
-            }
-        }
+		  channel->addUser(user);
+      server->sendToSpecificDestination(server->formatResponse(user->getNickname() + " JOIN :#" + channel->getName()), user);
+      if (channel->getTopic() != "")
+        server->sendToSpecificDestination(server->formatResponse(RPLTopic(user, channel)), user);
+		  server->sendToSpecificDestination(server->formatResponse(RPLNamReply(user, channel)), user);
+		  server->sendToSpecificDestination(server->formatResponse(RPLEndOfNames(user, channel)), user);
+      std::vector<User *> users = channel->getUsers();
+      for (std::vector<User *>::iterator it = users.begin(); it != users.end(); it++) {
+          if (*it == user) {
+              users.erase(it);
+              break;
+          }
+      }
 		server->sendToSpecificDestination(server->formatResponse(user, "JOIN #" + channel->getName()), users);
 		return 0;
     }

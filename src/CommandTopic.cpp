@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandTopic.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:32:24 by bfaisy            #+#    #+#             */
-/*   Updated: 2024/09/18 14:18:40 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/11/06 11:19:33 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ namespace irc {
 		std::string channelName = this->_params.at(0);
 		channel = server->findChannelByNameSafe(channelName);
 		if (!channel->isOperator(user)) {
-			throw NoPrivileges();
+			throw ChanOprivIsNeeded(user, channel);
 		}
     	if (channel->isTopicRestricted() == true) {
     		throw IsTopicRestricted();
@@ -35,6 +35,7 @@ namespace irc {
 			return 0;
 		}
 		std::string newTopic = this->_params.at(1);
+    newTopic = newTopic.substr(1);
 		channel->setTopic(newTopic);
 		server->sendToSpecificDestination(server->formatResponse(RPLTopic(user, channel)), channel);
 		return 0;
