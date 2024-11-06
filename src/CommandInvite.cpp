@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:24:01 by bfaisy            #+#    #+#             */
-/*   Updated: 2024/11/06 08:47:44 by root             ###   ########.fr       */
+/*   Updated: 2024/11/06 18:33:41 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 namespace irc {
 	int CommandINVITE::resolve(Ircserv *server, User *operatorUser) {
 		std::string targetUserNickname = this->_params.at(0);
-		std::string channelName = this->_params.at(1);
+		std::string channelName = this->_params.at(1).substr(1);
 		std::cout << channelName << std::endl;
 		std::string msg;
 		Channel *channel;

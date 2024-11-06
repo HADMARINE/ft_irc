@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 18:06:27 by bfaisy            #+#    #+#             */
-/*   Updated: 2024/11/06 18:21:29 by root             ###   ########.fr       */
+/*   Updated: 2024/11/06 18:30:55 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,13 @@ namespace irc {
 	}
 
     std::vector<std::string> CommandMODE::setParamsMiddleware(std::vector<std::string> params) {
-        if (params.empty()) {
+        if (params.size() < 2) {
             throw NeedMoreParams();
         }
-        if (params.size() < 2) {
-            throw TooManyParameters("3", params.size());
+        if (params.size() > 3) {
+            throw TooManyParameters("2-3", params.size());
         }
+
         return params;
     }
 }

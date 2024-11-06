@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:21:34 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/11/06 10:47:44 by root             ###   ########.fr       */
+/*   Updated: 2024/11/06 18:27:32 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,6 +238,15 @@ namespace irc {
         this->setNumeric(482);
         std::stringstream ss;
         ss << user->getNickname() << " #" << channel->getName() << " :You' re not channel operator";
+        this->setMessage(ss.str());
+    }
+
+    ChanNoPrivsNeeded::ChanNoPrivsNeeded(User * user, Channel * channel) {
+        this->setCode("ERR_CHANOPRIVSNEEDED");
+        this->setNumeric(482);
+        std::stringstream ss;
+        ss << user->getNickname() << " #" << channel->getName();
+        ss << " :You're not channel operator";
         this->setMessage(ss.str());
     }
 

@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:14:05 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/11/06 08:59:46 by root             ###   ########.fr       */
+/*   Updated: 2024/11/06 18:27:43 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,11 @@ namespace irc {
     class ChanOprivIsNeeded : public IrcSpecificResponse {
     public:
         ChanOprivIsNeeded(User * user, Channel * channel);
+    };
+
+    class ChanNoPrivsNeeded : public IrcSpecificResponse {
+    public:
+        ChanNoPrivsNeeded(User *, Channel *);
     };
 
     // ~~~ Custom exceptions from here which are not defined in RFC1459 ~~~

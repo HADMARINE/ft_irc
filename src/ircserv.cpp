@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/11/06 09:53:05 by root             ###   ########.fr       */
+/*   Updated: 2024/11/06 18:30:23 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,8 @@ namespace irc {
       }
 
       std::string messageStr(messageBuff);
+
+      std::cout << "LOOK LOOK : " << messageStr << std::endl;
 
       commmands = this->parseCommandStr(messageStr);
 
@@ -322,11 +324,8 @@ namespace irc {
 
 			_operators.push_back(op);
 		}
-	// for (std::vector<t_server_op>::iterator itOp = _operators.begin(); itOp != _operators.end(); itOp++)
-	// {
-	// 	std::cout << itOp->name << std::endl;  // Accès aux noms de chaque opérateur
-	// }
-	return (1);
+
+    return (1);
 	}
 
   User * Ircserv::findUserByFd(int fd) {
@@ -437,6 +436,7 @@ namespace irc {
   }
 
   void Ircserv::sendToSpecificDestination(const std::string & message, std::vector<User *> users) {
+    std::cout << "SORTANT :::" << message << std::endl;
     for (std::vector<User *>::iterator it = users.begin(); it != users.end(); it++) {
       this->sendToSpecificDestination(message, (*it));
     }
@@ -480,6 +480,18 @@ namespace irc {
     }
     ss << message.getMessage();
     std::cout<< "sent == " << ss.str() << std::endl;
+    return ss.str();
+  }
+
+  std::string Ircserv::formatResponse(User * origin, IrcSpecificResponse message) {
+    std::stringstream ss;
+    ss << ":" << origin->getClientInfo() << " ";
+    if (message.getNumeric() != 0) {
+      std::ostringstream oss;
+      oss << std::setfill('0') << std::setw(3) << message.getNumeric();
+      ss << oss.str() << " ";
+    }
+    ss << message.getMessage();
     return ss.str();
   }
 
