@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:21:34 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/11/07 14:46:12 by root             ###   ########.fr       */
+/*   Updated: 2024/11/07 21:45:46 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 
 namespace irc {
-    NoSuchNick::NoSuchNick() {
+    NoSuchNick::NoSuchNick(User * user, std::string nick) {
         this->setCode("ERR_NOSUCHNICK");
         this->setNumeric(401);
-        this->setMessage(":No such nick/channel");
+        this->setMessage( user->getNickname() + " " + nick + " :No such nick/channel");
     }
 
     NoSuchNick::NoSuchNick(std::string nick) {

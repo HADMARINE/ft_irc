@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:26:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/11/07 20:26:20 by root             ###   ########.fr       */
+/*   Updated: 2024/11/07 21:46:24 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ namespace irc {
             server->sendToSpecificDestination(str, user1);
         }
         else
-            throw ErroneusNickName();
+            throw NoSuchNick(user, target);
         return 0;
     }
 

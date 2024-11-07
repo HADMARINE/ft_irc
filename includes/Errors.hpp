@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:14:05 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/11/07 14:45:57 by root             ###   ########.fr       */
+/*   Updated: 2024/11/07 21:45:03 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ namespace irc {
     // 401
     class NoSuchNick : public IrcSpecificResponse {
     public:
-        NoSuchNick();
+        NoSuchNick(User * user, std::string nick);
         NoSuchNick(std::string nick);
     };
 
