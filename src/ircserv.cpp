@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/11/06 18:30:23 by root             ###   ########.fr       */
+/*   Updated: 2024/11/07 14:51:09 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ namespace irc {
       throw std::runtime_error("Failed to accept connection");
 
     User * user = new User(fd);
-    user->setHostname("localhost");
+    user->setHostname(_hostname);
     this->_users.push_back(user);
 
     pfd.fd = fd;

@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:21:34 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/11/06 18:27:32 by root             ###   ########.fr       */
+/*   Updated: 2024/11/07 14:46:12 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,11 +248,6 @@ namespace irc {
         ss << user->getNickname() << " #" << channel->getName();
         ss << " :You're not channel operator";
         this->setMessage(ss.str());
-    }
-
-    IsTopicRestricted::IsTopicRestricted() {
-        this->setCode("TOPIC_RESTRICTED");
-        this->setMessage(":Permission Denied- This channel is topic restricted");
     }
 
     TooManyParameters::TooManyParameters() {

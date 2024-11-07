@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 18:06:27 by bfaisy            #+#    #+#             */
-/*   Updated: 2024/11/06 18:30:55 by root             ###   ########.fr       */
+/*   Updated: 2024/11/07 14:41:44 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ namespace irc {
 		if (option == "+t")
 			return (server->sendToSpecificDestination(":" + user->getNickname() + " MODE #" + channelName + " +t" , channel) ,channel->changeTopicRestrict(true), 0);
 		if (option == "-t")
-			return (server->sendToSpecificDestination(":" + user->getNickname() + " MODE #" + channelName + " -i" , channel) ,channel->changeTopicRestrict(false), 0);
+			return (server->sendToSpecificDestination(":" + user->getNickname() + " MODE #" + channelName + " -t" , channel) ,channel->changeTopicRestrict(false), 0);
 		if (option == "+k")
 		{
 			std::string password = this->_params.at(2);
@@ -56,10 +56,10 @@ namespace irc {
 		if (option == "+l")
 		{
 			std::string nbr = this->_params.at(2);
-			return (server->sendToSpecificDestination(":" + user->getNickname() + " MODE #" + channelName + " +l" , channel) ,channel->isUserLimit(true), channel->setUserLimit(std::atoi((nbr.c_str()))), 0);
+			return (server->sendToSpecificDestination(":" + user->getNickname() + " MODE #" + channelName + " +l" , channel) ,channel->changeUserLimit(true), channel->setUserLimit(std::atoi((nbr.c_str()))), 0);
 		}
 		if (option == "-l")
-			return (server->sendToSpecificDestination(":" + user->getNickname() + " MODE #" + channelName + " -l" , channel) ,channel->isUserLimit(false), 0);
+			return (server->sendToSpecificDestination(":" + user->getNickname() + " MODE #" + channelName + " -l" , channel) ,channel->changeUserLimit(false), 0);
 		return 0;
 	}
 

@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:29:50 by enorie            #+#    #+#             */
-/*   Updated: 2024/09/18 13:47:30 by root             ###   ########.fr       */
+/*   Updated: 2024/11/07 14:37:32 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ namespace irc {
 	unsigned int		Channel::getUserLimit() { return (_userLimit); }
 	bool				Channel::isInviteOnly() { return (_onInvite); }
 	bool				Channel::isTopicRestricted() { return (_topicRestriction); }
+	bool				Channel::isUserLimit() { return (_isUserLimit); }
 	std::vector<User *>	Channel::getUsers() const { return (_users); }
 	std::vector<User *>	Channel::getOperators() const { return (_operators); }
 	std::vector<User *>	Channel::getInvitedUsers() const { return (_invitedUsers); }
@@ -48,7 +49,7 @@ namespace irc {
 	void				Channel::setTopic(std::string & topic) { _topic = topic; }
 	void				Channel::setPassword(std::string & password) { _channelPassword = password; }
 	void				Channel::setUserLimit(int limit) { _userLimit = limit; }
-	void				Channel::isUserLimit(bool cond) {_isUserLimit = cond;}
+	void				Channel::changeUserLimit(bool cond) {_isUserLimit = cond;}
 	void				Channel::changeInviteOnly(bool cond)
 	{
 		_onInvite = cond;

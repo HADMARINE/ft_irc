@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:09:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/11/06 18:27:08 by root             ###   ########.fr       */
+/*   Updated: 2024/11/07 14:38:09 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ namespace irc {
         }
 		// ADD LOOP TO JOIN MULTIPLE CHANNELS WHEN MULTIPLE ARGS
 		std::string password = channel->getPassword();
-		if (channel->getUsers().size() == channel->getUserLimit()) {
+		if (channel->isUserLimit() == true && channel->getUsers().size() == channel->getUserLimit()) {
 			throw ChannelIsFull(user, channel);
 		}
 		if (channel->isInviteOnly() && !channel->isInvitedUser(user)) {

@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:32:24 by bfaisy            #+#    #+#             */
-/*   Updated: 2024/11/06 18:31:13 by root             ###   ########.fr       */
+/*   Updated: 2024/11/07 14:54:49 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,9 @@ namespace irc {
 		std::string ss;
 		std::string channelName = this->_params.at(0);
 		channel = server->findChannelByNameSafe(channelName);
-		if (!channel->isOperator(user)) {
-			throw ChanOprivIsNeeded(user, channel);
+		if (channel->isTopicRestricted() == true && !channel->isOperator(user)) {
+			throw NoPrivileges(user);
 		}
-    	if (channel->isTopicRestricted() == true) {
-    		throw IsTopicRestricted();
-    	}
-
 		if (this->_params.size() == 1) {
 			std::string currentTopic = channel->getTopic();
 			if (currentTopic == "")
