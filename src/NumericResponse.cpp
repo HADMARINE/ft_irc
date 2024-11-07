@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   NumericResponse.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 15:05:22 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/25 17:00:59 by marvin           ###   ########.fr       */
+/*   Updated: 2024/11/07 20:59:35 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ namespace irc {
 		this->setCode("RPL_MYINFO");
 		this->setNumeric(4);
 		std::stringstream ss;
-		ss << user->getNickname() << "<servername> <version> <available user modes> <available channel modes>";
+		ss << user->getNickname() << " :<servername> <version> <available user modes> <available channel modes>";
 		this->setMessage(ss.str());
 	}
 
@@ -60,9 +60,7 @@ namespace irc {
 	RPLIsupport::RPLIsupport(User * user) {
 		this->setCode("RPL_ISUPPORT");
 		this->setNumeric(5);
-		std::stringstream ss;
-		ss << user->getNickname() << " :are supported by this server";
-		this->setMessage(":are supported by this server");
+		this->setMessage(user->getNickname() + " :are supported by this server");
 	}
 
     // 251
