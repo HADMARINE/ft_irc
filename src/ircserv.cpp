@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/11/07 14:51:09 by root             ###   ########.fr       */
+/*   Updated: 2024/11/07 19:26:27 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,8 +137,6 @@ namespace irc {
 
       std::string messageStr(messageBuff);
 
-      std::cout << "LOOK LOOK : " << messageStr << std::endl;
-
       commmands = this->parseCommandStr(messageStr);
 
       int commandReturnCode;
@@ -212,7 +210,7 @@ namespace irc {
     } else if (cmd == "CAP") {
     	return NULL;
     } else if (cmd == "PING") {
-    	return NULL;
+    	return new CommandPING();
     } else if (cmd == "WHOIS") {
     	return NULL;
     } else if (cmd == "INVITE"){
@@ -430,13 +428,13 @@ namespace irc {
 
   void Ircserv::sendToSpecificDestination(const std::string & message, User * user) {
     std::string newMesage = message + "\r\n";
+    std::cout << "sent == " << newMesage << std::endl;
     if (send(user->getSocketfd(), newMesage.c_str(), newMesage.size(), 0) < 0) {
       throw std::runtime_error("Failed to send message");
     }
   }
 
   void Ircserv::sendToSpecificDestination(const std::string & message, std::vector<User *> users) {
-    std::cout << "SORTANT :::" << message << std::endl;
     for (std::vector<User *>::iterator it = users.begin(); it != users.end(); it++) {
       this->sendToSpecificDestination(message, (*it));
     }
@@ -479,7 +477,6 @@ namespace irc {
       ss << oss.str() << " ";
     }
     ss << message.getMessage();
-    std::cout<< "sent == " << ss.str() << std::endl;
     return ss.str();
   }
 

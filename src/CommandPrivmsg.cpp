@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandPrivmsg.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:26:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/25 17:25:01 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/11/07 17:33:29 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ namespace irc {
     }
 
     int CommandPRIVMSG::resolve(Ircserv * server, User * user) {
-        
-        
+
+
         std::stringstream ss;
 
         ss << "PRIVMSG ";
@@ -70,7 +70,7 @@ namespace irc {
             if (_params.at(1).empty())
                 throw NeedMoreParams();
             std::string msg  = _params.at(1).substr(1);
-            std::string str = server->formatResponse(user, "MSG " + user->getNickname() +" " + msg);
+            std::string str = server->formatResponse(user, "MSG " + user1->getNickname() +" " + msg);
             std::cout << str << std::endl;
             server->sendToSpecificDestination(str, user1);
         }

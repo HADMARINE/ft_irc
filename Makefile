@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+         #
+#    By: root <root@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/07 14:13:59 by lhojoon           #+#    #+#              #
-#    Updated: 2024/09/15 15:27:03 by bfaisy           ###   ########.fr        #
+#    Updated: 2024/11/07 17:50:57 by root             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRCS_RAW =	main.cpp \
 			CommandUser.cpp \
 			CommandMode.cpp \
 			CommandTopic.cpp \
+			CommandPing.cpp   \
  			NumericResponse.cpp \
 			CommandPrivmsg.cpp \
 			CommandInvite.cpp

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandPass.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 13:43:42 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/10 10:04:52 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/11/07 17:50:08 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,5 @@ namespace irc {
             throw AlreadyRegistered();
         }
     }
-    
+
 }
