@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 18:06:27 by bfaisy            #+#    #+#             */
-/*   Updated: 2024/11/07 14:41:44 by root             ###   ########.fr       */
+/*   Updated: 2024/11/08 11:42:00 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ namespace irc {
 		Channel *channel;
 		std::string ss;
 
+		if (server->findUserByNick(this->_params.at(0)))
+			return (0);
 		std::string channelName = this->_params.at(0).substr(1);
 		std::string option = this->_params.at(1);
 		channel = server->findChannelByNameSafe(channelName);
