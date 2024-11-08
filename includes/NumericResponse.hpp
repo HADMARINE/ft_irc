@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 17:44:38 by root              #+#    #+#             */
-/*   Updated: 2024/09/18 13:32:02 by root             ###   ########.fr       */
+/*   Updated: 2024/11/08 12:13:52 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,11 @@ namespace irc {
        RPLLUserClient();
     };
 
+   // 324
+    class RPLChannelModeIs : public IrcSpecificResponse {
+    public:
+       RPLChannelModeIs(User *user, Channel *channel);
+    };
 	// 331
 	class RPLNoTopic : public IrcSpecificResponse {
 	public:

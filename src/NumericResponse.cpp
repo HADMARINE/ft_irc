@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 15:05:22 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/11/07 20:59:35 by root             ###   ########.fr       */
+/*   Updated: 2024/11/08 12:06:54 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,25 @@ namespace irc {
 		this->setCode("RPL_LUSERCLIENT");
 		this->setNumeric(251);
 		this->setMessage(":There are <integer> users and <integer> services on <integer> servers");
+	}
+
+  // 324
+  RPLChannelModeIs::RPLChannelModeIs(User *user, Channel *channel) {
+		this->setCode("RPL_CHANNELMODEIS");
+		this->setNumeric(324);
+		std::stringstream ss;
+			ss << user->getNickname() << " #" << channel->getName();
+		if (channel->isInviteOnly() || channel->isTopicRestricted() || channel->isPasswordRequired() ||channel->isUserLimit())
+			ss << " +";
+		if (channel->isInviteOnly())
+			ss << "i";
+		if (channel->isTopicRestricted())
+			ss << "t";
+		if (channel->isPasswordRequired())
+			ss << "k";
+		if (channel->isUserLimit())
+			ss << "l";
+		this->setMessage(ss.str());
 	}
 
 	// 331

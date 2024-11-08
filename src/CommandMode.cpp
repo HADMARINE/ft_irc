@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 18:06:27 by bfaisy            #+#    #+#             */
-/*   Updated: 2024/11/08 11:42:00 by root             ###   ########.fr       */
+/*   Updated: 2024/11/08 12:02:17 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@ namespace irc {
 		if (server->findUserByNick(this->_params.at(0)))
 			return (0);
 		std::string channelName = this->_params.at(0).substr(1);
-		std::string option = this->_params.at(1);
 		channel = server->findChannelByNameSafe(channelName);
+		if (this->_params.size() == 1)
+			return (server->sendToSpecificDestination(server->formatResponse(RPLChannelModeIs(user, channel)), user), 0);
+		std::string option = this->_params.at(1);
 		if (!channel->isOperator(user)) {
 			throw NoPrivileges(user);
 		}
@@ -66,7 +68,7 @@ namespace irc {
 	}
 
     std::vector<std::string> CommandMODE::setParamsMiddleware(std::vector<std::string> params) {
-        if (params.size() < 2) {
+        if (params.size() < 1) {
             throw NeedMoreParams();
         }
         if (params.size() > 3) {
