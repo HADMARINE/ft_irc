@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:26:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/11/07 21:46:24 by root             ###   ########.fr       */
+/*   Updated: 2024/11/08 13:34:18 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,10 @@ namespace irc {
             if (_params.at(1).empty())
                 throw NeedMoreParams();
             std::string msg  = _params.at(1).substr(1);
+            for (std::vector<std::string>::iterator it = _params.begin() += 2; it != _params.end(); it++) {
+              std::cout << *it << std::endl;
+              msg = msg + " " + *it;
+            }
             std::string str = server->formatResponse(":" + user->getNickname() +  " PRIVMSG " + user1->getNickname() + " :" + msg);
             std::cout << str << std::endl;
             server->sendToSpecificDestination(str, user1);
