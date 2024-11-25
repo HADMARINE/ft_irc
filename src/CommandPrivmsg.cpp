@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:26:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/11/25 16:26:51 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/11/25 17:27:15 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,35 +51,39 @@ namespace irc {
 
         std::stringstream ss;
 
-        ss << "PRIVMSG ";
-        std::string &target = _params.at(0);
-        std::string targetcpy = target.substr(1);
-        if (server->findChannelByName(targetcpy))
+        if (_params.at(0).at(0) == '#')
         {
-            std::vector<User *> users = getDestinatingUsersList(target, server, user);
+            ss << "PRIVMSG ";
+            std::vector<User *> users = getDestinatingUsersList(_params.at(0), server, user);
             for (std::vector<std::string>::iterator it = _params.begin(); it != _params.end(); it++) {
                 ss << *it << " ";
             }
-
-            std::string str = ss.str();
-            server->sendToSpecificDestination(server->formatResponse(user, str), users);
-        }
-        else if (server->findUserByNick(target))
-        {
-            User * user1 = server->findUserByNickSafe(target);
-            if (_params.at(1).empty())
-                throw NeedMoreParams();
-            std::string msg  = _params.at(1).substr(1);
-            for (std::vector<std::string>::iterator it = _params.begin() + 2; it != _params.end(); it++) {
-              std::cout << *it << std::endl;
-              msg = msg + " " + *it;
-            }
-            std::string str = server->formatResponse(":" + user->getNickname() +  " PRIVMSG " + user1->getNickname() + " :" + msg);
-            std::cout << str << std::endl;
-            server->sendToSpecificDestination(str, user1);
+            server->sendToSpecificDestination(server->formatResponse(user, ss.str()), users);
         }
         else
-            throw NoSuchNick(user, target);
+        {
+            ss << "PRIVMSG ";
+            User * destination = server->findUserByNick(_params.at(0));
+            if (_params.at(1).empty())
+                throw NeedMoreParams();
+            // bool isFirstWord = false;
+            for (std::vector<std::string>::iterator it = _params.begin(); it != _params.end(); it++) {
+                ss << *it << " ";
+                // if (!isFirstWord)
+                // {
+                //     isFirstWord = true;
+                //     ss << it->substr(1) << " ";
+                // }
+                // else
+                //     ss << *it << " ";
+            //   std::cout << *it << std::endl;
+            //   msg = msg + " " + *it;
+            }
+            std::string str = server->formatResponse(user, ss.str());
+            // std::string str = server->formatResponse(":" + user->getNickname() +  " PRIVMSG " + destination->getNickname() + " :" + msg);
+            // std::cout << str << std::endl;
+            server->sendToSpecificDestination(str, destination);
+        }
         return 0;
     }
 
