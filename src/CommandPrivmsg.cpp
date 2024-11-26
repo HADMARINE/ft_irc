@@ -3,7 +3,11 @@
 /*                                                        :::      ::::::::   */
 /*   CommandPrivmsg.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+<<<<<<< HEAD
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+=======
+/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
+>>>>>>> 50e57c3af153e774ad2fca9133397b649a875801
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:26:48 by lhojoon           #+#    #+#             */
 /*   Updated: 2024/11/26 15:57:47 by root             ###   ########.fr       */
