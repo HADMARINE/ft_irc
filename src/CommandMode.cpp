@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 18:06:27 by bfaisy            #+#    #+#             */
-/*   Updated: 2024/11/08 12:02:17 by root             ###   ########.fr       */
+/*   Updated: 2024/11/26 10:45:05 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,14 @@ namespace irc {
 		std::string ss;
 
 		if (server->findUserByNick(this->_params.at(0)))
-			return (0);
+		  return (0);
 		std::string channelName = this->_params.at(0).substr(1);
 		channel = server->findChannelByNameSafe(channelName);
 		if (this->_params.size() == 1)
-			return (server->sendToSpecificDestination(server->formatResponse(RPLChannelModeIs(user, channel)), user), 0);
+		{
+			server->sendToSpecificDestination(server->formatResponse(RPLChannelModeIs(user, channel)), user);
+			return 0;
+		}
 		std::string option = this->_params.at(1);
 		if (!channel->isOperator(user)) {
 			throw NoPrivileges(user);
