@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandPrivmsg.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:26:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/11/25 17:27:15 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/11/26 15:57:47 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,9 @@ namespace irc {
         else
         {
             ss << "PRIVMSG ";
-            User * destination = server->findUserByNick(_params.at(0));
+            User * destination = server->findUserByNickSafe(_params.at(0));
+            if (!destination)
+              throw UserNotFound();
             if (_params.at(1).empty())
                 throw NeedMoreParams();
             // bool isFirstWord = false;
