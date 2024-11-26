@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandMode.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 18:06:27 by bfaisy            #+#    #+#             */
-/*   Updated: 2024/11/25 16:53:00 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/11/26 10:45:05 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ namespace irc {
 		Channel *channel;
 		std::string ss;
 
-		// if (server->findUserByNick(this->_params.at(0)))
-		// 	return (0);
+		if (server->findUserByNick(this->_params.at(0)))
+		  return (0);
 		std::string channelName = this->_params.at(0).substr(1);
 		channel = server->findChannelByNameSafe(channelName);
 		if (this->_params.size() == 1)
