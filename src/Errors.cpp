@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Errors.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:21:34 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/11/27 16:35:36 by root             ###   ########.fr       */
+/*   Updated: 2024/11/27 19:20:33 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ namespace irc {
     NoSuchNick::NoSuchNick(User * user, std::string nick) {
         this->setCode("ERR_NOSUCHNICK");
         this->setNumeric(401);
-        this->setMessage( user->getNickname() + " " + nick + " :No such nick/channel");
+        this->setMessage(user->getNickname() + " " + nick + " :No such nick/channel");
     }
 
     NoSuchNick::NoSuchNick(std::string nick) {

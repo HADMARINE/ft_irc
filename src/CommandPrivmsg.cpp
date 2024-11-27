@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandPrivmsg.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:26:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/11/27 11:43:03 by root             ###   ########.fr       */
+/*   Updated: 2024/11/27 19:29:34 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ namespace irc {
 
         std::stringstream ss;
 
+        ss << "PRIVMSG ";
         if (_params.at(0).at(0) == '#')
         {
-            ss << "PRIVMSG ";
             std::vector<User *> users = getDestinatingUsersList(_params.at(0), server, user);
             for (std::vector<std::string>::iterator it = _params.begin(); it != _params.end(); it++) {
                 ss << *it << " ";
@@ -62,28 +62,19 @@ namespace irc {
         }
         else
         {
-            ss << "PRIVMSG ";
-            User * destination = server->findUserByNickSafe(_params.at(0));
-            if (!destination)
-              throw UserNotFound();
+            User * destination;
+            try {
+                destination = server->findUserByNickSafe(_params.at(0));
+            } catch (IrcSpecificResponse & e) {
+                server->sendToSpecificDestination(server->formatResponse(user, NoSuchNick(user, _params.at(0))), user);
+                return 0;
+            }
             if (_params.at(1).empty())
                 throw NeedMoreParams();
-            // bool isFirstWord = false;
             for (std::vector<std::string>::iterator it = _params.begin(); it != _params.end(); it++) {
                 ss << *it << " ";
-                // if (!isFirstWord)
-                // {
-                //     isFirstWord = true;
-                //     ss << it->substr(1) << " ";
-                // }
-                // else
-                //     ss << *it << " ";
-            //   std::cout << *it << std::endl;
-            //   msg = msg + " " + *it;
             }
             std::string str = server->formatResponse(user, ss.str());
-            // std::string str = server->formatResponse(":" + user->getNickname() +  " PRIVMSG " + destination->getNickname() + " :" + msg);
-            // std::cout << str << std::endl;
             server->sendToSpecificDestination(str, destination);
         }
         return 0;
