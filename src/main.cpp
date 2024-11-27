@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:19:41 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/23 15:57:17 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/11/27 19:03:36 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void signalHdlr(int sig) {
 }
 
 static void printUsage() {
-    std::cout << "Usage : ./ircserv <password> <port>" << std::endl;
+    std::cout << "Usage : ./ircserv <port> <password>" << std::endl;
     std::cout << "\t<password> : non void string value\n\t<port> : number in range of 1 ~ 65535\n\n";
     std::cout << "Happy hacking !" << std::endl;
 }
@@ -41,7 +41,7 @@ int main(int argc, char **argv)
     }
     try {
         irc::t_irc_exec_conf conf;
-        conf = irc::getIrcExecConf(argv[1], argv[2], &isServerShut);
+        conf = irc::getIrcExecConf(argv[2], argv[1], &isServerShut);
         
         irc::Ircserv server(conf);
         
