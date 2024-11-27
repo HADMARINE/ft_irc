@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandInvite.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: enorie <enorie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:24:01 by bfaisy            #+#    #+#             */
-/*   Updated: 2024/11/06 18:33:41 by root             ###   ########.fr       */
+/*   Updated: 2024/11/27 18:40:07 by enorie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ namespace irc {
 
 		User *targetUser = server->findUserByNickSafe(targetUserNickname);
 		channel = server->findChannelByNameSafe(channelName);
-		if (!channel->isOperator(operatorUser)) {
-			throw NoPrivileges(operatorUser);
+		if (!channel->isOperator(operatorUser) && channel->isInviteOnly()) {
+			throw ChanOprivIsNeeded(operatorUser, channel);
 		}
 			msg = ":" + operatorUser->getNickname() + " INVITE " + targetUserNickname + " #" + channelName;
 			server->sendToSpecificDestination(msg, targetUser);
