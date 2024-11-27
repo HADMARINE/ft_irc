@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/11/08 12:14:11 by root             ###   ########.fr       */
+/*   Updated: 2024/11/26 16:37:03 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ namespace irc {
 		servPoll.fd = _serverSock;
 		servPoll.events = POLLIN;
 		servPoll.revents = 0;
+    setError(0);
 		_pfds.push_back(servPoll);
 		freeaddrinfo(addrinfo);
     this->_hostname = conf.hostname;
@@ -142,6 +143,7 @@ namespace irc {
       int commandReturnCode;
       for (std::vector<ACommand *>::iterator it = commmands.begin(); it != commmands.end(); it++) {
         commandReturnCode = (*it)->resolve(this, this->findUserByFdSafe(fd)); //
+
         if (commandReturnCode != 0) {
             throw std::runtime_error("Some error while command execution occured"); // TODO : precise error
         }
@@ -534,4 +536,12 @@ namespace irc {
     this->sendToSpecificDestination(str, user);
   }
 
+  void Ircserv::setError(bool nbr)
+  {
+    this->error = nbr;
+  }
+
+  bool Ircserv::getError()
+  {
+    return (this->error);}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Errors.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:14:05 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/11/07 21:45:03 by root             ###   ########.fr       */
+/*   Updated: 2024/11/26 15:45:55 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ namespace irc {
     // 464
     class PasswordMisMatch : public IrcSpecificResponse {
     public:
-        PasswordMisMatch(std::string nick);
+        PasswordMisMatch(std::string nick, User *user, Ircserv *serv);
     };
 
     // 471

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Errors.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:21:34 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/11/07 21:45:46 by root             ###   ########.fr       */
+/*   Updated: 2024/11/26 15:45:54 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,10 +180,12 @@ namespace irc {
         this->setMessage(":You may not reregister");
     }
 
-    PasswordMisMatch::PasswordMisMatch(std::string nick) {
+    PasswordMisMatch::PasswordMisMatch(std::string nick, User *user, Ircserv *serv) {
         this->setCode("ERR_PASSWDMISMATCH");
         this->setNumeric(464);
         this->setMessage(nick + " :Password incorrect");
+        serv->disconnectUser(user);
+        
     }
 
     ChannelIsFull::ChannelIsFull() {

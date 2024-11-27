@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandPass.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 13:43:42 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/11/07 17:50:08 by root             ###   ########.fr       */
+/*   Updated: 2024/11/26 15:43:21 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ namespace irc {
     int CommandPASS::resolve(Ircserv * server, User * user) {
         (void)server;
         user->setPendingpassword(this->_params.at(0));
+        
+        
         return 0;
     }
 

@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:35:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/11/05 23:34:31 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/11/26 16:25:33 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@ namespace irc {
         void clientMessage(int fd);
         void bindLoop();
         int readFromConfigFile(char *filename);
+        void setError(bool nbr);
 
+        bool getError();
         std::vector<User *> & getUsers() { return this->_users; }
         const std::string & getPassword() const { return this->_password; }
         std::vector<Channel> & getChannels() { return this->_channels; }
@@ -42,7 +44,7 @@ namespace irc {
 
         void setMotd(std::string & motd) { this->_motd = motd; }
 
-
+        
         User * findUserByFd(int fd); // User * can be null
         User * findUserByFdSafe(int fd); // User * cannot be null, throw when null
         User * findUserByNick(std::string & nick); // User * can be null
@@ -78,6 +80,7 @@ namespace irc {
         bool *_isServerShut;
         std::time_t _time;
         std::string _hostname;
+        bool error;
 
 
         std::vector<struct pollfd> _pfds;

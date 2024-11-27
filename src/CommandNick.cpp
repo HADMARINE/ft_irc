@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandNick.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 17:28:34 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/25 09:44:44 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/11/26 16:36:54 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ They SHOULD NOT contain any dot character ('.', 0x2E).
 */
 namespace irc {
     int CommandNICK::resolve(Ircserv * server, User * user) {
-
+        
+    	    
         if (server->findUserByNick(this->_params.at(0))) {
             throw NicknameInUse(this->_params.at(0));
         }

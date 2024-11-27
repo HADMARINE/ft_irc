@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandUser.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 18:38:42 by root              #+#    #+#             */
-/*   Updated: 2024/11/26 13:23:57 by root             ###   ########.fr       */
+/*   Updated: 2024/11/26 16:05:24 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 namespace irc {
 	int CommandUSER::resolve(Ircserv * serv, User * user) {
         if (user->getPendingpassword() != serv->getPassword()) {
-            throw PasswordMisMatch(user->getNickname());
+            serv->setError(1);
+            std::cout << "I" << std::endl;
+            throw PasswordMisMatch(user->getNickname(), user, serv);
         }
         if (user->getNickname().empty()) {
             serv->disconnectUser(user);
