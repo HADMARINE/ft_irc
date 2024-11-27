@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:26:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/11/27 19:29:34 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/11/27 19:36:53 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,8 @@ namespace irc {
         }
         else
         {
-            User * destination;
-            try {
-                destination = server->findUserByNickSafe(_params.at(0));
-            } catch (IrcSpecificResponse & e) {
+            User * destination = server->findUserByNick(_params.at(0));
+            if (!destination) {
                 server->sendToSpecificDestination(server->formatResponse(user, NoSuchNick(user, _params.at(0))), user);
                 return 0;
             }
