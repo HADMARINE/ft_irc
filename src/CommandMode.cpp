@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 18:06:27 by bfaisy            #+#    #+#             */
-/*   Updated: 2024/11/26 10:45:05 by root             ###   ########.fr       */
+/*   Updated: 2024/11/27 17:33:52 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ namespace irc {
 		if (option == "-i")
 			return (server->sendToSpecificDestination(":" + user->getNickname() + " MODE #" + channelName + " -i" , channel) ,channel->changeInviteOnly(false), 0);
 		if (option == "+t")
-			return (server->sendToSpecificDestination(":" + user->getNickname() + " MODE #" + channelName + " +t" , channel) ,channel->changeTopicRestrict(true), 0);
+			return (server->sendToSpecificDestination(":" + user->getNickname() + "!" + user->getUsername() + "@" + user->getHostname() + " MODE #" + channelName + " +t", channel) ,channel->changeTopicRestrict(true), 0);
 		if (option == "-t")
 			return (server->sendToSpecificDestination(":" + user->getNickname() + " MODE #" + channelName + " -t" , channel) ,channel->changeTopicRestrict(false), 0);
 		if (option == "+k")

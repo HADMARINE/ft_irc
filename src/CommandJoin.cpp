@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:09:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/11/26 13:17:50 by root             ###   ########.fr       */
+/*   Updated: 2024/11/27 17:43:17 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ namespace irc {
 					_params.at(1).erase(0, pos1 + 1);
 				}
 				server->addChannel(newChannel);
-				server->sendToSpecificDestination(server->formatResponse(user->getNickname() + " JOIN :#" + newChannel.getName()), user);
+				server->sendToSpecificDestination(":" + user->getNickname() + "!" + user->getUsername() + "@" + user->getHostname() + " JOIN #" + channelName, user);
 				server->sendToSpecificDestination(server->formatResponse(RPLNamReply(user, &newChannel)), user);
 				server->sendToSpecificDestination(server->formatResponse(RPLEndOfNames(user, &newChannel)), user);
 			}
@@ -74,7 +74,7 @@ namespace irc {
 					_params.at(1).erase(0, pos1);
 				}
 				channel->addUser(user);
-				server->sendToSpecificDestination(server->formatResponse(user->getNickname() + " JOIN :#" + channel->getName()), user);
+				server->sendToSpecificDestination(":" + user->getNickname() + "!" + user->getUsername() + "@" + user->getHostname() + " JOIN #" + channel->getName(), user);
 				if (channel->getTopic() != "")
 					server->sendToSpecificDestination(server->formatResponse(RPLTopic(user, channel)), user);
 				server->sendToSpecificDestination(server->formatResponse(RPLNamReply(user, channel)), user);
@@ -86,7 +86,7 @@ namespace irc {
 						break;
 					}
 				}
-				server->sendToSpecificDestination(server->formatResponse(user, "JOIN #" + channel->getName()), users);
+				server->sendToSpecificDestination(":" + user->getNickname() + "!" + user->getUsername() + "@" + user->getHostname() + " JOIN #" + channel->getName(), users);
 			}
 			_params.at(0).erase(0, pos + 1);
 		}
