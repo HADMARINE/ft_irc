@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/11/26 16:37:03 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/11/27 16:06:31 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,14 +153,22 @@ namespace irc {
         delete *it;
       }
     } catch (IrcSpecificResponse & e) {
-      this->sendToSpecificDestination(this->formatResponse(e), this->findUserByFdSafe(fd));
-      for (std::vector<ACommand *>::iterator it = commmands.begin(); it != commmands.end(); it++) {
-        delete *it;
+      if (!_users.empty()){
+        this->sendToSpecificDestination(this->formatResponse(e), this->findUserByFd(fd));
+        for (std::vector<ACommand *>::iterator it = commmands.begin(); it != commmands.end(); it++) {
+          delete *it;
+        }
+        DCMD(std::cerr << "Client " << fd << " : Application Error : " << e.getMessage() << std::endl);
+        if (e.getDisconnectAfterEmit()) {
+          DCMD(std::cerr << "Client " << fd << " : Disconnecting client caused by disconnect emit" << std::endl);
+          disconnectUser(findUserByFdSafe(fd));
+        }}
+      else
+      {
+        for (std::vector<ACommand *>::iterator it = commmands.begin(); it != commmands.end(); it++) {
+          delete *it;
       }
-      DCMD(std::cerr << "Client " << fd << " : Application Error : " << e.getMessage() << std::endl);
-      if (e.getDisconnectAfterEmit()) {
-        DCMD(std::cerr << "Client " << fd << " : Disconnecting client caused by disconnect emit" << std::endl);
-        disconnectUser(findUserByFdSafe(fd));
+      DCMD(std::cerr << "Client " << fd << " : System Error : " << e.what() << std::endl);
       }
     } catch (std::exception & e) {
       for (std::vector<ACommand *>::iterator it = commmands.begin(); it != commmands.end(); it++) {
