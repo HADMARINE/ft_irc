@@ -6,7 +6,7 @@
 /*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:18:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/11/28 16:27:21 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/11/28 17:14:55 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,14 @@ namespace irc {
     int CommandKICK::resolve(Ircserv * server, User * user) {
         std::string channelName = this->_params.at(0);
         std::string targetUserNickname = this->_params.at(1);
-        std::string comment = this->_params.at(2);
+        
+        std::stringstream ss;
+        for (std::vector<std::string>::iterator it = _params.begin() + 2; it != _params.end(); it++) {
+                ss << *it << " ";
+        }
+        std::string comment = ss.str().substr(0, ss.str().length() - 1);
         std::string msg;
-        Channel *channel ;
+        Channel *channel;
         std::string nick;
 
         std::cout << channelName<<  targetUserNickname << std::endl;
@@ -32,7 +37,8 @@ namespace irc {
         }
         nick = server->findNickbyUser(user);
         channel->removeUser(targetUser);
-        msg = ":" + nick + " KICK #" + channelName + " " + targetUserNickname + " :" + comment;
+        msg = "KICK #" + channelName + " " + targetUser->getNickname() + " :" + comment;
+        msg = server->formatResponse(user, msg);
         server->sendToSpecificDestination(msg, channel);
         server->sendToSpecificDestination(msg, targetUser);
 
