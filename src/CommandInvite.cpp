@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandInvite.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enorie <enorie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:24:01 by bfaisy            #+#    #+#             */
-/*   Updated: 2024/11/27 18:40:07 by enorie           ###   ########.fr       */
+/*   Updated: 2024/11/28 11:15:41 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ namespace irc {
 		std::string msg;
 		Channel *channel;
 
-		User *targetUser = server->findUserByNickSafe(targetUserNickname);
+		User *targetUser = server->findUserByNick(targetUserNickname);
+    if (!targetUser)
+      throw NoSuchNick(operatorUser, targetUserNickname);
 		channel = server->findChannelByNameSafe(channelName);
 		if (!channel->isOperator(operatorUser) && channel->isInviteOnly()) {
 			throw ChanOprivIsNeeded(operatorUser, channel);
