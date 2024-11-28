@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandMode.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 18:06:27 by bfaisy            #+#    #+#             */
-/*   Updated: 2024/11/28 12:11:39 by root             ###   ########.fr       */
+/*   Updated: 2024/11/28 16:20:51 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ namespace irc {
 		}
 		std::string option = this->_params.at(1);
 		if (!channel->isOperator(user)) {
-			throw NoPrivileges(user);
+			throw ChanOprivIsNeeded(user, channel);
 		}
 		if (option == "+i")
 			return (server->sendToSpecificDestination(":" + user->getNickname() + "!" + user->getUsername() + "@" + user->getHostname() + " MODE #" + channelName + " +i", channel) ,channel->changeInviteOnly(true), 0);
