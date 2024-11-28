@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserv.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 17:51:40 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/11/27 19:12:55 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/11/28 12:21:13 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ namespace irc {
 		// TODO : implement this
 	}
 
-	// Explanations on README
 	Ircserv::Ircserv(t_irc_exec_conf & conf) : _password(conf.password), _isServerShut(conf.isServerShut), _time(conf.time) {
 		struct pollfd servPoll;
 		struct sockaddr_in  serv_addr;
@@ -106,7 +105,7 @@ namespace irc {
 	}
 
 	void  Ircserv::clientMessage(int fd) {
-		char messageBuff[512]; // Following ircserv standard
+		char messageBuff[512];
 		memset(messageBuff, 0, sizeof(messageBuff));
 		if (recv(fd, messageBuff, sizeof(messageBuff) - 1, 0) <= 0) {
 			disconnectUser(findUserByFdSafe(fd));
@@ -264,14 +263,11 @@ namespace irc {
 		data.open((filename));
 		if (!data)
 			return (0);
-		while (getline(data, buffer)) {
+		while (getline(data, buffer))
 			operators.push_back(buffer);
-		}
 		data.close();
-
 		std::vector<std::string>::iterator it;
-		for (it = operators.begin(); it != operators.end(); it++)
-		{
+		for (it = operators.begin(); it != operators.end(); it++) {
 			std::string	line = *it;
 			t_server_op	op;
 
@@ -283,8 +279,7 @@ namespace irc {
 
 			_operators.push_back(op);
 		}
-
-    return (1);
+    	return (1);
 	}
 
   User * Ircserv::findUserByFd(int fd) {
@@ -294,7 +289,6 @@ namespace irc {
       if ((*it)->getSocketfd() == fd)
         foundUser = (*it);
     }
-
     return foundUser;
   }
 
@@ -306,9 +300,8 @@ namespace irc {
         foundUser = (*it);
     }
 
-    if (foundUser == NULL) {
+    if (foundUser == NULL)
       throw UserNotFound();
-    }
     return foundUser;
   }
 
