@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 18:38:42 by root              #+#    #+#             */
-/*   Updated: 2024/11/28 11:58:22 by root             ###   ########.fr       */
+/*   Updated: 2024/11/28 12:05:02 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ namespace irc {
             serv->disconnectUser(user);
             throw NoNicknameGiven();
         }
-        // serv->sendToSpecificDestination("motd", (user)); // use this
         serv->motd(user);
         user->setRealname(_params.at(3));
 		    user->setUsername(_params.at(0));
@@ -33,8 +32,6 @@ namespace irc {
         serv->sendToSpecificDestination(serv->formatResponse(RPLWelcome(user)), user);
         serv->sendToSpecificDestination(serv->formatResponse(RPLYourHost(user, serv->getHostname(), "Yv2")), user);
         serv->sendToSpecificDestination(serv->formatResponse(RPLCreated(user, &t)), user);
-        //serv->sendToSpecificDestination(serv->formatResponse(RPLMyInfo(user)), user);
-        //serv->sendToSpecificDestination(serv->formatResponse(RPLIsupport(user)), user);
         std::cout << user->getHostname() << " " << user->getNickname() << " " << user->getRealname() << " " << user->getUsername() << std::endl;
         return 0;
     }
