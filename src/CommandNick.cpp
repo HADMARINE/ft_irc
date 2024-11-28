@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandNick.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 17:28:34 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/09/25 09:44:44 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/11/28 11:51:35 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 /*
 
 TODO : Verify nickname rules
-Nickname rules : 
+Nickname rules :
 
 They MUST NOT contain any of the following characters: space (' ', 0x20), comma (',', 0x2C), asterisk ('*', 0x2A), question mark ('?', 0x3F), exclamation mark ('!', 0x21), at sign ('@', 0x40).
 They MUST NOT start with any of the following characters: dollar ('$', 0x24), colon (':', 0x3A).
@@ -28,7 +28,10 @@ namespace irc {
     int CommandNICK::resolve(Ircserv * server, User * user) {
 
         if (server->findUserByNick(this->_params.at(0))) {
-            throw NicknameInUse(this->_params.at(0));
+			server->sendToSpecificDestination(":" + user->getHostname() + " ERROR :registration failed", user);
+			server->sendToSpecificDestination(":" + user->getHostname() + " 433 " + user->getNickname() + " :Nickname is already in use", user);
+			server->disconnectUser(user);
+			return (1);
         }
         user->setNickname(this->_params.at(0));
         return 0;

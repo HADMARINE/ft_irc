@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 18:38:42 by root              #+#    #+#             */
-/*   Updated: 2024/11/26 13:23:57 by root             ###   ########.fr       */
+/*   Updated: 2024/11/28 11:58:22 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 namespace irc {
 	int CommandUSER::resolve(Ircserv * serv, User * user) {
         if (user->getPendingpassword() != serv->getPassword()) {
-            throw PasswordMisMatch(user->getNickname());
+            serv->sendToSpecificDestination(":" + user->getHostname() + " 464 " + user->getNickname() + " :Password incorrect", user);
+			      serv->sendToSpecificDestination(":" + user->getHostname() + " ERROR :registration failed", user);
+			      serv->disconnectUser(user);
+			      return (1);
         }
         if (user->getNickname().empty()) {
             serv->disconnectUser(user);
@@ -30,8 +33,8 @@ namespace irc {
         serv->sendToSpecificDestination(serv->formatResponse(RPLWelcome(user)), user);
         serv->sendToSpecificDestination(serv->formatResponse(RPLYourHost(user, serv->getHostname(), "Yv2")), user);
         serv->sendToSpecificDestination(serv->formatResponse(RPLCreated(user, &t)), user);
-        serv->sendToSpecificDestination(serv->formatResponse(RPLMyInfo(user)), user);
-        serv->sendToSpecificDestination(serv->formatResponse(RPLIsupport(user)), user);
+        //serv->sendToSpecificDestination(serv->formatResponse(RPLMyInfo(user)), user);
+        //serv->sendToSpecificDestination(serv->formatResponse(RPLIsupport(user)), user);
         std::cout << user->getHostname() << " " << user->getNickname() << " " << user->getRealname() << " " << user->getUsername() << std::endl;
         return 0;
     }
