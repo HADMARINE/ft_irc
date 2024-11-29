@@ -6,7 +6,7 @@
 /*   By: enorie <enorie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 17:28:34 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/11/29 13:25:45 by enorie           ###   ########.fr       */
+/*   Updated: 2024/11/29 13:34:42 by enorie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ namespace irc {
                 server->sendToSpecificDestination(":" + this->_params.at(0) + "!@" + user->getHostname() + " NICK " + this->_params.at(0), user);
                 return 0;
             }
-            server->sendToSpecificDestination(":" + this->_params.at(0) + "!@" + user->getHostname() + " NICK " + this->_params.at(0), user);
+            std::string msg = ":" + user->getClientInfo() + " NICK " + this->_params.at(0);
+            server->sendToAllServer(msg);
             user->setNickname(this->_params.at(0));
+            return 0;
         }
 
 
