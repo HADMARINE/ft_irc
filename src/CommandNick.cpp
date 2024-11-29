@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandNick.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: enorie <enorie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 17:28:34 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/11/28 11:51:35 by root             ###   ########.fr       */
+/*   Updated: 2024/11/29 12:46:26 by enorie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,17 @@ They SHOULD NOT contain any dot character ('.', 0x2E).
 */
 namespace irc {
     int CommandNICK::resolve(Ircserv * server, User * user) {
-
-        if (server->findUserByNick(this->_params.at(0))) {
+		if (server->findUserByNick(this->_params.at(0)) && user->getNickname() != "") {
+			server->sendToSpecificDestination(":" + user->getHostname() + " 433 * " + _params.at(0) + " :Nickname is already in use", user);
+			return (0);
+		}
+        if (server->findUserByNick(this->_params.at(0)) && user->getNickname() == "") {
 			server->sendToSpecificDestination(":" + user->getHostname() + " ERROR :registration failed", user);
-			server->sendToSpecificDestination(":" + user->getHostname() + " 433 " + user->getNickname() + " :Nickname is already in use", user);
 			server->disconnectUser(user);
-			return (1);
+			return (0);
         }
+		if (user->getNickname() != "")
+			server->sendToSpecificDestination(":" + user->getNickname() + " NICK " + _params.at(0), user);
         user->setNickname(this->_params.at(0));
         return 0;
     }

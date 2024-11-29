@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandKick.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: enorie <enorie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:18:23 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/11/28 17:14:55 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/11/29 12:41:23 by enorie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,17 @@ namespace irc {
 
         std::cout << channelName<<  targetUserNickname << std::endl;
         channel = server->findChannelByNameSafe(channelName);
-        User *targetUser = server->findUserByNickSafe(targetUserNickname);
+        User *targetUser = server->findUserByNick(targetUserNickname);
+		if (!targetUser) {
+		server->sendToSpecificDestination(":" + user->getNickname() + "!" + user->getRealname() + "@" + user->getHostname() + " 401 " + user->getNickname() + " " + targetUserNickname, user);
+		  return (0);
+		}
         if (!channel->isOperator(user)) {
             throw ChanOprivIsNeeded(user, channel);
         }
         if (!channel->isUserInChannel(targetUser)) {
-            throw UserNotInChannel(targetUser->getNickname(), channel->getName());
+          server->sendToSpecificDestination(":" + user->getNickname() + "!" + user->getRealname() + "@" + user->getHostname() + " 441 " + targetUserNickname + " :They aren't on that channel.", user);
+		  return (0);
         }
         nick = server->findNickbyUser(user);
         channel->removeUser(targetUser);
