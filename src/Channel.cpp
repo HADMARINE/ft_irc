@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:29:50 by enorie            #+#    #+#             */
-/*   Updated: 2024/11/07 14:37:32 by root             ###   ########.fr       */
+/*   Updated: 2024/11/29 12:57:08 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,4 +144,25 @@ namespace irc {
 		_invitedUsers.push_back(user);
 
 	}
+
+	int	Channel::isIN(User * user) {
+    std::vector<User *>::iterator it;
+    for (it = _operators.begin(); it != _operators.end(); it++)
+    {
+        if ((*it) == user)
+        {
+            return 1 ;
+        }
+    }
+    return 0;}
+
+	bool Channel::IsNbr(std::string str)
+	{
+		int i =-1;
+		while (str[++i])
+			if (!isdigit(str[i]))
+				return 0;
+		return 1;
+	}
+
 }
