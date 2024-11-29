@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Commands.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: enorie <enorie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 13:42:22 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/11/29 12:51:31 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/11/29 12:57:44 by enorie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ namespace irc {
     class CommandJOIN : public ACommand {
         int resolve(Ircserv * server, User * user);
         std::vector<std::string> setParamsMiddleware(std::vector<std::string> params);
-        bool checkNickValidity(const std::string & nick)
+        bool checkNickValidity(const std::string & nick);
     };
 
     class CommandPING : public ACommand {

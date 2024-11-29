@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandNick.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: enorie <enorie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 17:28:34 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/11/29 12:47:05 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/11/29 13:05:02 by enorie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,15 @@ namespace irc {
             server->sendToSpecificDestination(":" + user->getHostname() + " 464 " + user->getNickname() + " :Password incorrect", user);
             server->sendToSpecificDestination(":" + user->getHostname() + " ERROR :registration failed", user);
             server->disconnectUser(user);
-            return (1);
+            return 0;
         }
-
+		if (user->getNickname() != "" && server->findUserByNick(this->_params.at(0))) {
+			server->sendToSpecificDestination(":" + user->getHostname() + " 433 * " + _params.at(0) + " :Nickname is already in use", user);
+			return 0;
+		}
         std::stringstream ss;
         if (server->findUserByNick(this->_params.at(0))) {
-			// server->sendToSpecificDestination(":" + user->getHostname() + " ERROR :registration failed", user);
             server->sendToSpecificDestination(server->formatResponse(NicknameInUse(this->_params.at(0), this->_params.at(0))), user);
-			// server->sendToSpecificDestination(":" + user->getHostname() + " 433 " + this->_params.at(0) + " " + this->_params.at(0) + " :Nickname is already in use", user);
-			// server->disconnectUser(user);
             server->sendToSpecificDestination(":" + this->_params.at(0) + "!@" + user->getHostname() + " NICK " + this->_params.at(0), user);
 			return 0;
         }
