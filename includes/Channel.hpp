@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 21:40:47 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/11/07 14:37:29 by root             ###   ########.fr       */
+/*   Updated: 2024/11/29 12:57:39 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,9 @@ namespace irc {
 			bool				isUserInChannel(const User * user);
 			void				setPasswordRequired(bool cond);
 			void				changeUserLimit(bool cond);
+			int					isIN(User * user);
+			bool				IsNbr(std::string str);
+
    		private:
 			Channel();
 			std::string 		_name;
