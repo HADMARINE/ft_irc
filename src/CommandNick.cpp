@@ -6,7 +6,7 @@
 /*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 17:28:34 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/11/29 13:16:37 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/11/29 13:27:19 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ namespace irc {
                 server->sendToSpecificDestination(":" + this->_params.at(0) + "!@" + user->getHostname() + " NICK " + this->_params.at(0), user);
                 return 0;
             }
-            server->sendToSpecificDestination(":" + this->_params.at(0) + "!@" + user->getHostname() + " NICK " + this->_params.at(0), user);
+            std::string msg = ":" + user->getClientInfo() + " NICK " + this->_params.at(0);
+            server->sendToAll(msg);
             user->setNickname(this->_params.at(0));
+            return 0;
         }
 
 
