@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandJoin.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:09:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/11/27 17:43:17 by root             ###   ########.fr       */
+/*   Updated: 2024/11/29 12:54:10 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ namespace irc {
 				channelName = _params.at(0).substr(1, pos - 1);
 			else
 				channelName = _params.at(0).substr(1);
+			if (this->checkNickValidity(channelName) == false) {
+				
+			}
 			channel = server->findChannelByName(channelName);
 			if (!channel) {
 				Channel newChannel(channelName);
@@ -101,5 +104,18 @@ namespace irc {
             throw TooManyParameters("1-2", params.size());
         }
         return params;
+    }
+
+	bool CommandJOIN::checkNickValidity(const std::string & nick) {
+        if (nick.find_first_of(" ,*?!@") != std::string::npos) {
+            return false;
+        }
+        if (nick.find_first_of("$:") == 0) {
+            return false;
+        }
+        if (nick.find_first_of(".") != std::string::npos) {
+            return false;
+        }
+        return true;
     }
 }

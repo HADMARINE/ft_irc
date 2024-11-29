@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandUser.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 18:38:42 by root              #+#    #+#             */
-/*   Updated: 2024/11/28 12:05:02 by root             ###   ########.fr       */
+/*   Updated: 2024/11/29 12:46:57 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,26 @@ namespace irc {
 	int CommandUSER::resolve(Ircserv * serv, User * user) {
         if (user->getPendingpassword() != serv->getPassword()) {
             serv->sendToSpecificDestination(":" + user->getHostname() + " 464 " + user->getNickname() + " :Password incorrect", user);
-			      serv->sendToSpecificDestination(":" + user->getHostname() + " ERROR :registration failed", user);
-			      serv->disconnectUser(user);
-			      return (1);
-        }
-        if (user->getNickname().empty()) {
+            serv->sendToSpecificDestination(":" + user->getHostname() + " ERROR :registration failed", user);
             serv->disconnectUser(user);
-            throw NoNicknameGiven();
+            return (1);
         }
-        serv->motd(user);
+        
         user->setRealname(_params.at(3));
-		    user->setUsername(_params.at(0));
+        user->setUsername(_params.at(0));
+        if (user->getNickname().empty()) {
+            // throw NoNicknameGiven();
+            return 0;
+        }
+
+        serv->motd(user);
         user->setIsRegistered(true);
         std::time_t t = std::time(0);
         serv->sendToSpecificDestination(serv->formatResponse(RPLWelcome(user)), user);
         serv->sendToSpecificDestination(serv->formatResponse(RPLYourHost(user, serv->getHostname(), "Yv2")), user);
         serv->sendToSpecificDestination(serv->formatResponse(RPLCreated(user, &t)), user);
         std::cout << user->getHostname() << " " << user->getNickname() << " " << user->getRealname() << " " << user->getUsername() << std::endl;
+        
         return 0;
     }
     std::vector<std::string> CommandUSER::setParamsMiddleware(std::vector<std::string> params) {

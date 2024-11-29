@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Errors.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:21:34 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/11/29 11:04:12 by bfaisy           ###   ########.fr       */
+/*   Updated: 2024/11/29 12:23:02 by lhojoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ namespace irc {
         this->setCode("ERR_NONICKNAMEGIVEN");
         this->setNumeric(431);
         this->setMessage(":No nickname given");
+        this->_disconnectAfterEmit = true;
     }
 
     ErroneusNickName::ErroneusNickName() {
@@ -115,6 +116,14 @@ namespace irc {
         this->setNumeric(433);
         std::stringstream ss;
         ss << nick << " :Nickname is already in use";
+        this->setMessage(ss.str());
+    }
+
+    NicknameInUse::NicknameInUse(std::string client, std::string nick) {
+        this->setCode("ERR_NICKNAMEINUSE");
+        this->setNumeric(433);
+        std::stringstream ss;
+        ss << client << " " << nick << " :Nickname is already in use.";
         this->setMessage(ss.str());
     }
 
