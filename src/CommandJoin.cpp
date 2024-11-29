@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandJoin.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: enorie <enorie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:09:48 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/11/29 12:54:10 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/11/29 13:32:45 by enorie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ namespace irc {
 					std::cout << "PASS " << password << " " << joinpass << std::endl;
 					if (password != joinpass)
 						throw BadKey(user, channel);
-					_params.at(1).erase(0, pos1);
+					_params.at(1).erase(0, pos1 + 1);
 				}
 				channel->addUser(user);
 				server->sendToSpecificDestination(":" + user->getNickname() + "!" + user->getUsername() + "@" + user->getHostname() + " JOIN #" + channel->getName(), user);
