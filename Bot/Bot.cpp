@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Bot.cpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: enorie <enorie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 12:47:22 by root              #+#    #+#             */
-/*   Updated: 2024/11/27 15:52:48 by root             ###   ########.fr       */
+/*   Updated: 2024/11/29 13:42:50 by enorie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,8 @@ Bot::Bot(std::string port, std::string pass) {
 		if (recv(sock, received, 512, 0) == -1)
 			throw std::runtime_error("error while using recv");
 		parsingStr = received;
+		if (parsingStr.find("ERROR") != std::string::npos)
+			isServerShut = true;
 		if (parsingStr.find("PRIVMSG") != std::string::npos) {
 			pos = parsingStr.find("!");
 			std::string sender = parsingStr.substr(1, pos - 1);
