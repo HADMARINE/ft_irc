@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Errors.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhojoon <lhojoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bfaisy <bfaisy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:21:34 by lhojoon           #+#    #+#             */
-/*   Updated: 2024/11/27 19:20:33 by lhojoon          ###   ########.fr       */
+/*   Updated: 2024/11/29 11:04:12 by bfaisy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,13 +166,6 @@ namespace irc {
         this->setMessage(":Not enough parameters");
     }
 
-    NeedMoreParams::NeedMoreParams(std::string cmd) {
-        this->setCode("ERR_NEEDMOREPARAMS");
-        this->setNumeric(461);
-        std::stringstream ss;
-        ss << cmd << " :Not enough parameters";
-        this->setMessage(ss.str());
-    }
 
     AlreadyRegistered::AlreadyRegistered() {
         this->setCode("ERR_ALREADYREGISTRED");
